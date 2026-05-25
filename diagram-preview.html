@@ -1,0 +1,400 @@
+<style>
+  body { margin: 20px; background: #f8f9fa; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+  .diagram-container { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); max-width: 760px; }
+  .diagram-container h3 { margin: 0 0 12px 0; font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; color: #2E3440; }
+</style>
+<div class="diagram-container">
+<h3>🏗️ 企业 AI 平台 - 整体架构图</h3>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 620" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L7.5 5L1 8.5" fill="none" stroke="#8B93A1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L7.5 5L1 8.5" fill="none" stroke="#6B7FF5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 第五层：用户接入层 -->
+  <rect x="20" y="10" width="680" height="90" rx="12" fill="#EDF7FF" stroke="#9DD4F5"/>
+  <text x="40" y="32" font-size="11" fill="#3AA8E0" font-weight="400">第五层 - 用户接入层</text>
+  
+  <rect x="50" y="44" width="130" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="115" y="71" text-anchor="middle" font-size="13" font-weight="500" fill="#134B73">Web 管理后台</text>
+  
+  <rect x="200" y="44" width="130" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="265" y="71" text-anchor="middle" font-size="13" font-weight="500" fill="#134B73">企业内部 Portal</text>
+  
+  <rect x="350" y="44" width="130" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="415" y="71" text-anchor="middle" font-size="13" font-weight="500" fill="#134B73">移动端 / 企微</text>
+
+  <rect x="500" y="44" width="130" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="565" y="71" text-anchor="middle" font-size="13" font-weight="500" fill="#134B73">Open API / SDK</text>
+
+  <!-- 连线 -->
+  <line x1="360" y1="100" x2="360" y2="126" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 第四层：统一网关与安全 -->
+  <rect x="20" y="126" width="680" height="90" rx="12" fill="#FFF8E6" stroke="#F5D97E"/>
+  <text x="40" y="148" font-size="11" fill="#E6A817" font-weight="400">第四层 - 统一网关 &amp; 安全鉴权层</text>
+
+  <rect x="50" y="158" width="160" height="46" rx="10" fill="#fff" stroke="#F5D97E"/>
+  <text x="130" y="178" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">统一 API 网关</text>
+  <text x="130" y="194" text-anchor="middle" font-size="11" fill="#8B93A1">路由 / 限流 / 熔断</text>
+
+  <rect x="240" y="158" width="160" height="46" rx="10" fill="#fff" stroke="#F5D97E"/>
+  <text x="320" y="178" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">统一身份认证 (SSO)</text>
+  <text x="320" y="194" text-anchor="middle" font-size="11" fill="#8B93A1">OAuth2 / LDAP / CAS</text>
+
+  <rect x="430" y="158" width="160" height="46" rx="10" fill="#fff" stroke="#F5D97E"/>
+  <text x="510" y="178" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">权限策略引擎</text>
+  <text x="510" y="194" text-anchor="middle" font-size="11" fill="#8B93A1">RBAC / ABAC</text>
+
+  <!-- 连线 -->
+  <line x1="360" y1="216" x2="360" y2="242" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 第三层：核心业务服务层 -->
+  <rect x="20" y="242" width="680" height="120" rx="12" fill="#EBF0FF" stroke="#B4C6FC"/>
+  <text x="40" y="264" font-size="11" fill="#6B7FF5" font-weight="400">第三层 - 核心业务服务层</text>
+
+  <rect x="40" y="274" width="150" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="115" y="301" text-anchor="middle" font-size="13" font-weight="500" fill="#2D3A8C">💬 智能对话引擎</text>
+
+  <rect x="210" y="274" width="150" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="285" y="301" text-anchor="middle" font-size="13" font-weight="500" fill="#2D3A8C">🔍 知识库检索服务</text>
+
+  <rect x="380" y="274" width="150" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="455" y="301" text-anchor="middle" font-size="13" font-weight="500" fill="#2D3A8C">🧩 技能/插件引擎</text>
+
+  <rect x="550" y="274" width="135" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="617" y="301" text-anchor="middle" font-size="13" font-weight="500" fill="#2D3A8C">📊 分析统计</text>
+
+  <rect x="100" y="328" width="130" height="24" rx="6" fill="#F5F6F8" stroke="#D4D8E0"/>
+  <text x="165" y="344" text-anchor="middle" font-size="11" fill="#2E3440">敏感词/安全过滤</text>
+
+  <rect x="280" y="328" width="130" height="24" rx="6" fill="#F5F6F8" stroke="#D4D8E0"/>
+  <text x="345" y="344" text-anchor="middle" font-size="11" fill="#2E3440">上下文管理</text>
+
+  <rect x="460" y="328" width="130" height="24" rx="6" fill="#F5F6F8" stroke="#D4D8E0"/>
+  <text x="525" y="344" text-anchor="middle" font-size="11" fill="#2E3440">审计日志</text>
+
+  <!-- 连线 -->
+  <line x1="360" y1="362" x2="360" y2="388" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 第二层：AI 能力与数据层 -->
+  <rect x="20" y="388" width="680" height="120" rx="12" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="40" y="410" font-size="11" fill="#2EBD7F" font-weight="400">第二层 - AI 能力 &amp; 知识库层</text>
+
+  <rect x="40" y="420" width="200" height="76" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="140" y="440" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">多模型路由 &amp; 适配器</text>
+  <text x="140" y="456" text-anchor="middle" font-size="11" fill="#8B93A1">OpenAI · Claude · 文心 · 通义</text>
+  <text x="140" y="472" text-anchor="middle" font-size="11" fill="#8B93A1">DeepSeek · 私有化部署模型</text>
+
+  <rect x="270" y="420" width="180" height="76" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="360" y="440" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">企业知识库</text>
+  <text x="360" y="456" text-anchor="middle" font-size="11" fill="#8B93A1">文档解析 / Embedding</text>
+  <text x="360" y="472" text-anchor="middle" font-size="11" fill="#8B93A1">向量数据库 · 全文索引</text>
+
+  <rect x="480" y="420" width="200" height="76" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="580" y="440" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">RAG 检索增强生成</text>
+  <text x="580" y="456" text-anchor="middle" font-size="11" fill="#8B93A1">混合检索 (向量+关键词)</text>
+  <text x="580" y="472" text-anchor="middle" font-size="11" fill="#8B93A1">重排序 / 结果过滤</text>
+
+  <!-- 连线 -->
+  <line x1="360" y1="508" x2="360" y2="534" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 第一层：基础设施层 -->
+  <rect x="20" y="534" width="680" height="70" rx="12" fill="#F5F6F8" stroke="#D4D8E0"/>
+  <text x="40" y="556" font-size="11" fill="#8B93A1" font-weight="400">第一层 - 基础设施层</text>
+
+  <rect x="40" y="566" width="145" height="28" rx="8" fill="#fff" stroke="#D4D8E0"/>
+  <text x="112" y="584" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">容器编排 K8s</text>
+
+  <rect x="200" y="566" width="140" height="28" rx="8" fill="#fff" stroke="#D4D8E0"/>
+  <text x="270" y="584" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">CI/CD 流水线</text>
+
+  <rect x="355" y="566" width="140" height="28" rx="8" fill="#fff" stroke="#D4D8E0"/>
+  <text x="425" y="584" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">监控 &amp; 日志 (ELK)</text>
+
+  <rect x="510" y="566" width="140" height="28" rx="8" fill="#fff" stroke="#D4D8E0"/>
+  <text x="580" y="584" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">数据库 &amp; 消息队列</text>
+
+</svg>
+</div>
+
+<div class="diagram-container">
+<h3>🔐 权限与数据安全模型</h3>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 520" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L7.5 5L1 8.5" fill="none" stroke="#8B93A1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="360" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#2E3440">多维度权限控制体系</text>
+
+  <!-- 用户与组织 -->
+  <rect x="20" y="40" width="200" height="210" rx="12" fill="#EDF7FF" stroke="#9DD4F5"/>
+  <text x="120" y="62" text-anchor="middle" font-size="12" font-weight="600" fill="#134B73">👤 用户 &amp; 组织架构</text>
+
+  <rect x="35" y="76" width="170" height="30" rx="8" fill="#fff" stroke="#9DD4F5"/>
+  <text x="120" y="95" text-anchor="middle" font-size="12" font-weight="500" fill="#134B73">用户 (User)</text>
+
+  <line x1="120" y1="106" x2="120" y2="120" stroke="#8B93A1" stroke-width="1" marker-end="url(#arrow2)"/>
+
+  <rect x="35" y="120" width="80" height="30" rx="8" fill="#fff" stroke="#9DD4F5"/>
+  <text x="75" y="139" text-anchor="middle" font-size="11" font-weight="500" fill="#134B73">部门 (Dept)</text>
+
+  <rect x="125" y="120" width="80" height="30" rx="8" fill="#fff" stroke="#9DD4F5"/>
+  <text x="165" y="139" text-anchor="middle" font-size="11" font-weight="500" fill="#134B73">角色 (Role)</text>
+
+  <line x1="75" y1="150" x2="75" y2="164" stroke="#8B93A1" stroke-width="1" marker-end="url(#arrow2)"/>
+  <line x1="165" y1="150" x2="165" y2="164" stroke="#8B93A1" stroke-width="1" marker-end="url(#arrow2)"/>
+
+  <rect x="35" y="164" width="170" height="30" rx="8" fill="#fff" stroke="#9DD4F5"/>
+  <text x="120" y="183" text-anchor="middle" font-size="11" font-weight="500" fill="#134B73">上级部门 / 子部门</text>
+
+  <line x1="120" y1="194" x2="120" y2="208" stroke="#8B93A1" stroke-width="1" marker-end="url(#arrow2)"/>
+
+  <rect x="35" y="208" width="170" height="30" rx="8" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="120" y="227" text-anchor="middle" font-size="11" font-weight="500" fill="#145A3A">部门负责人 / 管理员</text>
+
+  <!-- 中间的权限策略引擎 -->
+  <rect x="260" y="40" width="200" height="210" rx="12" fill="#FFF8E6" stroke="#F5D97E"/>
+  <text x="360" y="62" text-anchor="middle" font-size="12" font-weight="600" fill="#7A5200">⚙️ 权限策略引擎</text>
+
+  <rect x="280" y="76" width="160" height="32" rx="8" fill="#fff" stroke="#F5D97E"/>
+  <text x="360" y="96" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">RBAC 角色权限</text>
+
+  <rect x="280" y="118" width="160" height="32" rx="8" fill="#fff" stroke="#F5D97E"/>
+  <text x="360" y="138" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">ABAC 属性权限</text>
+
+  <rect x="280" y="160" width="160" height="32" rx="8" fill="#fff" stroke="#F5D97E"/>
+  <text x="360" y="180" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">数据分级分类</text>
+
+  <rect x="280" y="202" width="160" height="32" rx="8" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="360" y="222" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">🔑 策略缓存 &amp; 评估</text>
+
+  <!-- 右侧：权限控制点 -->
+  <rect x="500" y="40" width="200" height="210" rx="12" fill="#FFF0F1" stroke="#F5B3BA"/>
+  <text x="600" y="62" text-anchor="middle" font-size="12" font-weight="600" fill="#8C1B30">🛡️ 权限控制点</text>
+
+  <rect x="515" y="76" width="170" height="30" rx="8" fill="#fff" stroke="#F5B3BA"/>
+  <text x="600" y="95" text-anchor="middle" font-size="12" font-weight="500" fill="#8C1B30">知识库文档级权限</text>
+
+  <rect x="515" y="116" width="170" height="30" rx="8" fill="#fff" stroke="#F5B3BA"/>
+  <text x="600" y="135" text-anchor="middle" font-size="12" font-weight="500" fill="#8C1B30">检索结果过滤</text>
+
+  <rect x="515" y="156" width="170" height="30" rx="8" fill="#fff" stroke="#F5B3BA"/>
+  <text x="600" y="175" text-anchor="middle" font-size="12" font-weight="500" fill="#8C1B30">技能/插件使用权限</text>
+
+  <rect x="515" y="196" width="170" height="30" rx="8" fill="#fff" stroke="#F5B3BA"/>
+  <text x="600" y="215" text-anchor="middle" font-size="12" font-weight="500" fill="#8C1B30">模型调用权限</text>
+
+  <!-- 连线 -->
+  <line x1="220" y1="145" x2="260" y2="145" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="460" y1="145" x2="500" y2="145" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <!-- 底部：请求处理流程 -->
+  <rect x="20" y="270" width="680" height="100" rx="12" fill="#F5F6F8" stroke="#D4D8E0"/>
+  <text x="360" y="292" text-anchor="middle" font-size="13" font-weight="600" fill="#2E3440">请求处理流程</text>
+
+  <!-- 流程节点 -->
+  <rect x="35" y="306" width="110" height="44" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="90" y="326" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">用户提问</text>
+  <text x="90" y="341" text-anchor="middle" font-size="11" fill="#8B93A1">输入问题</text>
+
+  <line x1="145" y1="328" x2="165" y2="328" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <rect x="165" y="306" width="120" height="44" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="225" y="326" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">意图/关键词分析</text>
+  <text x="225" y="341" text-anchor="middle" font-size="11" fill="#8B93A1">判断访问的数据范围</text>
+
+  <line x1="285" y1="328" x2="305" y2="328" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <rect x="305" y="306" width="130" height="44" rx="10" fill="#FFF8E6" stroke="#F5D97E"/>
+  <text x="370" y="326" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">权限策略匹配</text>
+  <text x="370" y="341" text-anchor="middle" font-size="11" fill="#8B93A1">部门/角色/数据分级</text>
+
+  <line x1="435" y1="328" x2="455" y2="328" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <rect x="455" y="306" width="110" height="44" rx="10" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="510" y="326" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">知识库检索</text>
+  <text x="510" y="341" text-anchor="middle" font-size="11" fill="#8B93A1">仅返回授权内容</text>
+
+  <line x1="565" y1="328" x2="585" y2="328" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <rect x="585" y="306" width="100" height="44" rx="10" fill="#EBF0FF" stroke="#B4C6FC"/>
+  <text x="635" y="326" text-anchor="middle" font-size="12" font-weight="500" fill="#2D3A8C">AI 生成回答</text>
+  <text x="635" y="341" text-anchor="middle" font-size="11" fill="#8B93A1">脱敏后返回</text>
+
+  <!-- 底部：数据隔离说明 -->
+  <rect x="20" y="390" width="680" height="110" rx="12" fill="#FFF0F1" stroke="#F5B3BA"/>
+  <text x="360" y="412" text-anchor="middle" font-size="13" font-weight="600" fill="#8C1B30">数据安全与隔离策略</text>
+
+  <text x="40" y="436" font-size="12" font-weight="500" fill="#2E3440">1. 知识库文档分级</text>
+  <text x="56" y="454" font-size="11" fill="#8B93A1">公开 · 内部 · 部门内 · 机密 · 绝密，各级别对应不同访问策略</text>
+
+  <text x="40" y="476" font-size="12" font-weight="500" fill="#2E3440">2. 数据不出域</text>
+  <text x="56" y="494" font-size="11" fill="#8B93A1">所有知识库数据存储在企业内网/私有云；外部模型 API 仅接收脱敏后的检索片段，不传输原始文档</text>
+
+</svg>
+</div>
+
+<div class="diagram-container">
+<h3>📚 知识库 RAG 检索增强生成 - 完整流程</h3>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 480" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L7.5 5L1 8.5" fill="none" stroke="#8B93A1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 上半部分：知识库构建（离线） -->
+  <text x="360" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#2E3440">知识库构建流程（离线）</text>
+
+  <rect x="20" y="36" width="680" height="155" rx="12" fill="#F5F6F8" stroke="#D4D8E0"/>
+
+  <rect x="35" y="52" width="130" height="50" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="100" y="72" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">📄 文档上传</text>
+  <text x="100" y="90" text-anchor="middle" font-size="11" fill="#8B93A1">PDF/Word/Excel/PPT</text>
+
+  <line x1="165" y1="77" x2="185" y2="77" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="185" y="52" width="130" height="50" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="250" y="72" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">📝 文档解析</text>
+  <text x="250" y="90" text-anchor="middle" font-size="11" fill="#8B93A1">OCR / 版面分析 / 分段</text>
+
+  <line x1="315" y1="77" x2="335" y2="77" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="335" y="52" width="150" height="50" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="410" y="72" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">🔤 Embedding 向量化</text>
+  <text x="410" y="90" text-anchor="middle" font-size="11" fill="#8B93A1">私域 Embedding 模型</text>
+
+  <line x1="485" y1="77" x2="505" y2="77" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="505" y="52" width="180" height="50" rx="10" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="595" y="72" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">📦 向量数据库存储</text>
+  <text x="595" y="90" text-anchor="middle" font-size="11" fill="#8B93A1">Milvus / Qdrant / PGVector</text>
+
+  <!-- 权限标注环节 -->
+  <rect x="100" y="114" width="520" height="38" rx="8" fill="#FFF8E6" stroke="#F5D97E"/>
+  <text x="360" y="139" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">🔖 权限标注：每个文档块绑定 部门标签 + 数据密级 + 可见角色列表</text>
+
+  <!-- 分割线 + 下半部分 -->
+  <line x1="40" y1="203" x2="680" y2="203" stroke="#D4D8E0" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <text x="360" y="224" text-anchor="middle" font-size="14" font-weight="600" fill="#2E3440">在线检索与生成流程（实时）</text>
+
+  <rect x="20" y="236" width="680" height="152" rx="12" fill="#EBF0FF" stroke="#B4C6FC"/>
+
+  <rect x="35" y="252" width="110" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="90" y="279" text-anchor="middle" font-size="12" font-weight="500" fill="#2D3A8C">用户提问</text>
+
+  <line x1="145" y1="274" x2="165" y2="274" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="165" y="252" width="130" height="44" rx="10" fill="#FFF8E6" stroke="#F5D97E"/>
+  <text x="230" y="272" text-anchor="middle" font-size="12" font-weight="500" fill="#7A5200">🔒 权限过滤</text>
+  <text x="230" y="289" text-anchor="middle" font-size="11" fill="#8B93A1">根据用户身份过滤可访问文档</text>
+
+  <line x1="295" y1="274" x2="315" y2="274" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="315" y="252" width="150" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="390" y="272" text-anchor="middle" font-size="12" font-weight="500" fill="#2D3A8C">混合检索</text>
+  <text x="390" y="289" text-anchor="middle" font-size="11" fill="#8B93A1">向量相似度 + 关键词 BM25</text>
+
+  <line x1="465" y1="274" x2="485" y2="274" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="485" y="252" width="100" height="44" rx="10" fill="#fff" stroke="#B4C6FC"/>
+  <text x="535" y="272" text-anchor="middle" font-size="12" font-weight="500" fill="#2D3A8C">重排序</text>
+  <text x="535" y="289" text-anchor="middle" font-size="11" fill="#8B93A1">Cross-Encoder</text>
+
+  <line x1="585" y1="274" x2="605" y2="274" stroke="#8B93A1" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="605" y="252" width="80" height="44" rx="10" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="645" y="279" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">LLM 生成</text>
+
+  <!-- 结果的权限过滤 -->
+  <rect x="160" y="312" width="400" height="38" rx="8" fill="#FFF0F1" stroke="#F5B3BA"/>
+  <text x="360" y="337" text-anchor="middle" font-size="12" font-weight="500" fill="#8C1B30">🔍 结果后过滤：再次校验每段检索结果的权限，确保无越权内容进入 Prompt</text>
+
+  <!-- 底部说明 -->
+  <rect x="20" y="404" width="680" height="58" rx="12" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="40" y="426" font-size="12" font-weight="500" fill="#145A3A">安全关键设计</text>
+  <text x="40" y="444" font-size="11" fill="#8B93A1">① Embedding 模型需私有化部署 ② 检索过程全程在内网完成 ③ 发送到外部 LLM 的内容经过脱敏和权限过滤 ④ 每次检索都附带用户身份上下文</text>
+
+</svg>
+</div>
+
+<div class="diagram-container">
+<h3>🧩 技能/插件系统架构</h3>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 360" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L7.5 5L1 8.5" fill="none" stroke="#8B93A1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#2E3440">技能/插件体系 - 类似 WorkBuddy 但去掉了"专家"模式</text>
+
+  <!-- 技能市场 -->
+  <rect x="20" y="40" width="320" height="150" rx="12" fill="#EDF7FF" stroke="#9DD4F5"/>
+  <text x="40" y="62" font-size="12" font-weight="600" fill="#134B73">🏪 技能市场 / 管理后台</text>
+
+  <rect x="35" y="74" width="140" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="105" y="101" text-anchor="middle" font-size="12" font-weight="500" fill="#134B73">官方技能</text>
+
+  <rect x="185" y="74" width="140" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="255" y="101" text-anchor="middle" font-size="12" font-weight="500" fill="#134B73">自定义技能</text>
+
+  <rect x="35" y="128" width="140" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="105" y="148" text-anchor="middle" font-size="12" font-weight="500" fill="#134B73">技能上架/下架</text>
+  <text x="105" y="164" text-anchor="middle" font-size="11" fill="#8B93A1">管理员审批</text>
+
+  <rect x="185" y="128" width="140" height="44" rx="10" fill="#fff" stroke="#9DD4F5"/>
+  <text x="255" y="148" text-anchor="middle" font-size="12" font-weight="500" fill="#134B73">技能权限配置</text>
+  <text x="255" y="164" text-anchor="middle" font-size="11" fill="#8B93A1">部门/角色可见</text>
+
+  <!-- 技能运行时 -->
+  <rect x="380" y="40" width="320" height="150" rx="12" fill="#E8FAF0" stroke="#8FE8BE"/>
+  <text x="400" y="62" font-size="12" font-weight="600" fill="#145A3A">⚡ 技能运行时引擎</text>
+
+  <rect x="395" y="74" width="140" height="44" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="465" y="94" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">技能编排引擎</text>
+  <text x="465" y="110" text-anchor="middle" font-size="11" fill="#8B93A1">顺序/条件/并行执行</text>
+
+  <rect x="545" y="74" width="140" height="44" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="615" y="94" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">技能调度器</text>
+  <text x="615" y="110" text-anchor="middle" font-size="11" fill="#8B93A1">意图匹配 → 技能激活</text>
+
+  <rect x="395" y="128" width="140" height="44" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="465" y="148" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">技能沙箱</text>
+  <text x="465" y="164" text-anchor="middle" font-size="11" fill="#8B93A1">安全隔离执行环境</text>
+
+  <rect x="545" y="128" width="140" height="44" rx="10" fill="#fff" stroke="#8FE8BE"/>
+  <text x="615" y="148" text-anchor="middle" font-size="12" font-weight="500" fill="#145A3A">上下文传递</text>
+  <text x="615" y="164" text-anchor="middle" font-size="11" fill="#8B93A1">用户身份/会话共享</text>
+
+  <!-- 技能类型 -->
+  <rect x="20" y="210" width="680" height="130" rx="12" fill="#F5F6F8" stroke="#D4D8E0"/>
+  <text x="360" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#2E3440">技能类型示例</text>
+
+  <rect x="35" y="248" width="150" height="44" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="110" y="268" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">🔎 知识检索技能</text>
+  <text x="110" y="284" text-anchor="middle" font-size="11" fill="#8B93A1">对接知识库搜索</text>
+
+  <rect x="200" y="248" width="150" height="44" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="275" y="268" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">📊 数据查询技能</text>
+  <text x="275" y="284" text-anchor="middle" font-size="11" fill="#8B93A1">BI报表/数据库查询</text>
+
+  <rect x="365" y="248" width="150" height="44" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="440" y="268" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">📧 办公自动化技能</text>
+  <text x="440" y="284" text-anchor="middle" font-size="11" fill="#8B93A1">审批/邮件/日程</text>
+
+  <rect x="530" y="248" width="155" height="44" rx="10" fill="#fff" stroke="#D4D8E0"/>
+  <text x="607" y="268" text-anchor="middle" font-size="12" font-weight="500" fill="#2E3440">🛠️ 自定义工具技能</text>
+  <text x="607" y="284" text-anchor="middle" font-size="11" fill="#8B93A1">OpenAPI / Webhook</text>
+
+</svg>
+</div>

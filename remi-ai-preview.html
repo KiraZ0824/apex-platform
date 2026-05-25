@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remi AI - 智能助手</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --primary-light: #fff7ed;
+      --primary-border: #fed7aa;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #ef4444;
+      --accent-violet: #8b5cf6;
+      --bg: #f5f5f4;
+      --card: #ffffff;
+      --border: #e7e5e4;
+      --border-light: #f0efed;
+      --text: #292524;
+      --text-secondary: #78716c;
+      --text-muted: #a8a29e;
+      --radius-sm: 8px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+      --shadow: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+      --font: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    html { font-size: 14px; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== LAYOUT ===== */
+    .app {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ===== MAIN AREA ===== */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--card);
+    }
+
+    /* ===== TOP BAR ===== */
+    /* ===== CONTENT ===== */
+    .content {
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      background: var(--bg);
+    }
+    .page {
+      display: none;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: auto;
+      overflow-y: auto;
+    }
+    .page.active { display: flex; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } }
+
+    .page-inner {
+      width: 100%;
+      min-width: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      flex-shrink: 0;
+    }
+
+    /* ===== CHAT VIEW (DEFAULT / MAIN) ===== */
+    .chat-view {
+      flex-direction: column;
+      background: var(--card);
+    }
+    .chat-view .page-inner {
+      max-width: 100%;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .chat-header {
+      padding: 14px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .chat-header-title { font-size: 14px; font-weight: 600; color: var(--text); }
+    .chat-header-actions { display: flex; align-items: center; gap: 6px; }
+    .chat-maximize-btn {
+      width: 30px; height: 30px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .chat-maximize-btn:hover { background: var(--bg); color: var(--text-secondary); }
+    .chat-maximize-btn svg { width: 16px; height: 16px; }
+    .chat-messages-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .chat-messages-area::-webkit-scrollbar { width: 4px; }
+    .chat-messages-area::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+    .chat-scroll-inner {
+      width: 100%;
+      max-width: 720px;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .msg {
+      display: flex;
+      gap: 12px;
+      max-width: 100%;
+    }
+    .msg.user { flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 13px; color: white;
+    }
+    .msg-body { max-width: 600px; }
+    .msg-bubble {
+      padding: 10px 16px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+    .msg.user .msg-bubble {
+      background: var(--primary);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .msg.assistant .msg-bubble {
+      background: var(--bg);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+    .msg-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .msg.user .msg-time { text-align: right; }
+    .citation {
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius);
+      font-size: 13px;
+    }
+    .citation-doc {
+      font-weight: 600; font-size: 12px; margin-bottom: 3px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .citation-conf {
+      font-size: 10px; font-weight: 600;
+      padding: 1px 6px; border-radius: 4px;
+    }
+    .citation-conf.high { background: #d1fae5; color: #065f46; }
+    .citation-conf.medium { background: #fef3c7; color: #92400e; }
+    .citation-snippet { font-size: 12px; color: var(--text-secondary); }
+
+    .chat-empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--text-muted);
+      padding: 40px 24px 60px;
+    }
+    .chat-empty-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .chat-empty h2 { font-size: 18px; font-weight: 700; color: var(--text); }
+    .chat-empty p { font-size: 13px; color: var(--text-muted); max-width: 400px; text-align: center; }
+    .chat-suggestions {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      margin-top: 8px;
+    }
+    .chat-suggestion {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--card);
+      color: var(--text-secondary);
+    }
+    .chat-suggestion:hover { border-color: var(--primary-border); color: var(--primary); }
+
+    /* Chat Input */
+    .chat-input-container {
+      border-top: 1px solid var(--border-light);
+      padding: 12px 24px 16px;
+      flex-shrink: 0;
+      background: var(--card);
+    }
+    .chat-input-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .chat-input-tools {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .chat-input-tool {
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--card);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .chat-input-tool:hover { border-color: var(--primary-border); color: var(--primary); }
+    .chat-input-tool.active { background: var(--primary-light); border-color: var(--primary-border); color: var(--primary); }
+    .chat-input-tool svg { width: 14px; height: 14px; }
+    .chat-input-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 10px 14px;
+      transition: var(--transition);
+    }
+    .chat-input-wrap:focus-within {
+      border-color: var(--primary-border);
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
+    }
+    .chat-input-wrap textarea {
+      flex: 1;
+      border: none;
+      background: none;
+      outline: none;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text);
+      resize: none;
+      min-height: 22px;
+      max-height: 120px;
+      line-height: 1.5;
+    }
+    .chat-input-wrap textarea::placeholder { color: var(--text-muted); }
+    .chat-send-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .chat-send-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
+    .chat-send-btn:active { transform: scale(0.95); }
+    .chat-send-btn svg { width: 16px; height: 16px; }
+
+    /* ===== ARTIFACT PANEL ===== */
+    .artifact-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.15);
+      z-index: 50;
+      display: none;
+    }
+    .artifact-overlay.open { display: block; }
+    .artifact-panel {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 0;
+      background: var(--card);
+      box-shadow: var(--shadow-lg);
+      z-index: 51;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .artifact-panel.open { width: 480px; }
+    .artifact-panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .artifact-panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .artifact-panel-close {
+      width: 30px; height: 30px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .artifact-panel-close:hover { background: var(--bg); color: var(--text); }
+    .artifact-panel-close svg { width: 18px; height: 18px; }
+    .artifact-panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .artifact-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .artifact-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .artifact-card-content {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .artifact-card-content pre {
+      background: #1c1917;
+      color: #f5f5f4;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 12px;
+      overflow-x: auto;
+      margin: 8px 0;
+    }
+    .artifact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+      margin-top: 6px;
+    }
+    .artifact-btn:hover { background: var(--primary-border); }
+    .artifact-btn svg { width: 13px; height: 13px; }
+
+    /* ===== CHAT LAYOUT WRAPPER (for maximize + artifact) ===== */
+    .chat-content-wrap {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      position: relative;
+    }
+    .chat-main-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* ===== CONVERSATION SIDEBAR (always visible) ===== */
+    .conv-sidebar {
+      width: 300px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+      overflow: hidden;
+    }
+    .conv-sidebar.collapsed {
+      width: 0;
+      opacity: 0;
+      border-right: none;
+    }
+    .conv-sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .conv-search {
+      position: relative;
+      margin-top: 12px;
+    }
+    .conv-search input {
+      width: 100%;
+      padding: 7px 12px 7px 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-family: var(--font);
+      background: var(--bg);
+      outline: none;
+    }
+    .conv-search input:focus { border-color: var(--primary-border); }
+    .conv-search svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      color: var(--text-muted);
+    }
+    .conv-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      min-height: 0;
+    }
+    .conv-item {
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 2px;
+    }
+    .conv-item:hover { background: var(--bg); }
+    .conv-item.active { background: var(--primary-light); }
+    .conv-item-title {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .conv-item-preview {
+      font-size: 12px; color: var(--text-muted);
+      margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .conv-item-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ===== CONVERSATION NAV ===== */
+    .conv-nav { display: flex; flex-direction: column; gap: 2px; }
+    .conv-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: none;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      text-align: left;
+    }
+    .conv-nav-item:hover { background: var(--bg); color: var(--text); }
+    .conv-nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+    .conv-nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* ===== CONVERSATION SIDEBAR FOOTER ===== */
+    .conv-sidebar {
+      display: flex;
+      flex-direction: column;
+    }
+    .conv-sidebar-footer {
+      border-top: 1px solid var(--border-light);
+      padding: 10px 12px;
+      flex-shrink: 0;
+    }
+    .conv-sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .conv-sidebar-user:hover { background: var(--bg); }
+    .conv-sidebar-user-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #ea580c);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 13px;
+      flex-shrink: 0;
+    }
+    .conv-sidebar-user-info { flex: 1; min-width: 0; }
+    .conv-sidebar-user-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .conv-sidebar-user-role { font-size: 11px; color: var(--text-muted); }
+
+    /* ===== KNOWLEDGE ===== */
+    .kb-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .kb-header h1 { font-size: 20px; font-weight: 700; }
+    .kb-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .kb-grid { display: grid; grid-template-columns: 220px 1fr; gap: 20px; min-width: 0; }
+    .kb-tree {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+    }
+    .kb-tree-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .kb-tree-item:hover { background: var(--bg); }
+    .kb-tree-item.active { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; }
+    .kb-tree-item .count { margin-left: auto; font-size: 11px; color: var(--text-muted); }
+    .kb-main { min-width: 0; }
+    .kb-tree { min-width: 0; }
+    .kb-files {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .kb-files-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .kb-files-header h3 { font-size: 14px; font-weight: 600; }
+    .kb-file-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .kb-file-row:last-child { border-bottom: none; }
+    .kb-file-icon {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .kb-file-info { flex: 1; min-width: 0; }
+    .kb-file-name { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .kb-file-meta { font-size: 11px; color: var(--text-muted); display: flex; gap: 10px; margin-top: 1px; }
+    .kb-upload {
+      margin-top: 16px;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--card);
+    }
+    .kb-upload:hover { border-color: var(--primary-border); background: var(--primary-light); }
+    .kb-upload svg { width: 36px; height: 36px; color: var(--text-muted); margin-bottom: 8px; }
+    .kb-upload h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .kb-upload p { font-size: 12px; color: var(--text-muted); }
+
+    /* ===== SKILLS ===== */
+    .skills-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .skills-header h1 { font-size: 20px; font-weight: 700; }
+    .skills-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .skills-tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .skill-tag {
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text-secondary);
+      font-family: var(--font);
+    }
+    .skill-tag:hover { border-color: var(--primary-border); color: var(--primary); }
+    .skill-tag.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .skill-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .skill-card-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 12px;
+    }
+    .skill-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .skill-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+    .skill-card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .skill-stats { display: flex; gap: 10px; font-size: 11px; color: var(--text-muted); }
+
+    /* ===== SETTINGS ===== */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 24px;
+      min-width: 0;
+    }
+    .settings-nav-item {
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+    .settings-nav-item:hover { background: var(--bg); }
+    .settings-nav-item.active { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; }
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-label { font-size: 13px; font-weight: 600; }
+    .setting-desc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+    /* ===== USER MANAGEMENT ===== */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: var(--transition);
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      font-family: var(--font);
+    }
+    .tab:hover { color: var(--text-secondary); background: var(--bg); }
+    .tab.active { color: var(--primary); background: var(--primary-light); }
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px 2px 0 0;
+    }
+    .org-tree { font-size: 13px; }
+    .org-node { margin-bottom: 4px; }
+    .org-node-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .org-node-header:hover { background: var(--bg); }
+    .org-children {
+      padding-left: 20px;
+      margin-top: 4px;
+      border-left: 2px solid var(--border-light);
+      margin-left: 10px;
+    }
+    .tag-violet { background: #ede9fe; color: #6d28d9; }
+
+    /* ===== COMPONENTS ===== */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-title { font-size: 14px; font-weight: 600; }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn svg { width: 15px; height: 15px; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-ghost { background: transparent; color: var(--text-secondary); }
+    .btn-ghost:hover { background: var(--bg); }
+    .btn-outline { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm { padding: 5px 12px; font-size: 11px; }
+    .btn-xs { padding: 3px 10px; font-size: 10px; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .tag-orange { background: var(--primary-light); color: var(--primary-dark); }
+    .tag-green { background: #d1fae5; color: #065f46; }
+    .tag-amber { background: #fef3c7; color: #92400e; }
+    .tag-rose { background: #fee2e2; color: #991b1b; }
+    .tag-slate { background: #f1f5f9; color: #475569; }
+
+    .select-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .select-wrap select {
+      appearance: none;
+      padding: 5px 28px 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card);
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid var(--text-muted);
+      pointer-events: none;
+    }
+
+    .toggle {
+      width: 38px; height: 20px;
+      border-radius: 10px;
+      background: #d6d3d1;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      border: none;
+      flex-shrink: 0;
+    }
+    .toggle.on { background: var(--primary); }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: white;
+      transition: var(--transition);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .toggle.on::after { left: 20px; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--card);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      background: #fafaf9;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border-light);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafaf9; }
+
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 100%;
+      padding-top: 12px;
+    }
+    .chart-bar-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .chart-bar {
+      width: 100%;
+      max-width: 32px;
+      border-radius: 3px 3px 0 0;
+      min-height: 6px;
+      transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .chart-bar-label { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      transition: var(--transition);
+    }
+    .stat-card:hover { box-shadow: var(--shadow-md); }
+    .stat-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .stat-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stat-icon svg { width: 20px; height: 20px; }
+    .stat-value { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 1px; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .page-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .kb-grid { grid-template-columns: 1fr; }
+      .kb-tree { display: none; }
+      .settings-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .conv-sidebar { width: 220px; }
+      .artifact-panel.open { width: 100vw; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- ===== CONVERSATION SIDEBAR ===== -->
+  <div class="conv-sidebar" id="convSidebar">
+    <div class="conv-sidebar-header">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--primary),#ea580c);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:15px;">R</div>
+        <div style="flex:1;font-size:15px;font-weight:700;">Remi AI</div>
+      </div>
+      <div class="conv-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="搜索对话...">
+      </div>
+      <button class="conv-nav-item" onclick="newConversation()" style="margin-top:8px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        新建对话
+      </button>
+      <div class="conv-nav" style="margin-top:4px;">
+        <button class="conv-nav-item active" data-page="knowledge" onclick="navigateTo('knowledge')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          知识库
+        </button>
+        <button class="conv-nav-item" data-page="skills" onclick="navigateTo('skills')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          技能
+        </button>
+        <button class="conv-nav-item" data-page="dashboard" onclick="navigateTo('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          工作台
+        </button>
+        <button class="conv-nav-item" data-page="users" onclick="navigateTo('users')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          用户管理
+        </button>
+      </div>
+    </div>
+    <div class="conv-list" id="convList"></div>
+    <div class="conv-sidebar-footer">
+      <div class="conv-sidebar-user" onclick="navigateTo('settings')">
+        <div class="conv-sidebar-user-avatar">张</div>
+        <div class="conv-sidebar-user-info">
+          <div class="conv-sidebar-user-name">张明远</div>
+          <div class="conv-sidebar-user-role">管理员</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--text-muted);"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+    <!-- Content -->
+    <div class="content">
+      <!-- ===== CHAT PAGE ===== -->
+      <div class="page chat-view" id="page-chat">
+        <div class="page-inner">
+          <div class="chat-header">
+            <div class="chat-header-title" id="activeConvTitle">2026 Q2 财务数据分析</div>
+            <div class="chat-header-actions">
+              <button class="chat-maximize-btn" onclick="toggleMaximize()" title="最大化">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="chat-content-wrap">
+            <div class="chat-main-col">
+              <div class="chat-messages-area" id="chatMessagesArea">
+                <div class="chat-scroll-inner" id="chatMessages"></div>
+              </div>
+              <div class="chat-input-container">
+                <div class="chat-input-inner">
+                  <div class="chat-input-tools">
+                    <button class="chat-input-tool" onclick="toggleSkillSelector()">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      技能
+                    </button>
+                    <button class="chat-input-tool active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                      知识库
+                    </button>
+                    <span id="activeSkillsLabel" style="font-size:12px;color:var(--text-muted);margin-left:4px;"></span>
+                  </div>
+                  <div class="chat-input-wrap">
+                    <textarea rows="1" placeholder="输入消息，Enter 发送..." id="chatInput" onkeydown="handleChatKey(event)"></textarea>
+                    <button class="chat-send-btn" onclick="sendChatMessage()">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ===== DASHBOARD ===== -->
+      <div class="page" id="page-dashboard">
+        <div class="page-inner">
+          <div style="margin-bottom:20px;">
+            <h1 style="font-size:20px;font-weight:700;">工作台</h1>
+            <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">2026年5月20日 · 平台运行正常</p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-top">
+                <div class="stat-icon" style="background:var(--primary-light);color:var(--primary-dark);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+              </div>
+              <div class="stat-value">1,284</div>
+              <div class="stat-label">今日对话</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-top">
+                <div class="stat-icon" style="background:#d1fae5;color:#065f46;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+              </div>
+              <div class="stat-value">89.6K</div>
+              <div class="stat-label">Token 消耗</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-top">
+                <div class="stat-icon" style="background:#fef3c7;color:#92400e;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+              </div>
+              <div class="stat-value">47</div>
+              <div class="stat-label">活跃技能</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-top">
+                <div class="stat-icon" style="background:#ede9fe;color:#6d28d9;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+              </div>
+              <div class="stat-value">328</div>
+              <div class="stat-label">活跃用户</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">使用趋势</div>
+                  <div class="card-subtitle">近 7 天对话量</div>
+                </div>
+              </div>
+              <div style="height:200px;padding:8px 0;">
+                <div class="chart-bars" id="trendChart"></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">模型用量</div>
+              </div>
+              <div style="padding:4px 0;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <span style="width:50px;font-size:11px;color:var(--text-muted);text-align:right;">GPT-4o</span>
+                  <div style="flex:1;height:18px;border-radius:4px;background:var(--border-light);overflow:hidden;"><div style="height:100%;width:45%;background:var(--primary);border-radius:4px;"></div></div>
+                  <span style="font-size:11px;font-weight:600;color:var(--text-secondary);width:30px;text-align:right;">45%</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <span style="width:50px;font-size:11px;color:var(--text-muted);text-align:right;">GPT-4</span>
+                  <div style="flex:1;height:18px;border-radius:4px;background:var(--border-light);overflow:hidden;"><div style="height:100%;width:25%;background:#ea580c;border-radius:4px;"></div></div>
+                  <span style="font-size:11px;font-weight:600;color:var(--text-secondary);width:30px;text-align:right;">25%</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <span style="width:50px;font-size:11px;color:var(--text-muted);text-align:right;">Claude 3</span>
+                  <div style="flex:1;height:18px;border-radius:4px;background:var(--border-light);overflow:hidden;"><div style="height:100%;width:18%;background:#fb923c;border-radius:4px;"></div></div>
+                  <span style="font-size:11px;font-weight:600;color:var(--text-secondary);width:30px;text-align:right;">18%</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="width:50px;font-size:11px;color:var(--text-muted);text-align:right;">GLM-4</span>
+                  <div style="flex:1;height:18px;border-radius:4px;background:var(--border-light);overflow:hidden;"><div style="height:100%;width:12%;background:#fdba74;border-radius:4px;"></div></div>
+                  <span style="font-size:11px;font-weight:600;color:var(--text-secondary);width:30px;text-align:right;">12%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">热门技能 Top 5</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+              <div style="text-align:center;padding:12px;border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;">
+                <div style="font-size:28px;margin-bottom:6px;">📊</div>
+                <div style="font-size:12px;font-weight:600;">数据分析</div>
+                <div style="font-size:10px;color:var(--text-muted);">1,284次</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;">
+                <div style="font-size:28px;margin-bottom:6px;">🌐</div>
+                <div style="font-size:12px;font-weight:600;">多语言翻译</div>
+                <div style="font-size:10px;color:var(--text-muted);">956次</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;">
+                <div style="font-size:28px;margin-bottom:6px;">📝</div>
+                <div style="font-size:12px;font-weight:600;">文档摘要</div>
+                <div style="font-size:10px;color:var(--text-muted);">723次</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;">
+                <div style="font-size:28px;margin-bottom:6px;">💻</div>
+                <div style="font-size:12px;font-weight:600;">代码审查</div>
+                <div style="font-size:10px;color:var(--text-muted);">512次</div>
+              </div>
+              <div style="text-align:center;padding:12px;border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;">
+                <div style="font-size:28px;margin-bottom:6px;">📈</div>
+                <div style="font-size:12px;font-weight:600;">报表生成</div>
+                <div style="font-size:10px;color:var(--text-muted);">389次</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== KNOWLEDGE ===== -->
+      <div class="page active" id="page-knowledge">
+        <div class="page-inner">
+          <div class="kb-header">
+            <div>
+              <h1>知识库</h1>
+              <p>企业文档管理与检索 · 共 47 个文档</p>
+            </div>
+            <button class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              上传文档
+            </button>
+          </div>
+          <div class="kb-grid">
+            <div class="kb-tree">
+              <div class="kb-tree-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                全部文档 <span class="count">47</span>
+              </div>
+              <div style="padding-left:8px;margin-top:6px;">
+                <div class="kb-tree-item">📁 技术文档 <span class="count">15</span></div>
+                <div style="padding-left:18px;">
+                  <div class="kb-tree-item" style="font-size:12px;">📄 API 规范 <span class="count">5</span></div>
+                  <div class="kb-tree-item" style="font-size:12px;">📄 架构文档 <span class="count">7</span></div>
+                  <div class="kb-tree-item" style="font-size:12px;">📄 开发指南 <span class="count">3</span></div>
+                </div>
+                <div class="kb-tree-item">📁 产品设计 <span class="count">12</span></div>
+                <div class="kb-tree-item">📁 市场运营 <span class="count">8</span></div>
+                <div class="kb-tree-item">📁 合规风控 <span class="count">6</span></div>
+                <div class="kb-tree-item">📁 未分类 <span class="count">6</span></div>
+              </div>
+            </div>
+            <div class="kb-main">
+              <div class="kb-files">
+                <div class="kb-files-header">
+                  <h3>最近文档</h3>
+                  <div style="display:flex;gap:6px;">
+                    <div class="select-wrap"><select><option>全部状态</option></select></div>
+                    <button class="btn btn-sm btn-outline">批量权限</button>
+                  </div>
+                </div>
+                <div class="kb-file-row">
+                  <div class="kb-file-icon" style="background:var(--primary-light);">📄</div>
+                  <div class="kb-file-info"><div class="kb-file-name">Remi 平台 API 接口规范 V2.1.docx</div><div class="kb-file-meta"><span>2.4 MB</span><span>DOCX</span><span>技术文档</span></div></div>
+                  <span class="tag tag-green">已就绪</span>
+                </div>
+                <div class="kb-file-row">
+                  <div class="kb-file-icon" style="background:#d1fae5;">📊</div>
+                  <div class="kb-file-info"><div class="kb-file-name">2026 Q2 财务分析报告.xlsx</div><div class="kb-file-meta"><span>5.8 MB</span><span>XLSX</span><span>产品设计</span></div></div>
+                  <span class="tag tag-green">已就绪</span>
+                </div>
+                <div class="kb-file-row">
+                  <div class="kb-file-icon" style="background:#fef3c7;">📝</div>
+                  <div class="kb-file-info"><div class="kb-file-name">员工入职培训手册.md</div><div class="kb-file-meta"><span>128 KB</span><span>Markdown</span><span>未分类</span></div></div>
+                  <span class="tag tag-amber">解析中</span>
+                </div>
+                <div class="kb-file-row">
+                  <div class="kb-file-icon" style="background:#ede9fe;">📕</div>
+                  <div class="kb-file-info"><div class="kb-file-name">PRD - 智能对话模块.pdf</div><div class="kb-file-meta"><span>3.2 MB</span><span>PDF</span><span>产品设计</span></div></div>
+                  <span class="tag tag-green">已就绪</span>
+                </div>
+                <div class="kb-file-row">
+                  <div class="kb-file-icon" style="background:#fce7f3;">📄</div>
+                  <div class="kb-file-info"><div class="kb-file-name">数据安全合规政策 V3.0.docx</div><div class="kb-file-meta"><span>856 KB</span><span>DOCX</span><span>合规风控</span></div></div>
+                  <span class="tag tag-green">已就绪</span>
+                </div>
+              </div>
+              <div class="kb-upload">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <h4>拖拽或点击上传文件</h4>
+                <p>支持 PDF · Word · Excel · Markdown · TXT，单文件 ≤ 50MB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SKILLS ===== -->
+      <div class="page" id="page-skills">
+        <div class="page-inner">
+          <div class="skills-header">
+            <div>
+              <h1>技能市场</h1>
+              <p>扩展 Remi AI 的能力 · 发现 & 安装技能</p>
+            </div>
+            <div class="select-wrap">
+              <select onchange="filterSkillsBySelect(this.value)">
+                <option value="all">全部分类</option>
+                <option value="analysis">数据分析</option>
+                <option value="translation">翻译</option>
+                <option value="coding">编程开发</option>
+                <option value="writing">内容创作</option>
+              </select>
+            </div>
+          </div>
+          <div class="skills-tags" id="skillTags">
+            <button class="skill-tag active" onclick="filterSkills(this,'all')">全部</button>
+            <button class="skill-tag" onclick="filterSkills(this,'analysis')">数据分析</button>
+            <button class="skill-tag" onclick="filterSkills(this,'translation')">翻译</button>
+            <button class="skill-tag" onclick="filterSkills(this,'coding')">编程开发</button>
+            <button class="skill-tag" onclick="filterSkills(this,'writing')">内容创作</button>
+            <button class="skill-tag" onclick="filterSkills(this,'other')">更多</button>
+          </div>
+          <div class="skills-grid" id="skillGrid"></div>
+        </div>
+      </div>
+
+      <!-- ===== SETTINGS ===== -->
+      <div class="page" id="page-settings">
+        <div class="page-inner">
+          <div style="margin-bottom:20px;">
+            <h1 style="font-size:20px;font-weight:700;">设置</h1>
+            <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">管理偏好、技能与账号</p>
+          </div>
+          <div class="settings-grid">
+            <div>
+              <div class="settings-nav-item active" onclick="switchSettings(this,'general')">通用</div>
+              <div class="settings-nav-item" onclick="switchSettings(this,'skills')">技能管理</div>
+              <div class="settings-nav-item" onclick="switchSettings(this,'account')">账号安全</div>
+              <div class="settings-nav-item" onclick="switchSettings(this,'notifications')">通知</div>
+            </div>
+            <div>
+              <div class="card" id="settings-general">
+                <div class="card-header"><div class="card-title">通用设置</div></div>
+                <div class="setting-row"><div><div class="setting-label">默认模型</div><div class="setting-desc">新对话使用的模型</div></div><div class="select-wrap"><select><option>GPT-4o</option><option>GPT-4</option></select></div></div>
+                <div class="setting-row"><div><div class="setting-label">知识库检索</div><div class="setting-desc">自动检索企业知识库</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">流式输出</div><div class="setting-desc">逐 Token 实时显示</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">对话历史</div><div class="setting-desc">保存历史记录</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">上下文窗口</div><div class="setting-desc">最大 Token 数</div></div><div class="select-wrap"><select><option>8,192</option><option>4,096</option></select></div></div>
+              </div>
+              <div class="card" id="settings-skills" style="display:none;">
+                <div class="card-header"><div class="card-title">已安装技能</div><button class="btn btn-sm btn-primary" onclick="navigateTo('skills')">发现更多</button></div>
+                <div class="kb-file-row"><div class="kb-file-icon" style="background:var(--primary-light);">📊</div><div class="kb-file-info"><div class="kb-file-name">数据分析助手</div><div class="kb-file-meta">V2.3</div></div><button class="btn btn-sm btn-ghost" style="color:var(--accent-rose);">卸载</button></div>
+                <div class="kb-file-row"><div class="kb-file-icon" style="background:#d1fae5;">🌐</div><div class="kb-file-info"><div class="kb-file-name">多语言翻译</div><div class="kb-file-meta">V1.8</div></div><button class="btn btn-sm btn-ghost" style="color:var(--accent-rose);">卸载</button></div>
+                <div class="kb-file-row"><div class="kb-file-icon" style="background:#fef3c7;">📝</div><div class="kb-file-info"><div class="kb-file-name">文档摘要</div><div class="kb-file-meta">V3.0</div></div><button class="btn btn-sm btn-ghost" style="color:var(--accent-rose);">卸载</button></div>
+              </div>
+              <div class="card" id="settings-account" style="display:none;">
+                <div class="card-header"><div class="card-title">账号安全</div></div>
+                <div class="setting-row"><div><div class="setting-label">密码</div><div class="setting-desc">上次修改 2026-03-15</div></div><button class="btn btn-sm btn-outline">修改</button></div>
+                <div class="setting-row"><div><div class="setting-label">MFA</div><div class="setting-desc">多因素认证</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">Session</div><div class="setting-desc">24小时 · 当前在线</div></div><button class="btn btn-sm btn-ghost" style="color:var(--accent-rose);">退出所有</button></div>
+              </div>
+              <div class="card" id="settings-notifications" style="display:none;">
+                <div class="card-header"><div class="card-title">通知偏好</div></div>
+                <div class="setting-row"><div><div class="setting-label">对话回复</div><div class="setting-desc">AI 回复完成时</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">技能更新</div><div class="setting-desc">新版本通知</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">知识库状态</div><div class="setting-desc">解析完成通知</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
+                <div class="setting-row"><div><div class="setting-label">安全告警</div><div class="setting-desc">安全事件通知</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ===== USER MANAGEMENT ===== -->
+      <div class="page" id="page-users">
+        <div class="page-inner">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <div>
+              <h1 style="font-size:20px;font-weight:700;">用户管理</h1>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">组织架构 · 用户列表 · 角色权限</p>
+            </div>
+            <button class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              添加用户
+            </button>
+          </div>
+          <div class="tabs" style="margin-bottom:20px;">
+            <button class="tab active" onclick="switchUserTab(this,'org')">组织架构</button>
+            <button class="tab" onclick="switchUserTab(this,'users-list')">用户列表</button>
+            <button class="tab" onclick="switchUserTab(this,'roles')">角色权限</button>
+          </div>
+          <div class="user-tab-content" id="user-org">
+            <div class="card" style="margin-bottom:16px;">
+              <div class="card-header">
+                <div class="card-title">组织架构</div>
+                <button class="btn btn-sm btn-outline">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  添加部门
+                </button>
+              </div>
+              <div class="org-tree">
+                <div class="org-node"><div class="org-node-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--primary);"><polyline points="7 17 2 12 7 7"/><polyline points="12 7 17 12 12 17"/></svg><span style="font-weight:600;">Remi AI 科技有限公司</span><span class="tag tag-slate" style="margin-left:8px;">总部</span><span style="margin-left:auto;font-size:12px;color:var(--text-muted);">28 人</span></div>
+                  <div class="org-children">
+                    <div class="org-node"><div class="org-node-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--accent-emerald);"><polyline points="7 17 2 12 7 7"/><polyline points="12 7 17 12 12 17"/></svg><span>技术部</span><span class="tag tag-green" style="margin-left:8px;">8 人</span></div>
+                      <div class="org-children"><div class="org-node" style="padding-left:36px;"><div class="org-node-header"><span style="width:16px;"></span><span>前端组</span><span class="tag tag-slate" style="margin-left:8px;">3 人</span></div></div><div class="org-node" style="padding-left:36px;"><div class="org-node-header"><span style="width:16px;"></span><span>后端组</span><span class="tag tag-slate" style="margin-left:8px;">3 人</span></div></div><div class="org-node" style="padding-left:36px;"><div class="org-node-header"><span style="width:16px;"></span><span>AI 组</span><span class="tag tag-slate" style="margin-left:8px;">2 人</span></div></div></div>
+                    </div>
+                    <div class="org-node"><div class="org-node-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--accent-amber);"><polyline points="7 17 2 12 7 7"/><polyline points="12 7 17 12 12 17"/></svg><span>产品部</span><span class="tag tag-amber" style="margin-left:8px;">6 人</span></div></div>
+                    <div class="org-node"><div class="org-node-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--accent-violet);"><polyline points="7 17 2 12 7 7"/><polyline points="12 7 17 12 12 17"/></svg><span>市场部</span><span class="tag tag-violet" style="margin-left:8px;">5 人</span></div></div>
+                    <div class="org-node"><div class="org-node-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--accent-rose);"><polyline points="7 17 2 12 7 7"/><polyline points="12 7 17 12 12 17"/></svg><span>合规部</span><span class="tag tag-rose" style="margin-left:8px;">4 人</span></div></div>
+                    <div class="org-node"><div class="org-node-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--text-muted);"><polyline points="7 17 2 12 7 7"/><polyline points="12 7 17 12 12 17"/></svg><span>财务部</span><span class="tag tag-slate" style="margin-left:8px;">3 人</span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">部门信息</div></div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+                <div><div style="font-size:11px;color:var(--text-muted);">部门总数</div><div style="font-size:20px;font-weight:700;margin-top:2px;">8</div></div>
+                <div><div style="font-size:11px;color:var(--text-muted);">总人数</div><div style="font-size:20px;font-weight:700;margin-top:2px;">28</div></div>
+                <div><div style="font-size:11px;color:var(--text-muted);">管理员</div><div style="font-size:20px;font-weight:700;margin-top:2px;">2</div></div>
+                <div><div style="font-size:11px;color:var(--text-muted);">审核员</div><div style="font-size:20px;font-weight:700;margin-top:2px;">1</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="user-tab-content" id="user-users-list" style="display:none;">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>用户</th><th>部门</th><th>角色</th><th>邮箱</th><th>状态</th><th>最后活跃</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">张</div>张明远</div></td><td>技术部</td><td><span class="tag tag-orange">管理员</span></td><td>zhang@remi.ai</td><td><span class="tag tag-green">在线</span></td><td>刚刚</td><td><button class="btn btn-xs btn-ghost">编辑</button></td></tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:#10b981;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">李</div>李晓华</div></td><td>产品部</td><td><span class="tag tag-slate">普通用户</span></td><td>li@remi.ai</td><td><span class="tag tag-green">在线</span></td><td>5分钟前</td><td><button class="btn btn-xs btn-ghost">编辑</button></td></tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:#f59e0b;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">王</div>王思远</div></td><td>技术部</td><td><span class="tag tag-amber">审核员</span></td><td>wang@remi.ai</td><td><span class="tag tag-green">在线</span></td><td>15分钟前</td><td><button class="btn btn-xs btn-ghost">编辑</button></td></tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">陈</div>陈雨桐</div></td><td>市场部</td><td><span class="tag tag-slate">普通用户</span></td><td>chen@remi.ai</td><td><span class="tag tag-slate">离线</span></td><td>2小时前</td><td><button class="btn btn-xs btn-ghost">编辑</button></td></tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:#ef4444;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">赵</div>赵明</div></td><td>合规部</td><td><span class="tag tag-slate">普通用户</span></td><td>zhao@remi.ai</td><td><span class="tag tag-slate">离线</span></td><td>1天前</td><td><button class="btn btn-xs btn-ghost">编辑</button></td></tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">刘</div>刘思琪</div></td><td>财务部</td><td><span class="tag tag-slate">普通用户</span></td><td>liu@remi.ai</td><td><span class="tag tag-green">在线</span></td><td>30分钟前</td><td><button class="btn btn-xs btn-ghost">编辑</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+              <span style="font-size:12px;color:var(--text-muted);">共 28 人，当前显示 6 人</span>
+              <div style="display:flex;gap:4px;">
+                <button class="btn btn-sm btn-outline" disabled>上一页</button>
+                <button class="btn btn-sm btn-primary" style="padding:5px 10px;">1</button>
+                <button class="btn btn-sm btn-outline">2</button>
+                <button class="btn btn-sm btn-outline">3</button>
+                <span style="display:flex;align-items:center;color:var(--text-muted);font-size:12px;">...</span>
+                <button class="btn btn-sm btn-outline">5</button>
+                <button class="btn btn-sm btn-outline">下一页</button>
+              </div>
+            </div>
+          </div>
+          <div class="user-tab-content" id="user-roles" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div class="card">
+                <div class="card-header"><div class="card-title">预置角色</div><button class="btn btn-sm btn-primary">+ 新建角色</button></div>
+                <div class="kb-file-row"><div style="width:32px;height:32px;border-radius:8px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;color:var(--primary);font-weight:700;font-size:16px;">A</div><div class="kb-file-info"><div class="kb-file-name">管理员</div><div class="kb-file-meta">全部权限 · 2 人</div></div><span class="tag tag-orange">预置</span></div>
+                <div class="kb-file-row"><div style="width:32px;height:32px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;color:#92400e;font-weight:700;font-size:16px;">R</div><div class="kb-file-info"><div class="kb-file-name">审核员</div><div class="kb-file-meta">内容审核 · 技能审核 · 1 人</div></div><span class="tag tag-orange">预置</span></div>
+                <div class="kb-file-row"><div style="width:32px;height:32px;border-radius:8px;background:#d1fae5;display:flex;align-items:center;justify-content:center;color:#065f46;font-weight:700;font-size:16px;">U</div><div class="kb-file-info"><div class="kb-file-name">普通用户</div><div class="kb-file-meta">基础对话 · 知识库检索 · 25 人</div></div><span class="tag tag-orange">预置</span></div>
+              </div>
+              <div class="card">
+                <div class="card-header"><div class="card-title">ABAC 规则</div><button class="btn btn-sm btn-outline">+ 添加规则</button></div>
+                <div class="kb-file-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--accent-emerald);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="kb-file-info"><div class="kb-file-name">部门文档可见</div><div class="kb-file-meta">department = "财务部" → 可见财务文档</div></div><span class="tag tag-green">已启用</span></div>
+                <div class="kb-file-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--accent-amber);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="kb-file-info"><div class="kb-file-name">职级数据权限</div><div class="kb-file-meta">level ≥ "总监" → 查看全部门统计</div></div><span class="tag tag-green">已启用</span></div>
+                <div class="kb-file-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-muted);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="kb-file-info"><div class="kb-file-name">跨部门知识库</div><div class="kb-file-meta">role = "admin" → 全库可见</div></div><span class="tag tag-amber">待启用</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">RBAC 权限矩阵</div></div>
+              <div class="table-wrap" style="border:none;">
+                <table>
+                  <thead><tr><th>权限项</th><th><span class="tag tag-orange">管理员</span></th><th><span class="tag tag-amber">审核员</span></th><th><span class="tag tag-slate">普通用户</span></th></tr></thead>
+                  <tbody>
+                    <tr><td>智能对话</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                    <tr><td>知识库管理</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                    <tr><td>技能市场</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                    <tr><td>内容安全审核</td><td>✅</td><td>✅</td><td>❌</td></tr>
+                    <tr><td>技能上架审核</td><td>✅</td><td>✅</td><td>❌</td></tr>
+                    <tr><td>用户管理</td><td>✅</td><td>❌</td><td>❌</td></tr>
+                    <tr><td>模型路由配置</td><td>✅</td><td>❌</td><td>❌</td></tr>
+                    <tr><td>操作日志查看</td><td>✅</td><td>❌</td><td>❌</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ===== ARTIFACT PANEL ===== -->
+  <div class="artifact-overlay" id="artifactOverlay" onclick="closeArtifact()"></div>
+  <div class="artifact-panel" id="artifactPanel">
+    <div class="artifact-panel-header">
+      <div class="artifact-panel-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--primary);"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        AI 产出内容
+      </div>
+      <button class="artifact-panel-close" onclick="closeArtifact()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="artifact-panel-body" id="artifactBody">
+      <div class="artifact-card">
+        <div class="artifact-card-title">📊 销售数据分析报告</div>
+        <div class="artifact-card-content">
+          <p><strong>Q1 关键数据总览</strong></p>
+          <ul style="padding-left:16px;margin:8px 0;">
+            <li>总销售额：¥12,847,000（同比增长 23.5%）</li>
+            <li>环比增长：8.2%</li>
+            <li>华东地区贡献 38% 销售额</li>
+            <li>新产品线 C 增长 312%</li>
+          </ul>
+          <pre>{
+  "period": "2026-Q1",
+  "revenue": 12847000,
+  "yoy_growth": 23.5,
+  "top_region": "华东",
+  "top_product": "产品线C",
+  "product_growth": 312
+}</pre>
+        </div>
+      </div>
+      <div class="artifact-card">
+        <div class="artifact-card-title">📈 趋势可视化</div>
+        <div class="artifact-card-content" style="text-align:center;padding:12px 0;">
+          <div style="font-size:48px;margin-bottom:8px;">📊</div>
+          <p>Q1 销售额趋势图表已生成<br><span style="font-size:11px;color:var(--text-muted);">包含月度同比、环比数据对比</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ===== DATA =====
+const skills = [
+  { id:1, name:'数据分析助手', desc:'分析 Excel/CSV 数据，生成可视化图表和洞察报告。', icon:'📊', color:'#fff7ed', cat:'analysis', installs:1284, rating:4.8, author:'Remi Official' },
+  { id:2, name:'多语言翻译', desc:'支持 50+ 语言互译，保留专业术语。', icon:'🌐', color:'#d1fae5', cat:'translation', installs:956, rating:4.7, author:'Remi Official' },
+  { id:3, name:'文档摘要', desc:'快速提取长文档核心内容。', icon:'📝', color:'#fef3c7', cat:'writing', installs:723, rating:4.6, author:'Remi Official' },
+  { id:4, name:'代码审查', desc:'自动审查代码质量和安全漏洞。', icon:'💻', color:'#ede9fe', cat:'coding', installs:512, rating:4.9, author:'DevTools Inc.' },
+  { id:5, name:'报表生成', desc:'自动生成格式化报表，支持 PDF/HTML。', icon:'📈', color:'#fce7f3', cat:'analysis', installs:389, rating:4.4, author:'DataWorks' },
+  { id:6, name:'邮件助手', desc:'智能撰写和回复邮件。', icon:'✉️', color:'#fff7ed', cat:'writing', installs:456, rating:4.5, author:'Remi Official' },
+  { id:7, name:'SQL 查询助手', desc:'自然语言转 SQL。', icon:'🗄️', color:'#d1fae5', cat:'coding', installs:345, rating:4.8, author:'DBMaster' },
+  { id:8, name:'会议纪要', desc:'自动整理会议记录。', icon:'🎯', color:'#fef3c7', cat:'translation', installs:278, rating:4.3, author:'MeetingAI' },
+  { id:9, name:'流程图生成', desc:'自然语言生成流程图。', icon:'🔄', color:'#ede9fe', cat:'other', installs:234, rating:4.7, author:'DiagramPro' },
+  { id:10, name:'合规检查', desc:'检查文档合规性。', icon:'🛡️', color:'#fce7f3', cat:'other', installs:189, rating:4.6, author:'Compliance AI' },
+];
+const installedSkillIds = [1, 2, 3];
+const conversations = [
+  { id:'c1', title:'2026 Q2 财务数据分析', preview:'根据最新的财务报表...', time:'10分钟前', star:true },
+  { id:'c2', title:'API 接口设计方案讨论', preview:'我们需要设计一个高效的...', time:'2小时前', star:false },
+  { id:'c3', title:'产品需求文档翻译', preview:'请将以下 PRD 翻译成英文...', time:'昨天', star:false },
+  { id:'c4', title:'代码审查: payment模块', preview:'reviewPaymentProcessor...', time:'3天前', star:false },
+  { id:'c5', title:'市场调研报告摘要', preview:'2026年Q1市场调研报告...', time:'5天前', star:true },
+];
+let chatMessages = [
+  { role:'assistant', content:'你好！我是 Remi AI 助手。我可以帮你回答问题、分析数据、翻译文档等。请问有什么可以帮你的？', time:'10:30' },
+  { role:'user', content:'请帮我分析一下最近一个季度的销售数据趋势', time:'10:31' },
+  { role:'assistant', content:'好的，我来查看知识库中的相关文档。根据已上传的《2026年Q1销售数据分析报告》，我整理了几个关键发现：\n\n**1. 整体趋势**\nQ1 总销售额为 ¥12,847,000，同比增长 23.5%\n\n**2. 区域分布**\n华东地区贡献 38% 的销售额，华南地区增速最快（+41%）\n\n**3. 产品线表现**\n核心产品线 A 增长 18%，新产品线 C 增长 312%\n\n需要我进一步分析具体数据或生成可视化报表吗？', time:'10:32', citations:[{doc:'2026年Q1销售数据分析报告.pdf', snippet:'Q1总销售额同比增长23.5%，华东地区贡献38%...', confidence:0.95}] },
+  { role:'user', content:'生成一个Q1销售趋势的可视化图表', time:'10:33' },
+];
+let activeConversation = 'c1';
+
+// ===== NAVIGATION =====
+document.querySelectorAll('.conv-nav-item[data-page]').forEach(item => {
+  item.addEventListener('click', () => {
+    navigateTo(item.dataset.page);
+  });
+});
+
+function navigateTo(page) {
+  document.querySelectorAll('.conv-nav-item[data-page]').forEach(n => n.classList.remove('active'));
+  const navItem = document.querySelector(`.conv-nav-item[data-page="${page}"]`);
+  if (navItem) navItem.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById(`page-${page}`);
+  if (target) target.classList.add('active');
+  if (page === 'chat') renderChat();
+  if (page === 'skills') renderSkills();
+}
+
+// ===== CHAT =====
+function renderChat() {
+  renderMessages();
+  updateActiveConversationTitle();
+}
+
+function updateActiveConversationTitle() {
+  const conv = conversations.find(c => c.id === activeConversation);
+  if (conv) document.getElementById('activeConvTitle').textContent = conv.title;
+}
+
+function renderMessages() {
+  const container = document.getElementById('chatMessages');
+  if (chatMessages.length === 0) {
+    container.innerHTML = `
+      <div class="chat-empty">
+        <div class="chat-empty-icon">💬</div>
+        <h2>有什么我可以帮你的？</h2>
+        <p>我可以回答问题、分析文档、翻译内容、生成代码...</p>
+        <div class="chat-suggestions">
+          <div class="chat-suggestion" onclick="quickSend('帮我总结一下最近的销售数据')">📊 分析销售数据</div>
+          <div class="chat-suggestion" onclick="quickSend('请将这份文档翻译成英文')">🌐 翻译文档</div>
+          <div class="chat-suggestion" onclick="quickSend('帮我写一封商务邮件')">✉️ 写邮件</div>
+          <div class="chat-suggestion" onclick="quickSend('检查这段代码的安全性')">💻 审查代码</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML = chatMessages.map((m, idx) => `
+    <div class="msg ${m.role}">
+      ${m.role === 'assistant' ? '<div class="msg-avatar" style="background:linear-gradient(135deg,var(--primary),#ea580c);">R</div>' : ''}
+      <div class="msg-body">
+        <div class="msg-bubble">${m.content.replace(/\n/g,'<br>')}</div>
+        ${m.citations ? m.citations.map(c => `
+          <div class="citation">
+            <div class="citation-doc">📄 ${c.doc} <span class="citation-conf ${c.confidence >= 0.9 ? 'high' : 'medium'}">${c.confidence >= 0.9 ? '高度相关' : '相关'} ${Math.round(c.confidence*100)}%</span></div>
+            <div class="citation-snippet">"${c.snippet}"</div>
+          </div>
+        `).join('') : ''}
+        ${m.role === 'assistant' && m.citations ? `
+          <button class="artifact-btn" onclick="openArtifact(${idx})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            查看产出
+          </button>
+        ` : ''}
+        <div class="msg-time">${m.time}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('chatMessagesArea').scrollTop = document.getElementById('chatMessagesArea').scrollHeight;
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendChatMessage();
+  }
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  chatMessages.push({ role:'user', content:text, time:new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}) });
+  chatMessages.push({ role:'assistant', content:'收到您的消息！在实际平台中，消息会经过审核 → 知识库检索 → 技能调用 → 模型生成 → 输出审核等完整流程。\n\n这是 Remi AI 平台的交互预览版本，展示了对话界面的完整交互体验。', time:new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}) });
+  input.value = '';
+  renderMessages();
+}
+
+function quickSend(text) {
+  document.getElementById('chatInput').value = text;
+  sendChatMessage();
+}
+
+function newConversation() {
+  const id = `c${Date.now()}`;
+  conversations.unshift({ id, title:'新对话', preview:'开始新的对话...', time:'刚刚', star:false });
+  activeConversation = id;
+  chatMessages = [];
+  renderConversations();
+  updateActiveConversationTitle();
+  renderMessages();
+  navigateTo('chat');
+}
+
+function renderConversations() {
+  const list = document.getElementById('convList');
+  list.innerHTML = conversations.map(c => `
+    <div class="conv-item ${c.id === activeConversation ? 'active' : ''}" onclick="selectConversation('${c.id}')">
+      <div class="conv-item-title">${c.star ? '⭐ ' : ''}${c.title}</div>
+      <div class="conv-item-preview">${c.preview}</div>
+      <div class="conv-item-time">${c.time}</div>
+    </div>
+  `).join('');
+}
+
+function selectConversation(id) {
+  activeConversation = id;
+  renderConversations();
+  updateActiveConversationTitle();
+  navigateTo('chat');
+}
+
+function toggleSkillSelector() {
+  const names = skills.filter(s => installedSkillIds.includes(s.id)).map(s => s.name);
+  document.getElementById('activeSkillsLabel').textContent = `已启用: ${names.join(', ')}`;
+}
+
+// ===== SKILLS =====
+let currentSkillFilter = 'all';
+
+function renderSkills() {
+  const grid = document.getElementById('skillGrid');
+  const filtered = currentSkillFilter === 'all' ? skills : skills.filter(s => s.cat === currentSkillFilter);
+  grid.innerHTML = filtered.map(s => `
+    <div class="skill-card" onclick="alert('查看技能详情: ${s.name}')">
+      <div class="skill-card-icon" style="background:${s.color};">${s.icon}</div>
+      <h4>${s.name} ${installedSkillIds.includes(s.id) ? '<span class="tag tag-green" style="font-size:10px;">已安装</span>' : ''}</h4>
+      <p>${s.desc}</p>
+      <div class="skill-card-footer">
+        <div class="skill-stats"><span>⬇️ ${s.installs}</span><span>⭐ ${s.rating}</span></div>
+        <button class="btn btn-sm ${installedSkillIds.includes(s.id) ? 'btn-ghost' : 'btn-primary'}" onclick="event.stopPropagation();toggleInstall(${s.id})">${installedSkillIds.includes(s.id) ? '已安装' : '安装'}</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleInstall(id) {
+  const idx = installedSkillIds.indexOf(id);
+  idx > -1 ? installedSkillIds.splice(idx,1) : installedSkillIds.push(id);
+  renderSkills();
+}
+
+function filterSkills(btn, cat) {
+  currentSkillFilter = cat;
+  document.querySelectorAll('#skillTags .skill-tag').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderSkills();
+}
+
+function filterSkillsBySelect(cat) {
+  currentSkillFilter = cat;
+  document.querySelectorAll('#skillTags .skill-tag').forEach(c => c.classList.remove('active'));
+  document.querySelector(`#skillTags .skill-tag[onclick*="'${cat}'"]`)?.classList.add('active');
+  renderSkills();
+}
+
+// ===== SETTINGS =====
+function switchSettings(el, panel) {
+  document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.card[id^="settings-"]').forEach(p => p.style.display = 'none');
+  const target = document.getElementById(`settings-${panel}`);
+  if (target) target.style.display = 'block';
+}
+
+// ===== USER MANAGEMENT =====
+function switchUserTab(el, tabId) {
+  document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.user-tab-content').forEach(c => c.style.display = 'none');
+  const target = document.getElementById(`user-${tabId}`);
+  if (target) target.style.display = 'block';
+}
+
+// ===== DASHBOARD CHARTS =====
+function renderTrendChart() {
+  const data = [{l:'周一',v:420},{l:'周二',v:680},{l:'周三',v:520},{l:'周四',v:890},{l:'周五',v:740},{l:'周六',v:380},{l:'周日',v:610}];
+  const max = Math.max(...data.map(d=>d.v));
+  document.getElementById('trendChart').innerHTML = data.map(d => `
+    <div class="chart-bar-group">
+      <div class="chart-bar" style="height:${(d.v/max)*100}%;background:linear-gradient(180deg,var(--primary),#ea580c);"></div>
+      <div class="chart-bar-label">${d.l}</div>
+    </div>
+  `).join('');
+}
+
+// ===== MAXIMIZE =====
+function toggleMaximize() {
+  document.getElementById('convSidebar').classList.toggle('collapsed');
+}
+
+// ===== ARTIFACT PANEL =====
+function openArtifact(idx) {
+  document.getElementById('artifactPanel').classList.add('open');
+  document.getElementById('artifactOverlay').classList.add('open');
+}
+
+function closeArtifact() {
+  document.getElementById('artifactPanel').classList.remove('open');
+  document.getElementById('artifactOverlay').classList.remove('open');
+}
+
+// ===== INIT =====
+renderTrendChart();
+renderConversations();
+toggleSkillSelector();
+
+document.getElementById('chatInput')?.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+</script>
+</body>
+</html>

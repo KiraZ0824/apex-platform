@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "hermes-agent": {
+      "command": "/Users/Zhuanz/.local/bin/hermes",
+      "args": ["mcp", "serve"],
+      "env": {}
+    }
+  }
+}
