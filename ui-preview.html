@@ -98,6 +98,7 @@
             margin: 6px 12px;
             border-radius: 16px;
             text-align: center;
+            position: relative;
         }
         aside.sidebar .nav-item i {
             margin-right: 0 !important;
@@ -116,7 +117,50 @@
             display: none;
         }
         aside.sidebar .nav-item .nav-chevron {
-            display: none;
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        aside.sidebar .nav-item .nav-chevron i {
+            width: 10px !important;
+            height: 10px !important;
+            margin-right: 0 !important;
+        }
+        aside.sidebar .nav-item:hover .nav-chevron {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        aside.sidebar .nav-item .nav-chevron.open {
+            background: rgba(255, 122, 26, 0.2);
+            color: var(--apex-accent-0);
+        }
+        .nav-item .nav-chevron {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .nav-item:hover .nav-chevron {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .nav-item .nav-chevron.open {
+            background: rgba(255, 122, 26, 0.15);
+            color: var(--apex-accent-0);
         }
         aside.sidebar .nav-sub-items {
             padding: 0 10px 6px;
@@ -187,7 +231,7 @@
         }
         .nav-item {
             display: flex;
-            items-center;
+            align-items: center;
             padding: 12px 24px;
             color: var(--apex-text-1);
             transition: all 0.3s;
@@ -213,10 +257,11 @@
         }
         .nav-sub-items {
             overflow: hidden;
+            max-height: 0;
             transition: max-height 0.3s ease;
         }
         .nav-sub-items.open {
-            max-height: 300px;
+            max-height: 320px;
         }
         .nav-sub-item {
             display: flex;
@@ -247,7 +292,7 @@
             border-radius: 0 2px 2px 0;
         }
         .nav-chevron {
-            transition: transform 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .nav-chevron.open {
             transform: rotate(180deg);
@@ -463,9 +508,14 @@
                 <i data-lucide="user-cog" class="w-5 h-5"></i>
                 <span>用户管理</span>
             </div>
+            <div class="nav-item" data-view="talent-pool">
+                <i data-lucide="database" class="w-5 h-5"></i>
+                <span>人才库</span>
+            </div>
             <div class="nav-item" data-view="config-center" data-has-sub="true">
                 <i data-lucide="sliders" class="w-5 h-5"></i>
                 <span>配置中心</span>
+                <i data-lucide="chevron-down" class="nav-chevron w-3.5 h-3.5 ml-auto shrink-0"></i>
             </div>
             <div class="nav-sub-items" data-sub-of="config-center">
                 <div class="nav-sub-item active" data-view="config-center" data-config-tab="points">
@@ -475,7 +525,7 @@
                     <span>项目/特邀配置</span>
                 </div>
                 <div class="nav-sub-item" data-view="config-center" data-config-tab="operations">
-                    <span>运营中心</span>
+                    <span>学习中心配置</span>
                 </div>
                 <div class="nav-sub-item" data-view="config-center" data-config-tab="roles">
                     <span>角色权限管理</span>
@@ -537,34 +587,31 @@
             <!-- Stat Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                 <div class="ant-card p-4 cursor-pointer" data-action="go-to-my-invites">
-                    <div class="flex items-center justify-between mb-2">
-                        <p class="text-gray-500 text-[11px] font-medium tracking-tight">进行中特邀</p>
-                        <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-800"></i>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-baseline gap-2 min-w-0">
+                            <p class="text-2xl font-black text-gray-900 leading-none tracking-tight">0</p>
+                            <span class="text-[11px] text-gray-400 whitespace-nowrap">/ 我的特邀</span>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded-full font-medium bg-blue-50 text-blue-600 shrink-0">进行中</span>
                     </div>
-                    <div class="flex items-end justify-between">
-                        <p class="text-xl font-bold text-gray-900 leading-none">0</p>
-                    </div>
-                    <p class="mt-2 text-[10px] text-gray-400">我的特邀</p>
                 </div>
                 <div class="ant-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <p class="text-gray-500 text-[11px] font-medium tracking-tight">已完成特邀</p>
-                        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-baseline gap-2 min-w-0">
+                            <p class="text-2xl font-black text-gray-900 leading-none tracking-tight">0</p>
+                            <span class="text-[11px] text-gray-400 whitespace-nowrap">/ 我的特邀</span>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded-full font-medium bg-emerald-50 text-emerald-600 shrink-0">已完成</span>
                     </div>
-                    <div class="flex items-end justify-between">
-                        <p class="text-xl font-bold text-gray-900 leading-none">0</p>
-                    </div>
-                    <p class="mt-2 text-[10px] text-gray-400">历史累计</p>
                 </div>
                 <div class="ant-card p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <p class="text-gray-500 text-[11px] font-medium tracking-tight">可参与特邀</p>
-                        <i data-lucide="list" class="w-3.5 h-3.5 text-gray-400"></i>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-baseline gap-2 min-w-0">
+                            <p class="text-2xl font-black text-gray-900 leading-none tracking-tight">2</p>
+                            <span class="text-[11px] text-gray-400 whitespace-nowrap">/ 平台特邀</span>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded-full font-medium bg-emerald-50 text-emerald-600 shrink-0">可参与</span>
                     </div>
-                    <div class="flex items-end justify-between">
-                        <p class="text-xl font-bold text-gray-900 leading-none">2</p>
-                    </div>
-                    <p class="mt-2 text-[10px] text-gray-400">平台开放参与</p>
                 </div>
                 <div class="ant-card p-4 cursor-pointer" data-action="toggle-points-log">
                     <div class="flex items-center justify-between mb-2">
@@ -953,6 +1000,7 @@
                                     <th class="px-6 py-3 font-medium">类型</th>
                                     <th class="px-6 py-3 font-medium">状态</th>
                                     <th class="px-6 py-3 font-medium">报名人数</th>
+                                    <th class="px-6 py-3 font-medium">匹配用户</th>
                                     <th class="px-6 py-3 font-medium">关联项目</th>
                                     <th class="px-6 py-3 font-medium text-right">操作</th>
                                 </tr>
@@ -968,10 +1016,50 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">12 人</td>
+                                    <td class="px-6 py-4"><a href="#" class="text-blue-500 hover:underline text-[10px]" data-action="view-matched-users" data-invite-name="SaaS 增长策略专家访谈" data-invite-count="4">4 人</a></td>
                                     <td class="px-6 py-4 text-blue-600 hover:underline cursor-pointer">东南亚市场电商履约模式研究</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-slate-600 hover:text-slate-900" data-action="edit-invite">编辑</button>
                                         <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
+                                        <button class="text-red-400 hover:text-red-600" data-action="delete-invite">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900">测试用：未发布特邀 - AI匹配</td>
+                                    <td class="px-6 py-4 text-gray-500">其他</td>
+                                    <td class="px-6 py-4">
+                                        <span class="flex items-center gap-1.5 text-gray-400">
+                                            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                                            草稿
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">0 人</td>
+                                    <td class="px-6 py-4 text-gray-400">-</td>
+                                    <td class="px-6 py-4 text-gray-400 italic">未绑定项目</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-blue-500 hover:text-blue-700" data-action="review-publish" data-invite-name="测试用：未发布特邀 - AI匹配" data-invite-count="4">审核发布</button>
+                                        <button class="text-slate-600 hover:text-slate-900" data-action="edit-invite">编辑</button>
+                                        <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
+                                        <button class="text-red-400 hover:text-red-600" data-action="delete-invite">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900">测试用：未发布特邀 - 直接发布</td>
+                                    <td class="px-6 py-4 text-gray-500">其他</td>
+                                    <td class="px-6 py-4">
+                                        <span class="flex items-center gap-1.5 text-gray-400">
+                                            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                                            草稿
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">0 人</td>
+                                    <td class="px-6 py-4 text-gray-400">-</td>
+                                    <td class="px-6 py-4 text-gray-400 italic">未绑定项目</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-emerald-500 hover:text-emerald-700" data-action="publish-invite">发布</button>
+                                        <button class="text-slate-600 hover:text-slate-900" data-action="edit-invite">编辑</button>
+                                        <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
+                                        <button class="text-red-400 hover:text-red-600" data-action="delete-invite">删除</button>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-gray-50 transition-colors">
@@ -984,10 +1072,12 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">8 人</td>
+                                    <td class="px-6 py-4"><a href="#" class="text-blue-500 hover:underline text-[10px]" data-action="view-matched-users" data-invite-name="Web3 合约审计专家寻访" data-invite-count="3">3 人</a></td>
                                     <td class="px-6 py-4 text-blue-600 hover:underline cursor-pointer">新能源汽车出海合规政策解读</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-slate-600 hover:text-slate-900" data-action="edit-invite">编辑</button>
                                         <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
+                                        <button class="text-red-400 hover:text-red-600" data-action="delete-invite">删除</button>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-gray-50 transition-colors">
@@ -1000,6 +1090,7 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">5 人</td>
+                                    <td class="px-6 py-4"><a href="#" class="text-blue-500 hover:underline text-[10px]" data-action="view-matched-users" data-invite-name="跨境支付合规调研" data-invite-count="2">2 人</a></td>
                                     <td class="px-6 py-4 text-blue-600 hover:underline cursor-pointer">全球跨境支付体系优化</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
@@ -1016,6 +1107,7 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">15 人</td>
+                                    <td class="px-6 py-4"><a href="#" class="text-blue-500 hover:underline text-[10px]" data-action="view-matched-users" data-invite-name="中东金融科技准入分析" data-invite-count="6">6 人</a></td>
                                     <td class="px-6 py-4 text-blue-600 hover:underline cursor-pointer">RemiCore 海外版图扩张计划</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
@@ -1031,118 +1123,14 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">3 人</td>
+                                    <td class="px-6 py-4 text-gray-400">-</td>
                                     <td class="px-6 py-4 text-blue-600 hover:underline cursor-pointer">东南亚卡支付市场调研</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
-                                        <button class="text-purple-500 hover:text-purple-700" data-action="verify-invite">验收</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4 font-medium text-gray-900">测试用：未发布特邀</td>
-                                    <td class="px-6 py-4 text-gray-500">其他</td>
-                                    <td class="px-6 py-4">
-                                        <span class="flex items-center gap-1.5 text-gray-400">
-                                            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
-                                            草稿
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-600">0 人</td>
-                                    <td class="px-6 py-4 text-gray-400 italic">未绑定项目</td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900" data-action="edit-invite">编辑</button>
-                                        <button class="text-gray-500 hover:text-gray-700" data-action="view-invite">查看</button>
-                                        <button class="text-emerald-500 hover:text-emerald-700" data-action="publish-invite">发布</button>
-                                        <button class="text-red-400 hover:text-red-600" data-action="delete-invite">删除</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-
-                <!-- 专家匹配 (原 AI 人才匹配内容) -->
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-xs font-semibold text-gray-500 tracking-wide uppercase">AI 智能匹配专家</p>
-                    </div>
-                    <div class="ant-card p-4 flex flex-wrap items-center gap-4">
-                        <div class="relative flex-1 min-w-[300px]">
-                            <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-                            <input type="text" placeholder="搜索专家姓名、技能、行业标签..." class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
-                        </div>
-                        <select class="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white">
-                            <option>所有行业</option>
-                            <option>互联网/SaaS</option>
-                            <option>金融科技</option>
-                            <option>Web3/区块链</option>
-                            <option>供应链/物流</option>
-                        </select>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <!-- 专家卡片 1 -->
-                        <div class="ant-card overflow-hidden group hover:shadow-lg transition-all border-l-4 border-l-emerald-500">
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-4">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">CX</div>
-                                        <div>
-                                            <h3 class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">陈晓 · 增长策略顾问</h3>
-                                            <p class="text-[11px] text-gray-400 mt-0.5">前字节跳动 · 资深增长专家</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="text-emerald-500 font-bold text-lg">94%</span>
-                                        <p class="text-[10px] text-gray-400">AI 匹配度</p>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-[10px] text-gray-400 mb-1">拟关联特邀：</p>
-                                    <span class="text-[11px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded">SaaS 增长策略专家访谈</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded">B2B SaaS</span>
-                                    <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded">NDR 提升</span>
-                                </div>
-                                <p class="text-xs text-gray-500 line-clamp-2 mb-6">具有 8 年 SaaS 行业增长经验，曾主导多个千万级营收项目的用户留存与转化率提升工程。</p>
-                                <div class="flex items-center gap-2">
-                                    <button class="flex-1 py-2 border border-slate-200 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 transition-colors">查看画像</button>
-                                    <button class="flex-1 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg hover:bg-slate-800 transition-colors">立即邀约</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 专家卡片 2 -->
-                        <div class="ant-card overflow-hidden group hover:shadow-lg transition-all border-l-4 border-l-blue-400">
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-4">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-sm">LW</div>
-                                        <div>
-                                            <h3 class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">刘伟 · Web3 安全审计</h3>
-                                            <p class="text-[11px] text-gray-400 mt-0.5">CertiK · 资深审计师</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="text-blue-500 font-bold text-lg">91%</span>
-                                        <p class="text-[10px] text-gray-400">AI 匹配度</p>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-[10px] text-gray-400 mb-1">拟关联特邀：</p>
-                                    <span class="text-[11px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Web3 合约审计专家寻访</span>
-                                </div>
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded">Solidity</span>
-                                    <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded">智能合约</span>
-                                </div>
-                                <p class="text-xs text-gray-500 line-clamp-2 mb-6">专注于 DeFi 项目安全审计与零知识证明技术研究，曾为 50+ 个头部项目提供安全方案咨询。</p>
-                                <div class="flex items-center gap-2">
-                                    <button class="flex-1 py-2 border border-slate-200 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 transition-colors">查看画像</button>
-                                    <button class="flex-1 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg hover:bg-slate-800 transition-colors">立即邀约</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1150,7 +1138,7 @@
             <!-- Tab Content: 我的特邀 -->
             <div id="invite-tab" class="tab-content hidden space-y-6">
                 <!-- 进度概览 -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                     <div class="ant-card p-4 text-center">
                         <p class="text-xs text-gray-500 mb-1">已报名待审核</p>
                         <p class="text-xl font-bold text-gray-900">2</p>
@@ -1167,6 +1155,10 @@
                         <p class="text-xs text-gray-500 mb-1">已完成</p>
                         <p class="text-xl font-bold text-emerald-600">12</p>
                     </div>
+                    <div class="ant-card p-4 text-center">
+                        <p class="text-xs text-gray-500 mb-1">已拒绝</p>
+                        <p class="text-xl font-bold text-red-400">2</p>
+                    </div>
                 </div>
 
                 <!-- 任务列表 -->
@@ -1178,71 +1170,79 @@
                             <option>进行中</option>
                             <option>待提交成果</option>
                             <option>审核中</option>
+                            <option>已拒绝</option>
                         </select>
                     </div>
-                    <div class="divide-y divide-gray-100">
-                        <!-- 任务项：进行中，需提交成果 -->
-                        <div class="p-6 hover:bg-gray-50 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-900">SaaS 企业 NDR 提升专项</h4>
-                                    <p class="text-[11px] text-gray-500 mt-1">项目编号：PRJ-202604-001 · 预计奖励：3,500 智慧值</p>
-                                </div>
-                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-medium self-start md:self-auto">执行中 - 方案共创阶段</span>
-                            </div>
-                            
-                            <div class="bg-white border border-gray-100 rounded-lg p-4 mb-4">
-                                <div class="flex items-center justify-between mb-2">
-                                    <p class="text-xs font-medium text-gray-800">当前要求：提交 D-3 阶段调研报告</p>
-                                    <p class="text-[10px] text-red-500">截止日期：明天 18:00</p>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <button class="text-xs bg-slate-900 text-white px-4 py-1.5 rounded hover:bg-slate-800 transition-colors flex items-center gap-1" data-action="upload-result">
-                                        <i data-lucide="upload" class="w-3 h-3"></i>上传成果物
-                                    </button>
-                                    <button class="text-xs text-gray-500 border border-gray-200 px-4 py-1.5 rounded hover:bg-gray-50 transition-colors">
-                                        联系项目经理
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- 进度条 -->
-                            <div class="relative pt-6 pb-2">
-                                <div class="absolute top-8 left-0 w-full h-0.5 bg-gray-100"></div>
-                                <div class="absolute top-8 left-0 w-1/2 h-0.5 bg-blue-500"></div>
-                                <div class="relative flex justify-between text-[10px] text-gray-400">
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-3 h-3 rounded-full bg-blue-500 mb-1 ring-4 ring-white z-10"></div>
-                                        <span class="text-blue-600 font-medium">报名成功</span>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-3 h-3 rounded-full bg-blue-500 mb-1 ring-4 ring-white z-10"></div>
-                                        <span class="text-blue-600 font-medium">初步沟通</span>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-3 h-3 rounded-full bg-blue-500 mb-1 ring-4 ring-white z-10"></div>
-                                        <span class="text-blue-600 font-medium">方案共创</span>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-3 h-3 rounded-full bg-gray-200 mb-1 ring-4 ring-white z-10"></div>
-                                        <span>验收结算</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 任务项：待审核 -->
-                        <div class="p-6 hover:bg-gray-50 transition-colors">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-900">欧洲市场合规策略梳理</h4>
-                                    <p class="text-[11px] text-gray-500 mt-1">项目编号：PRJ-202604-012 · 预计奖励：1,800 智慧值</p>
-                                </div>
-                                <span class="px-3 py-1 bg-amber-50 text-amber-600 text-xs rounded-full font-medium self-start md:self-auto">成果审核中</span>
-                            </div>
-                            <p class="text-xs text-gray-600 mb-2">您于昨天 14:30 提交了《合规调研问卷分析.pdf》，项目经理正在审核中，预计 1-2 个工作日内反馈。</p>
-                            <button class="text-xs text-slate-600 hover:text-slate-900">查看已提交文件</button>
-                        </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">特邀名称</th>
+                                    <th class="px-6 py-3 font-medium">项目编号</th>
+                                    <th class="px-6 py-3 font-medium">状态</th>
+                                    <th class="px-6 py-3 font-medium">智慧值</th>
+                                    <th class="px-6 py-3 font-medium text-right">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-xs">
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900">SaaS 企业 NDR 提升专项</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202604-001</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded-full font-medium">执行中 - 方案共创阶段</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">3,500</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900 text-[10px]" data-action="upload-result">上传成果</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">联系项目经理</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900">欧洲市场合规策略梳理</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202604-012</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded-full font-medium">成果审核中</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">1,800</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900 text-[10px]">查看已提交文件</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900">跨境支付合规调研</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202605-008</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-green-50 text-green-600 text-[10px] rounded-full font-medium">进行中 - D-2 调研阶段</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">2,200</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900 text-[10px]">提交调研报告</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-400">中东金融科技准入分析</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202605-011</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-red-50 text-red-400 text-[10px] rounded-full font-medium">已拒绝</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-400">1,500</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-gray-400 text-[10px] cursor-not-allowed" disabled>已被拒绝</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-400">东南亚卡组织政策解读</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202604-025</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-red-50 text-red-400 text-[10px] rounded-full font-medium">已拒绝</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-400">800</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-gray-400 text-[10px] cursor-not-allowed" disabled>已被拒绝</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -1259,8 +1259,8 @@
                         <i data-lucide="book-open" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-500 mb-1">已学完课程</p>
-                        <p class="text-xl font-bold text-gray-900">4 <span class="text-xs font-normal text-gray-400 ml-1">门</span></p>
+                        <p class="text-xs text-gray-500 mb-1">历史学习资源</p>
+                        <p class="text-xl font-bold text-gray-900">4</p>
                     </div>
                 </div>
                 <div class="ant-card p-6 flex items-center gap-4">
@@ -1278,7 +1278,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-500 mb-1">获取学习智慧值</p>
-                        <p class="text-xl font-bold text-gray-900">150 <span class="text-xs font-normal text-gray-400 ml-1">分</span></p>
+                        <p class="text-xl font-bold text-gray-900">150</p>
                     </div>
                 </div>
             </div>
@@ -1310,7 +1310,7 @@
                         <p class="text-xs text-gray-500 line-clamp-2 mb-4">从访谈前准备、过程中的控场技巧到访谈后的纪要整理，全方位提升您的交付质量。</p>
                         <div class="flex items-center justify-between text-[11px] text-gray-400">
                             <span>1.2k 次观看</span>
-                            <span class="text-emerald-500 flex items-center gap-1"><i data-lucide="check-circle" class="w-3 h-3"></i>已学完</span>
+                            <span class="text-emerald-500 flex items-center gap-1"><i data-lucide="check-circle" class="w-3 h-3"></i>已看完</span>
                         </div>
                     </div>
                 </div>
@@ -1418,7 +1418,7 @@
                     <div class="flex-1">
                         <p class="text-xs text-gray-500 mb-1">当前可用智慧值</p>
                         <p class="text-3xl font-bold text-gray-900">12,480</p>
-                        <p class="text-[10px] text-gray-400 mt-2">1 智慧值 ≈ 1 稳定币</p>
+                        <p class="text-[10px] text-gray-400 mt-2">1 智慧值 = 1 稳定币</p>
                     </div>
                     <div class="w-px h-16 bg-gray-200 hidden md:block"></div>
                     <div class="flex-1">
@@ -1652,11 +1652,8 @@
                     <button data-user-tab="system" class="user-tab-btn border-blue-500 text-blue-600 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
                         管理系统用户
                     </button>
-                    <button data-user-tab="invite-unkyc" class="user-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
-                        特邀用户（未KYC认证）
-                    </button>
-                    <button data-user-tab="invite-kyc" class="user-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
-                        特邀用户（已认证）
+                    <button data-user-tab="invite" class="user-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+                        特邀用户
                     </button>
                 </nav>
             </div>
@@ -1780,123 +1777,8 @@
                 </div>
             </div>
 
-            <!-- 特邀用户（未KYC认证） -->
-            <div class="user-tab-content hidden" data-user-tab-content="invite-unkyc">
-                <div class="ant-card overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                        <div class="flex items-center gap-4">
-                            <div class="relative w-56">
-                                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
-                                <input type="text" placeholder="搜索用户名/邮箱..." class="w-full pl-9 pr-3 py-1.5 bg-white border border-gray-200 rounded text-[11px] outline-none focus:ring-2 focus:ring-blue-500/20">
-                            </div>
-                            <select class="text-[10px] border-gray-200 rounded py-1.5 px-2 text-gray-600 outline-none bg-white">
-                                <option value="">全部角色</option>
-                                <option>普通终端用户</option>
-                                <option>发布者</option>
-                            </select>
-                        </div>
-                        <span class="text-[10px] text-gray-400">共 3 位未认证用户</span>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-5 py-3 font-medium">用户信息</th>
-                                    <th class="px-5 py-3 font-medium">当前角色</th>
-                                    <th class="px-5 py-3 font-medium">KYC 状态</th>
-                                    <th class="px-5 py-3 font-medium">注册来源</th>
-                                    <th class="px-5 py-3 font-medium">注册时间</th>
-                                    <th class="px-5 py-3 font-medium text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs">
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-5 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-[9px] font-bold">ZL</div>
-                                            <div>
-                                                <p class="font-medium text-gray-900">zhangli@example.com</p>
-                                                <p class="text-[9px] text-gray-400">ID: 20018 · 微信扫码</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-4">
-                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
-                                    </td>
-                                    <td class="px-5 py-4">
-                                        <span class="flex items-center gap-1.5 text-amber-500">
-                                            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
-                                            未认证
-                                        </span>
-                                    </td>
-                                    <td class="px-5 py-4 text-gray-400">微信扫码</td>
-                                    <td class="px-5 py-4 text-gray-400">2024-04-22</td>
-                                    <td class="px-5 py-4 text-right space-x-1">
-                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="zhangli@example.com">角色</button>
-                                        <button class="text-amber-600 hover:text-amber-800 font-medium" data-action="reset-user-pwd" data-user="zhangli@example.com">重置密码</button>
-                                        <button class="text-red-400 hover:text-red-600 font-medium" data-action="ban-user" data-user="zhangli@example.com">封禁</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-5 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-[9px] font-bold">CW</div>
-                                            <div>
-                                                <p class="font-medium text-gray-900">chenwei@example.com</p>
-                                                <p class="text-[9px] text-gray-400">ID: 20019 · Google OAuth</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-4">
-                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
-                                    </td>
-                                    <td class="px-5 py-4">
-                                        <span class="flex items-center gap-1.5 text-amber-500">
-                                            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
-                                            未认证
-                                        </span>
-                                    </td>
-                                    <td class="px-5 py-4 text-gray-400">Google OAuth</td>
-                                    <td class="px-5 py-4 text-gray-400">2024-04-19</td>
-                                    <td class="px-5 py-4 text-right space-x-1">
-                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="chenwei@example.com">角色</button>
-                                        <button class="text-amber-600 hover:text-amber-800 font-medium" data-action="reset-user-pwd" data-user="chenwei@example.com">重置密码</button>
-                                        <button class="text-red-400 hover:text-red-600 font-medium" data-action="ban-user" data-user="chenwei@example.com">封禁</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors opacity-60">
-                                    <td class="px-5 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-[9px] font-bold">LS</div>
-                                            <div>
-                                                <p class="font-medium text-gray-400">liushuo@example.com</p>
-                                                <p class="text-[9px] text-gray-400">ID: 20020 · 邮箱注册</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-4">
-                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
-                                    </td>
-                                    <td class="px-5 py-4">
-                                        <span class="flex items-center gap-1.5 text-amber-500">
-                                            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
-                                            未认证
-                                        </span>
-                                    </td>
-                                    <td class="px-5 py-4 text-gray-400">邮箱注册</td>
-                                    <td class="px-5 py-4 text-gray-400">2024-04-16</td>
-                                    <td class="px-5 py-4 text-right space-x-1">
-                                        <button class="text-gray-400 cursor-not-allowed font-medium" disabled>已封禁</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 特邀用户（已认证） -->
-            <div class="user-tab-content hidden" data-user-tab-content="invite-kyc">
+            <!-- 特邀用户 -->
+            <div class="user-tab-content hidden" data-user-tab-content="invite">
                 <div class="ant-card overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                         <div class="flex items-center gap-4">
@@ -1919,7 +1801,7 @@
                             <span class="text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
                                 <i data-lucide="star" class="w-3 h-3"></i>白名单用户优先匹配
                             </span>
-                            <span class="text-[10px] text-gray-400">共 4 位认证用户</span>
+                            <span class="text-[10px] text-gray-400">共 7 位特邀用户</span>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -1930,11 +1812,13 @@
                                     <th class="px-5 py-3 font-medium">当前角色</th>
                                     <th class="px-5 py-3 font-medium">KYC 状态</th>
                                     <th class="px-5 py-3 font-medium">标签</th>
+                                    <th class="px-5 py-3 font-medium">注册来源</th>
                                     <th class="px-5 py-3 font-medium">注册时间</th>
                                     <th class="px-5 py-3 font-medium text-right">操作</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-xs">
+                                <!-- 已认证 - 白名单 -->
                                 <tr class="hover:bg-gray-50 transition-colors bg-amber-50/30">
                                     <td class="px-5 py-4">
                                         <div class="flex items-center gap-3">
@@ -1964,6 +1848,7 @@
                                             <i data-lucide="star" class="w-3 h-3 fill-amber-500"></i>优先匹配
                                         </span>
                                     </td>
+                                    <td class="px-5 py-4 text-gray-400">-</td>
                                     <td class="px-5 py-4 text-gray-400">2023-09-15</td>
                                     <td class="px-5 py-4 text-right space-x-1">
                                         <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="robert.huang@example.com">角色</button>
@@ -2000,6 +1885,7 @@
                                             <i data-lucide="star" class="w-3 h-3 fill-amber-500"></i>优先匹配
                                         </span>
                                     </td>
+                                    <td class="px-5 py-4 text-gray-400">-</td>
                                     <td class="px-5 py-4 text-gray-400">2023-11-01</td>
                                     <td class="px-5 py-4 text-right space-x-1">
                                         <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="sarah.jiang@example.com">角色</button>
@@ -2007,6 +1893,7 @@
                                         <button class="text-red-400 hover:text-red-600 font-medium" data-action="ban-user" data-user="sarah.jiang@example.com">封禁</button>
                                     </td>
                                 </tr>
+                                <!-- 已认证 - 普通 -->
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-5 py-4">
                                         <div class="flex items-center gap-3">
@@ -2029,6 +1916,7 @@
                                     <td class="px-5 py-4">
                                         <span class="text-gray-400 text-[10px]">-</span>
                                     </td>
+                                    <td class="px-5 py-4 text-gray-400">-</td>
                                     <td class="px-5 py-4 text-gray-400">2024-04-20</td>
                                     <td class="px-5 py-4 text-right space-x-1">
                                         <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="wangke@example.com">角色</button>
@@ -2058,11 +1946,101 @@
                                     <td class="px-5 py-4">
                                         <span class="text-gray-400 text-[10px]">-</span>
                                     </td>
+                                    <td class="px-5 py-4 text-gray-400">-</td>
                                     <td class="px-5 py-4 text-gray-400">2024-04-18</td>
                                     <td class="px-5 py-4 text-right space-x-1">
                                         <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="liming@example.com">角色</button>
                                         <button class="text-amber-600 hover:text-amber-800 font-medium" data-action="reset-user-pwd" data-user="liming@example.com">重置密码</button>
                                         <button class="text-red-400 hover:text-red-600 font-medium" data-action="ban-user" data-user="liming@example.com">封禁</button>
+                                    </td>
+                                </tr>
+                                <!-- 未认证 -->
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-[9px] font-bold">ZL</div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">zhangli@example.com</p>
+                                                <p class="text-[9px] text-gray-400">ID: 20018 · 微信扫码</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="flex items-center gap-1.5 text-amber-500">
+                                            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+                                            未认证
+                                        </span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="text-gray-400 text-[10px]">-</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-400">微信扫码</td>
+                                    <td class="px-5 py-4 text-gray-400">2024-04-22</td>
+                                    <td class="px-5 py-4 text-right space-x-1">
+                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="zhangli@example.com">角色</button>
+                                        <button class="text-amber-600 hover:text-amber-800 font-medium" data-action="reset-user-pwd" data-user="zhangli@example.com">重置密码</button>
+                                        <button class="text-red-400 hover:text-red-600 font-medium" data-action="ban-user" data-user="zhangli@example.com">封禁</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-[9px] font-bold">CW</div>
+                                            <div>
+                                                <p class="font-medium text-gray-900">chenwei@example.com</p>
+                                                <p class="text-[9px] text-gray-400">ID: 20019 · Google OAuth</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="flex items-center gap-1.5 text-amber-500">
+                                            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+                                            未认证
+                                        </span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="text-gray-400 text-[10px]">-</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-400">Google OAuth</td>
+                                    <td class="px-5 py-4 text-gray-400">2024-04-19</td>
+                                    <td class="px-5 py-4 text-right space-x-1">
+                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-user-role" data-user="chenwei@example.com">角色</button>
+                                        <button class="text-amber-600 hover:text-amber-800 font-medium" data-action="reset-user-pwd" data-user="chenwei@example.com">重置密码</button>
+                                        <button class="text-red-400 hover:text-red-600 font-medium" data-action="ban-user" data-user="chenwei@example.com">封禁</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors opacity-60">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-[9px] font-bold">LS</div>
+                                            <div>
+                                                <p class="font-medium text-gray-400">liushuo@example.com</p>
+                                                <p class="text-[9px] text-gray-400">ID: 20020 · 邮箱注册</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="flex items-center gap-1.5 text-amber-500">
+                                            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+                                            未认证
+                                        </span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <span class="text-gray-400 text-[10px]">-</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-400">邮箱注册</td>
+                                    <td class="px-5 py-4 text-gray-400">2024-04-16</td>
+                                    <td class="px-5 py-4 text-right space-x-1">
+                                        <button class="text-gray-400 cursor-not-allowed font-medium" disabled>已封禁</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -2071,6 +2049,123 @@
                     <div class="px-6 py-3 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
                         <p class="text-[10px] text-gray-400">特邀用户注册后自动分配「普通终端用户」角色</p>
                         <span class="text-[10px] text-gray-500">白名单用户由 AI 根据以往合作经验自动添加</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 hidden" data-view-container="talent-pool">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                        <i data-lucide="database" class="w-5 h-5 text-slate-600"></i>
+                        人才库
+                    </h3>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">共 <strong id="talent-total-count" class="text-gray-700">1,284</strong> 条数据</span>
+                </div>
+            </div>
+
+            <!-- 搜索与筛选 -->
+            <div class="flex items-center justify-between bg-white rounded-xl border border-gray-100 px-5 py-3 shadow-sm relative z-30">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
+                        <input type="text" id="talent-search-input" placeholder="搜索姓名/邮箱/职位/公司..." class="w-56 pl-9 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-[11px] outline-none focus:ring-2 focus:ring-blue-500/20">
+                    </div>
+                    <select id="talent-country-filter" class="text-[10px] border border-gray-200 rounded-lg py-1.5 px-2.5 bg-white text-gray-600 outline-none focus:ring-2 focus:ring-blue-500/20">
+                        <option value="">全部地区</option>
+                        <option>中国</option>
+                        <option>美国</option>
+                        <option>新加坡</option>
+                        <option>英国</option>
+                        <option>中国香港</option>
+                        <option>日本</option>
+                        <option>德国</option>
+                    </select>
+                    <select id="talent-industry-filter" class="text-[10px] border border-gray-200 rounded-lg py-1.5 px-2.5 bg-white text-gray-600 outline-none focus:ring-2 focus:ring-blue-500/20">
+                        <option value="">全部行业</option>
+                        <option>银行与金融</option>
+                        <option>科技与互联网</option>
+                        <option>咨询与专业服务</option>
+                        <option>跨境支付</option>
+                        <option>区块链与Web3</option>
+                        <option>合规与法律</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="relative" id="talent-column-selector">
+                        <button class="px-3 py-1.5 border border-slate-200 text-slate-600 rounded-lg text-[10px] hover:bg-slate-50 transition-colors flex items-center gap-1" id="talent-col-toggle">
+                            <i data-lucide="columns" class="w-3 h-3"></i>列显示
+                        </button>
+                        <div class="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg p-3 z-50 hidden" id="talent-col-dropdown" style="min-width:140px">
+                            <p class="text-[9px] text-gray-400 mb-2 font-medium">显示列</p>
+                            <div class="space-y-1.5" id="talent-col-list"></div>
+                        </div>
+                    </div>
+                    <button class="px-3 py-1.5 border border-slate-200 text-slate-600 rounded-lg text-[10px] hover:bg-slate-50 transition-colors flex items-center gap-1" data-action="refresh-talent">
+                        <i data-lucide="refresh-cw" class="w-3 h-3"></i>刷新
+                    </button>
+                    <button class="px-3 py-1.5 border border-amber-200 text-amber-600 rounded-lg text-[10px] hover:bg-amber-50 transition-colors flex items-center gap-1" data-action="sync-talent">
+                        <i data-lucide="refresh-cw" class="w-3 h-3"></i>同步更新数据
+                    </button>
+                    <button class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-[10px] hover:bg-slate-800 transition-colors flex items-center gap-1" data-action="export-talent">
+                        <i data-lucide="download" class="w-3 h-3"></i>导出
+                    </button>
+                    <button class="px-3 py-1.5 border border-blue-200 text-blue-600 rounded-lg text-[10px] hover:bg-blue-50 transition-colors flex items-center gap-1" data-action="open-source-data">
+                        <i data-lucide="database" class="w-3 h-3"></i>源数据
+                    </button>
+                </div>
+            </div>
+
+            <!-- 人才列表 -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left" id="talent-table">
+                        <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                            <tr>
+                                <th class="px-4 py-2.5 font-medium w-8"><input type="checkbox" class="rounded text-slate-900 w-3 h-3" id="talent-select-all"></th>
+                                <th class="px-4 py-2.5 font-medium" data-col="name">姓名</th>
+                                <th class="px-4 py-2.5 font-medium" data-col="email">邮箱</th>
+                                <th class="px-4 py-2.5 font-medium" data-col="phone">电话</th>
+                                <th class="px-4 py-2.5 font-medium" data-col="position">职位</th>
+                                <th class="px-4 py-2.5 font-medium" data-col="company">当前公司</th>
+                                <th class="px-4 py-2.5 font-medium" data-col="location">所在地</th>
+                                <th class="px-4 py-2.5 font-medium" data-col="industry">行业</th>
+                                 <th class="px-4 py-2.5 font-medium" data-col="inviteCount">被邀请次数</th>
+                                  <th class="px-4 py-2.5 font-medium" data-col="isApexUser">APEX用户</th>
+                                  <th class="px-4 py-2.5 font-medium" data-col="linkedin">领英链接</th>
+                                <th class="px-4 py-2.5 font-medium text-right">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50 text-[11px]" id="talent-tbody">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 分页 -->
+                <div class="px-4 py-2.5 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-[10px] text-gray-500">
+                        <span>每页</span>
+                        <select id="talent-page-size" class="text-[10px] border border-gray-200 rounded py-1 px-1.5 bg-white text-gray-600 outline-none">
+                            <option value="12" selected>12</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span>条，共 <strong id="talent-total-rows">1,284</strong> 条</span>
+                    </div>
+                    <div class="flex items-center gap-1.5" id="talent-pagination">
+                        <button class="px-2 py-1 rounded text-[10px] font-medium text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" id="talent-page-prev" disabled>
+                            <i data-lucide="chevron-left" class="w-3 h-3"></i>
+                        </button>
+                        <div class="flex items-center gap-1" id="talent-page-numbers"></div>
+                        <button class="px-2 py-1 rounded text-[10px] font-medium text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" id="talent-page-next">
+                            <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                        </button>
+                        <span class="text-[10px] text-gray-400 ml-2">跳至</span>
+                        <input type="number" id="talent-page-jump" value="1" min="1" class="w-10 px-1.5 py-1 text-[10px] border border-gray-200 rounded text-center outline-none focus:ring-1 focus:ring-blue-500/20">
+                        <span class="text-[10px] text-gray-400">/ <span id="talent-total-pages">65</span> 页</span>
                     </div>
                 </div>
             </div>
@@ -2093,12 +2188,59 @@
                     </button>
                 </div>
 
-                <!-- 智慧值规则列表 -->
+                <!-- 智慧值兑换比例 -->
+                <div class="ant-card p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+                                <i data-lucide="refresh-cw" class="w-5 h-5 text-amber-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-900">智慧值兑换比例</h4>
+                                <p class="text-[10px] text-gray-400 mt-0.5">设定智慧值与 USDT 的兑换汇率</p>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="save-exchange-rate">保存比例</button>
+                    </div>
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-100">
+                            <p class="text-[10px] text-amber-600 font-medium mb-2">当前汇率</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-black text-amber-600" id="exchange-rate-display">1</span>
+                                <span class="text-xs text-gray-500">智慧值 =</span>
+                                <span class="text-lg font-bold text-gray-900" id="exchange-usdt-display">0.01</span>
+                                <span class="text-xs text-gray-500">USDT</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-medium text-gray-500">智慧值数量</label>
+                            <div class="relative">
+                                <input type="number" id="exchange-points-input" value="100" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400">pts</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-medium text-gray-500">兑换 USDT</label>
+                            <div class="relative">
+                                <input type="number" id="exchange-usdt-input" value="1" step="0.01" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400">USDT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                        <p class="text-[10px] text-gray-500 flex items-center gap-1.5">
+                            <i data-lucide="info" class="w-3 h-3 text-blue-500"></i>
+                            兑换比例公式：<span class="font-mono font-medium" id="exchange-rate-formula">100 pts = 1 USDT</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 智慧值特定规则 -->
                 <div class="ant-card overflow-hidden mb-6">
                     <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
                         <div class="flex items-center gap-2">
                             <i data-lucide="list" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">规则列表</span>
+                            <span class="text-[11px] font-semibold text-gray-600">特定规则维护</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <select id="point-rule-category-filter" class="text-[10px] border border-gray-200 rounded py-1.5 px-2 bg-white text-gray-600 outline-none">
@@ -2210,53 +2352,6 @@
                     <div class="px-6 py-3 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
                         <p class="text-[10px] text-gray-400">共 <span id="point-rule-count">5</span> 条规则，<span id="point-rule-active-count">4</span> 条已启用</p>
                         <span class="text-[10px] text-gray-500">拖动规则行可排序</span>
-                    </div>
-                </div>
-
-                <!-- 智慧值兑换比例 -->
-                <div class="ant-card p-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
-                                <i data-lucide="refresh-cw" class="w-5 h-5 text-amber-500"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-bold text-gray-900">智慧值兑换比例</h4>
-                                <p class="text-[10px] text-gray-400 mt-0.5">设定智慧值与 USDT 的兑换汇率</p>
-                            </div>
-                        </div>
-                        <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="save-exchange-rate">保存比例</button>
-                    </div>
-                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-100">
-                            <p class="text-[10px] text-amber-600 font-medium mb-2">当前汇率</p>
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-2xl font-black text-amber-600" id="exchange-rate-display">1</span>
-                                <span class="text-xs text-gray-500">智慧值 =</span>
-                                <span class="text-lg font-bold text-gray-900" id="exchange-usdt-display">0.01</span>
-                                <span class="text-xs text-gray-500">USDT</span>
-                            </div>
-                        </div>
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-medium text-gray-500">智慧值数量</label>
-                            <div class="relative">
-                                <input type="number" id="exchange-points-input" value="100" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
-                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400">pts</span>
-                            </div>
-                        </div>
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-medium text-gray-500">兑换 USDT</label>
-                            <div class="relative">
-                                <input type="number" id="exchange-usdt-input" value="1" step="0.01" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
-                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400">USDT</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 p-3 bg-gray-50 rounded-lg">
-                        <p class="text-[10px] text-gray-500 flex items-center gap-1.5">
-                            <i data-lucide="info" class="w-3 h-3 text-blue-500"></i>
-                            兑换比例公式：<span class="font-mono font-medium" id="exchange-rate-formula">100 pts = 1 USDT</span>
-                        </p>
                     </div>
                 </div>
             </div>
@@ -2551,10 +2646,230 @@
                 </div>
             </div>
 
-            <!-- Tab Content: 运营中心 -->
-            <div class="config-tab-content hidden" data-config-tab-content="operations">
-                <div class="ant-card p-6">
-                    <p class="text-sm text-gray-500">运营中心配置内容（可扩展）</p>
+            <!-- Tab Content: 学习中心配置 -->
+            <div class="config-tab-content hidden space-y-6" data-config-tab-content="operations">
+                <!-- 页面头部 -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-5 h-5 text-slate-500"></i>
+                            学习中心配置
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">管理学习资源分类、资源内容及智慧值奖励规则</p>
+                    </div>
+                </div>
+
+                <!-- 资源列表管理 -->
+                <div class="ant-card overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="library" class="w-4 h-4 text-gray-400"></i>
+                            <span class="text-[11px] font-semibold text-gray-600">资源列表管理</span>
+                            <span class="text-[9px] text-gray-400 ml-2">管理学习中心展示的资源内容</span>
+                        </div>
+                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-resource">+ 新增资源</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">资源名称</th>
+                                    <th class="px-6 py-3 font-medium">所属分类</th>
+                                    <th class="px-6 py-3 font-medium">资源类型</th>
+                                    <th class="px-6 py-3 font-medium">学习/下载量</th>
+                                    <th class="px-6 py-3 font-medium">智慧值奖励</th>
+                                    <th class="px-6 py-3 font-medium">状态</th>
+                                    <th class="px-6 py-3 font-medium text-right">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-xs">
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-1">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-gray-900">如何进行一次高质量的专家访谈？</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="text-gray-500">技能提升 (视频)</span></td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded">视频</span></td>
+                                    <td class="px-6 py-4 text-gray-400">1.2k</td>
+                                    <td class="px-6 py-4 text-emerald-600">+20</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-amber-600 hover:text-amber-700">下架</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-gray-900">平台特邀顾问行为规范与红线</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="text-gray-500">新手必读</span></td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 text-[10px] rounded">PDF</span></td>
+                                    <td class="px-6 py-4 text-gray-400">5.8k</td>
+                                    <td class="px-6 py-4 text-emerald-600">+10</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-amber-600 hover:text-amber-700">下架</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-gray-900">行业研究数据测算模型模板 v2.0</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="text-gray-500">交付物模板</span></td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded">Excel</span></td>
+                                    <td class="px-6 py-4 text-gray-400">856</td>
+                                    <td class="px-6 py-4 text-emerald-600">+15</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-amber-600 hover:text-amber-700">下架</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 资源分类管理 -->
+                <div class="ant-card overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="folder-tree" class="w-4 h-4 text-gray-400"></i>
+                            <span class="text-[11px] font-semibold text-gray-600">资源分类管理</span>
+                            <span class="text-[9px] text-gray-400 ml-2">管理学习中心的分类标签</span>
+                        </div>
+                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-category">+ 新增分类</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">分类名称</th>
+                                    <th class="px-6 py-3 font-medium">类型标识</th>
+                                    <th class="px-6 py-3 font-medium">关联资源数</th>
+                                    <th class="px-6 py-3 font-medium">排序</th>
+                                    <th class="px-6 py-3 font-medium">状态</th>
+                                    <th class="px-6 py-3 font-medium text-right">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-xs">
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-1">
+                                    <td class="px-6 py-4 font-medium text-gray-900">新手必读</td>
+                                    <td class="px-6 py-4"><span class="text-gray-400">beginner</span></td>
+                                    <td class="px-6 py-4 text-gray-400">3</td>
+                                    <td class="px-6 py-4 text-gray-400">1</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-2">
+                                    <td class="px-6 py-4 font-medium text-gray-900">技能提升 (视频)</td>
+                                    <td class="px-6 py-4"><span class="text-gray-400">video</span></td>
+                                    <td class="px-6 py-4 text-gray-400">5</td>
+                                    <td class="px-6 py-4 text-gray-400">2</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-3">
+                                    <td class="px-6 py-4 font-medium text-gray-900">交付物模板</td>
+                                    <td class="px-6 py-4"><span class="text-gray-400">template</span></td>
+                                    <td class="px-6 py-4 text-gray-400">4</td>
+                                    <td class="px-6 py-4 text-gray-400">3</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-4">
+                                    <td class="px-6 py-4 font-medium text-gray-900">行业报告库</td>
+                                    <td class="px-6 py-4"><span class="text-gray-400">report</span></td>
+                                    <td class="px-6 py-4 text-gray-400">6</td>
+                                    <td class="px-6 py-4 text-gray-400">4</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 智慧值奖励配置 -->
+                <div class="ant-card overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="coins" class="w-4 h-4 text-gray-400"></i>
+                            <span class="text-[11px] font-semibold text-gray-600">智慧值奖励配置</span>
+                            <span class="text-[9px] text-gray-400 ml-2">学习行为对应的智慧值奖励规则</span>
+                        </div>
+                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-reward">+ 新增规则</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">奖励场景</th>
+                                    <th class="px-6 py-3 font-medium">适用分类</th>
+                                    <th class="px-6 py-3 font-medium">奖励智慧值</th>
+                                    <th class="px-6 py-3 font-medium">每日上限</th>
+                                    <th class="px-6 py-3 font-medium">状态</th>
+                                    <th class="px-6 py-3 font-medium text-right">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-xs">
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-1">
+                                    <td class="px-6 py-4 font-medium text-gray-900">完成阅读</td>
+                                    <td class="px-6 py-4 text-gray-500">全部</td>
+                                    <td class="px-6 py-4"><span class="text-emerald-600 font-medium">+10</span></td>
+                                    <td class="px-6 py-4 text-gray-400">50</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2">
+                                    <td class="px-6 py-4 font-medium text-gray-900">完成视频学习</td>
+                                    <td class="px-6 py-4 text-gray-500">技能提升 (视频)</td>
+                                    <td class="px-6 py-4"><span class="text-emerald-600 font-medium">+20</span></td>
+                                    <td class="px-6 py-4 text-gray-400">100</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3">
+                                    <td class="px-6 py-4 font-medium text-gray-900">下载模板</td>
+                                    <td class="px-6 py-4 text-gray-500">交付物模板</td>
+                                    <td class="px-6 py-4"><span class="text-emerald-600 font-medium">+15</span></td>
+                                    <td class="px-6 py-4 text-gray-400">30</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
+                                        <button class="text-red-400 hover:text-red-600">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -2563,7 +2878,7 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h3 class="text-base font-bold text-gray-900">角色权限管理</h3>
-                        <p class="text-xs text-gray-400 mt-1">自定义角色、按模块分配权限、管理外部注册用户</p>
+                        <p class="text-xs text-gray-400 mt-1">按模块分配权限</p>
                     </div>
                     <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all flex items-center gap-1.5" data-action="open-create-role-modal">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i>新建角色
@@ -2639,39 +2954,6 @@
                                     <td class="px-6 py-4 text-gray-500">外部注册用户默认角色，仅可参与被分配的特邀任务</td>
                                     <td class="px-6 py-4 text-right">
                                         <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="edit-role-permissions" data-role="普通终端用户">编辑权限</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 自定义角色列表 -->
-                <div class="ant-card overflow-hidden mb-8">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">自定义角色</span>
-                        </div>
-                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="open-create-role-modal">+ 新建</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3 font-medium">角色名称</th>
-                                    <th class="px-6 py-3 font-medium">用户数</th>
-                                    <th class="px-6 py-3 font-medium">描述</th>
-                                    <th class="px-6 py-3 font-medium text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs" id="custom-roles-tbody">
-                                <tr>
-                                    <td class="px-6 py-8 text-center text-gray-400 text-[10px]" colspan="4">
-                                        <div class="flex flex-col items-center gap-2">
-                                            <i data-lucide="plus-circle" class="w-6 h-6 text-gray-300"></i>
-                                            <p>暂无自定义角色，点击上方"新建"按钮创建</p>
-                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -2791,6 +3073,23 @@
                                     <label class="flex items-center gap-2 text-[10px] text-gray-500"><input type="checkbox" class="rounded text-slate-900 w-3 h-3"> 禁用/启用用户</label>
                                 </div>
                             </div>
+                            <!-- 人才库 -->
+                            <div class="border border-gray-100 rounded-xl p-4 bg-white shadow-sm">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="database" class="w-4 h-4 text-slate-500"></i>
+                                        <span class="text-xs font-bold text-gray-800">人才库</span>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-7 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-slate-900"></div>
+                                    </label>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-2 text-[10px] text-gray-500"><input type="checkbox" class="rounded text-slate-900 w-3 h-3"> 查看人才库</label>
+                                    <label class="flex items-center gap-2 text-[10px] text-gray-500"><input type="checkbox" class="rounded text-slate-900 w-3 h-3"> 导出数据</label>
+                                </div>
+                            </div>
                             <!-- 配置中心 -->
                             <div class="border border-gray-100 rounded-xl p-4 bg-white shadow-sm">
                                 <div class="flex items-center justify-between mb-4">
@@ -2817,121 +3116,6 @@
                     </div>
                 </div>
 
-                <!-- 外部注册用户管理 -->
-                <div class="ant-card overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="user-plus" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">外部注册用户管理</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="relative">
-                                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400"></i>
-                                <input type="text" placeholder="搜索用户..." class="w-48 pl-8 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded text-[10px] outline-none focus:ring-2 focus:ring-blue-500/20">
-                            </div>
-                            <select id="external-user-role-filter" class="text-[10px] border border-gray-200 rounded py-1.5 px-2 bg-white text-gray-600 outline-none">
-                                <option value="">全部角色</option>
-                                <option>普通终端用户</option>
-                                <option>发布者</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3 font-medium">用户信息</th>
-                                    <th class="px-6 py-3 font-medium">当前角色</th>
-                                    <th class="px-6 py-3 font-medium">注册来源</th>
-                                    <th class="px-6 py-3 font-medium">注册时间</th>
-                                    <th class="px-6 py-3 font-medium">状态</th>
-                                    <th class="px-6 py-3 font-medium text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs">
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-[9px] font-bold">WK</div>
-                                            <div>
-                                                <p class="font-medium text-gray-900">wangke@example.com</p>
-                                                <p class="text-[9px] text-gray-400">ID: 20015</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-400">微信扫码</td>
-                                    <td class="px-6 py-4 text-gray-400">2024-04-20</td>
-                                    <td class="px-6 py-4">
-                                        <span class="flex items-center gap-1.5 text-emerald-500">
-                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                                            活跃
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="open-assign-role-modal" data-user="wangke@example.com">分配角色</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-[9px] font-bold">LM</div>
-                                            <div>
-                                                <p class="font-medium text-gray-900">liming@example.com</p>
-                                                <p class="text-[9px] text-gray-400">ID: 20016</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-400">邮箱注册</td>
-                                    <td class="px-6 py-4 text-gray-400">2024-04-18</td>
-                                    <td class="px-6 py-4">
-                                        <span class="flex items-center gap-1.5 text-emerald-500">
-                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                                            活跃
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="open-assign-role-modal" data-user="liming@example.com">分配角色</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 text-[9px] font-bold">ZY</div>
-                                            <div>
-                                                <p class="font-medium text-gray-900">zhangying@example.com</p>
-                                                <p class="text-[9px] text-gray-400">ID: 20017</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">普通终端用户</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-400">Google OAuth</td>
-                                    <td class="px-6 py-4 text-gray-400">2024-04-15</td>
-                                    <td class="px-6 py-4">
-                                        <span class="flex items-center gap-1.5 text-gray-400">
-                                            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
-                                            未激活
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-slate-600 hover:text-slate-900 font-medium" data-action="open-assign-role-modal" data-user="zhangying@example.com">分配角色</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="px-6 py-3 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
-                        <p class="text-[10px] text-gray-400">外部注册用户自动分配「普通终端用户」角色</p>
-                        <span class="text-[10px] text-gray-500">共 128 人</span>
-                    </div>
-                </div>
             </div>
 
             <!-- Tab Content: AI 模型参数配置 -->
@@ -3723,7 +3907,7 @@
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer group">
                                     <input type="radio" name="apply_type" class="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500/20">
-                                    <span class="text-sm text-gray-600 group-hover:text-gray-900">主动邀请</span>
+                                    <span class="text-sm text-gray-600 group-hover:text-gray-900">定向邀请</span>
                                 </label>
                             </div>
                         </div>
@@ -3776,6 +3960,38 @@
                                 </div>
                             </div>
                             <p class="text-[10px] text-gray-400 mt-1.5">选中的用户将收到特邀邀请通知</p>
+                        </div>
+                        <!-- 客户信息（仅定向邀请时显示） -->
+                        <div class="md:col-span-2 hidden" id="direct-invite-field">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-orange-50/40 rounded-lg border border-orange-100/60">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 mb-1.5">客户名称 <span class="text-red-500">*</span></label>
+                                    <input type="text" id="direct-customer-name" placeholder="请输入客户名称/公司名" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 mb-1.5">联系方式（手机号/邮箱） <span class="text-red-500">*</span></label>
+                                    <input type="text" id="direct-contact-info" placeholder="请输入手机号或邮箱" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white">
+                                    <p class="text-[10px] text-amber-500 mt-1.5 flex items-center gap-1">
+                                        <i data-lucide="alert-triangle" class="w-3 h-3 shrink-0"></i>
+                                        手机短信邀请存在被拦截风险，建议优先使用邮箱
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 审核开关（仅 AI 匹配邀请时显示） -->
+                        <div class="md:col-span-2 hidden" id="ai-review-field">
+                            <div class="p-4 bg-purple-50/40 rounded-lg border border-purple-100/60">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <div class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="ai-manual-review" class="sr-only peer">
+                                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-slate-900"></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-800">匹配结果人工审核</p>
+                                        <p class="text-[10px] text-gray-400">开启后 AI 匹配的人才列表需人工确认后才发送特邀</p>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-xs font-medium text-gray-500 mb-1.5">描述 <span class="text-red-500">*</span></label>
@@ -4014,6 +4230,128 @@
                     <button type="submit" class="px-6 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all">提交保存</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- 上传资源弹窗 -->
+    <div id="upload-resource-modal" class="modal-overlay">
+        <div class="modal-container custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-lg font-bold text-gray-900">上传学习资源</h3>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6">
+                <!-- 基本信息 -->
+                <section>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-1 h-4 bg-blue-500 rounded-full"></span>
+                        <h4 class="text-sm font-bold text-gray-800">基本信息</h4>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">资源名称 <span class="text-red-500">*</span></label>
+                            <input type="text" placeholder="请输入资源名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">所属分类 <span class="text-red-500">*</span></label>
+                            <select class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                                <option value="">请选择分类</option>
+                                <option>新手必读</option>
+                                <option>技能提升 (视频)</option>
+                                <option>交付物模板</option>
+                                <option>行业报告库</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">资源类型 <span class="text-red-500">*</span></label>
+                            <select class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                                <option value="">请选择类型</option>
+                                <option>视频</option>
+                                <option>PDF 文档</option>
+                                <option>Excel 模板</option>
+                                <option>Word 文档</option>
+                                <option>PPT 文档</option>
+                                <option>图片</option>
+                                <option>外部链接</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">智慧值奖励</label>
+                            <div class="relative">
+                                <input type="number" placeholder="完成学习奖励" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">pts</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">每日获取上限</label>
+                            <input type="number" placeholder="每日最多获取次数" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">资源描述</label>
+                            <textarea rows="3" placeholder="请输入资源描述，帮助用户了解资源内容" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 文件上传 -->
+                <section>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-1 h-4 bg-emerald-500 rounded-full"></span>
+                        <h4 class="text-sm font-bold text-gray-800">文件上传</h4>
+                    </div>
+                    <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-blue-300 transition-colors cursor-pointer group">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                <i data-lucide="upload" class="w-7 h-7 text-blue-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-700">点击或拖拽文件到此处上传</p>
+                                <p class="text-[11px] text-gray-400 mt-1">支持 PDF、MP4、Excel、Word、PPT、图片等格式，单个文件不超过 50MB</p>
+                            </div>
+                            <button class="px-5 py-2 bg-blue-500 text-white rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors shadow-sm">选择文件</button>
+                            <input type="file" class="hidden" accept=".pdf,.mp4,.xlsx,.xls,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.mp3">
+                        </div>
+                    </div>
+                    <div class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-100 rounded-lg" id="upload-file-preview">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="file" class="w-5 h-5 text-emerald-500"></i>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-700" id="upload-file-name">文件名.pdf</p>
+                                    <p class="text-[10px] text-gray-400" id="upload-file-size">2.4 MB</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-600 text-[10px] rounded-full">已选择</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 发布设置 -->
+                <section>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-1 h-4 bg-gray-300 rounded-full"></span>
+                        <h4 class="text-sm font-bold text-gray-800">发布设置</h4>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="resource_status" class="w-4 h-4 text-blue-500 border-gray-300" checked>
+                            <span class="text-sm text-gray-700">立即发布</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="resource_status" class="w-4 h-4 text-blue-500 border-gray-300">
+                            <span class="text-sm text-gray-700">存为草稿</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- 操作按钮 -->
+                <div class="pt-5 border-t border-gray-100 flex items-center justify-end gap-3">
+                    <button class="px-5 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
+                    <button class="px-5 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all">确认上传</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -4590,6 +4928,44 @@
         </div>
     </div>
 
+    <!-- 源数据弹窗 -->
+    <div id="source-data-modal" class="modal-overlay">
+        <div class="modal-container max-w-5xl custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-sm font-bold text-gray-900">源数据 - 亮数据获取</h3>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-[10px] text-gray-400">共 <strong id="source-data-total" class="text-gray-600">0</strong> 条数据</span>
+                </div>
+                <div class="overflow-x-auto max-h-[60vh] overflow-y-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider sticky top-0">
+                            <tr>
+                                <th class="px-3 py-2 font-medium w-8"><input type="checkbox" class="rounded text-slate-900 w-3 h-3" id="source-data-select-all"></th>
+                                <th class="px-3 py-2 font-medium">姓名</th>
+                                <th class="px-3 py-2 font-medium">邮箱</th>
+                                <th class="px-3 py-2 font-medium">电话</th>
+                                <th class="px-3 py-2 font-medium">职位</th>
+                                <th class="px-3 py-2 font-medium">当前公司</th>
+                                <th class="px-3 py-2 font-medium">所在地</th>
+                                <th class="px-3 py-2 font-medium">行业</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50 text-[11px]" id="source-data-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="px-6 py-3 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-3">
+                <button class="px-5 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
+                <button class="px-5 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" id="source-data-add-btn">添加到人才库</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 新增权重因子弹窗 -->
     <div id="add-weight-factor-modal" class="modal-overlay">
         <div class="modal-container max-w-md custom-scrollbar">
@@ -4643,6 +5019,127 @@
                     <button type="submit" class="px-5 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all">添加配置项</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- 同步确认弹窗 -->
+    <div id="sync-confirm-modal" class="modal-overlay">
+        <div class="modal-container max-w-sm custom-scrollbar">
+            <div class="px-6 py-5 text-center">
+                <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="refresh-cw" class="w-6 h-6 text-amber-500"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 mb-2">同步确认</h3>
+                <p class="text-xs text-gray-500 mb-6">是否去同步 LinkedIn 最新数据？</p>
+                <div class="flex items-center justify-center gap-3">
+                    <button class="px-6 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
+                    <button class="px-6 py-2 bg-amber-500 text-white rounded-lg text-xs font-medium hover:bg-amber-600 shadow-sm transition-all" id="sync-confirm-btn">确认同步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 匹配用户列表弹窗 -->
+    <div id="matched-users-modal" class="modal-overlay">
+        <div class="modal-container max-w-5xl custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-sm font-bold text-gray-900" id="matched-users-modal-title">特邀名称 - AI匹配用户列表</h3>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                            <tr>
+                                <th class="px-3 py-2 font-medium">姓名</th>
+                                <th class="px-3 py-2 font-medium">邮箱</th>
+                                <th class="px-3 py-2 font-medium">电话</th>
+                                <th class="px-3 py-2 font-medium">职位</th>
+                                <th class="px-3 py-2 font-medium">当前公司</th>
+                                <th class="px-3 py-2 font-medium">所在地</th>
+                                <th class="px-3 py-2 font-medium">行业</th>
+                                <th class="px-3 py-2 font-medium">领英链接</th>
+                                <th class="px-3 py-2 font-medium w-16">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50 text-[11px]" id="matched-users-tbody"></tbody>
+                    </table>
+                </div>
+                <p class="text-[10px] text-gray-400 text-center mt-4" id="matched-users-count"></p>
+            </div>
+            <div class="px-6 py-3 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-3" id="matched-users-footer">
+                <button class="px-5 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
+                <button class="px-5 py-2 bg-blue-500 text-white rounded-lg text-xs font-medium hover:bg-blue-600 shadow-sm transition-all" id="matched-users-publish-btn">确认发布</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 人才详情弹窗 -->
+    <div id="talent-detail-modal" class="modal-overlay">
+        <div class="modal-container max-w-2xl custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-sm font-bold text-gray-900">人才详情</h3>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6" id="talent-detail-body">
+                <!-- 基本信息 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center text-blue-600 font-bold shrink-0 text-xl" id="talent-detail-avatar">ZL</div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-lg font-bold text-gray-900" id="talent-detail-name">-</h4>
+                        <p class="text-sm text-gray-500 mt-0.5" id="talent-detail-position">-</p>
+                        <p class="text-xs text-gray-400" id="talent-detail-company">-</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <p class="text-[10px] text-gray-400">被邀请次数</p>
+                        <p class="text-2xl font-bold text-blue-600" id="talent-detail-invite-count">0</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-3 p-5 bg-gray-50/80 rounded-xl border border-gray-100">
+                    <div>
+                        <p class="text-[10px] text-gray-400">邮箱</p>
+                        <p class="text-sm text-gray-700 font-medium" id="talent-detail-email">-</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400">电话</p>
+                        <p class="text-sm text-gray-700 font-medium" id="talent-detail-phone">-</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400">所在地</p>
+                        <p class="text-sm text-gray-700 font-medium" id="talent-detail-location">-</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400">行业</p>
+                        <p class="text-sm text-gray-700 font-medium" id="talent-detail-industry">-</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400">APEX用户</p>
+                        <p class="text-sm text-gray-700 font-medium" id="talent-detail-apex-user">-</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400">领英链接</p>
+                        <p class="text-sm text-gray-700 font-medium"><a id="talent-detail-linkedin" href="#" target="_blank" class="text-blue-500 hover:underline">-</a></p>
+                    </div>
+                </div>
+                <!-- 用户画像（仅被邀请次数>0时显示） -->
+                <div id="talent-detail-portrait" class="hidden">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-1 h-5 bg-gradient-to-b from-purple-500 to-purple-400 rounded-full"></span>
+                        <h4 class="text-sm font-bold text-gray-800">AI 画像总结</h4>
+                    </div>
+                    <div class="p-5 bg-gradient-to-br from-purple-50/80 to-white rounded-xl border border-purple-100 space-y-4">
+                        <p class="text-sm text-gray-600 leading-relaxed" id="talent-detail-portrait-summary">-</p>
+                        <div>
+                            <p class="text-[10px] text-gray-400 mb-2 font-medium">标签</p>
+                            <div class="flex flex-wrap gap-2" id="talent-detail-tags"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -5523,14 +6020,28 @@
         document.getElementById('invite-search-input').addEventListener('input', filterInviteList);
         document.getElementById('invite-status-filter').addEventListener('change', filterInviteList);
 
-        // 报名方式切换 —— 精准指派时显示指定用户字段
+        // 报名方式切换 —— 精准指派时显示指定用户字段，定向邀请时显示客户信息字段
         document.querySelectorAll('input[name="apply_type"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 const assignField = document.getElementById('assign-user-field');
+                const directField = document.getElementById('direct-invite-field');
+                const aiReviewField = document.getElementById('ai-review-field');
                 if (this.value === '精准指派') {
                     assignField.classList.remove('hidden');
+                    directField.classList.add('hidden');
+                    aiReviewField.classList.add('hidden');
+                } else if (this.value === '定向邀请') {
+                    directField.classList.remove('hidden');
+                    assignField.classList.add('hidden');
+                    aiReviewField.classList.add('hidden');
+                } else if (this.value === 'AI 匹配邀请') {
+                    aiReviewField.classList.remove('hidden');
+                    assignField.classList.add('hidden');
+                    directField.classList.add('hidden');
                 } else {
                     assignField.classList.add('hidden');
+                    directField.classList.add('hidden');
+                    aiReviewField.classList.add('hidden');
                 }
             });
             // 设置 value 属性以便判断
@@ -5539,12 +6050,20 @@
                 radio.value = label.querySelector('span').textContent.trim();
             }
         });
-        // 初始化：如果页面加载时精准指派被选中则显示
+        // 初始化：如果页面加载时精准指派/定向邀请/ AI 匹配邀请被选中则显示
         (function initAssignField() {
             const checked = document.querySelector('input[name="apply_type"]:checked');
             const assignField = document.getElementById('assign-user-field');
-            if (checked && checked.value === '精准指派') {
-                assignField.classList.remove('hidden');
+            const directField = document.getElementById('direct-invite-field');
+            const aiReviewField = document.getElementById('ai-review-field');
+            if (checked) {
+                if (checked.value === '精准指派') {
+                    assignField.classList.remove('hidden');
+                } else if (checked.value === '定向邀请') {
+                    directField.classList.remove('hidden');
+                } else if (checked.value === 'AI 匹配邀请') {
+                    aiReviewField.classList.remove('hidden');
+                }
             }
         })();
 
@@ -5947,6 +6466,24 @@
                     modal.querySelector('[data-action="submit-add-invite"]').textContent = '创建特邀';
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
+                }
+                return;
+            }
+
+            if (action === 'add-learning-resource') {
+                const modal = document.getElementById('upload-resource-modal');
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+                return;
+            }
+
+            if (action === 'close-modal') {
+                const modal = target.closest('.modal-overlay');
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
                 return;
             }
@@ -6736,6 +7273,568 @@
     // 阻止面板内部点击冒泡
     document.getElementById('ai-assist-panel')?.addEventListener('click', function(e) {
         e.stopPropagation();
+    });
+
+    // 上传资源弹窗 - 文件选择
+    document.getElementById('upload-resource-modal')?.addEventListener('change', function(e) {
+        const input = e.target.closest('input[type="file"]');
+        if (!input || !input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const preview = document.getElementById('upload-file-preview');
+        const nameEl = document.getElementById('upload-file-name');
+        const sizeEl = document.getElementById('upload-file-size');
+        if (preview && nameEl && sizeEl) {
+            nameEl.textContent = file.name;
+            const size = file.size > 1024 * 1024
+                ? (file.size / 1024 / 1024).toFixed(1) + ' MB'
+                : (file.size / 1024).toFixed(1) + ' KB';
+            sizeEl.textContent = size;
+            preview.classList.remove('hidden');
+        }
+    });
+
+    // 上传资源弹窗 - 点击上传区域触发文件选择
+    document.getElementById('upload-resource-modal')?.addEventListener('click', function(e) {
+        const uploadArea = e.target.closest('.border-dashed');
+        if (uploadArea) {
+            const fileInput = uploadArea.querySelector('input[type="file"]');
+            if (fileInput) fileInput.click();
+        }
+    });
+
+    // ========== 人才库 ==========
+    const POSITIONS = ['CEO', 'CTO', 'CFO', 'COO', '合规总监', '风控总监', '产品副总裁', '业务拓展总监', '技术总监', '市场总监', '区域总经理', '运营总监', '财务总监', '法务总监', '高级经理', '项目经理', '分析师', '产品经理', '技术主管', '区块链架构师'];
+    const COMPANIES = ['HSBC', 'Standard Chartered', 'JPMorgan', 'DBS Bank', '蚂蚁集团', '腾讯', '字节跳动', '汇丰银行', '花旗银行', '摩根士丹利', '高盛', 'Visa', 'Mastercard', 'PayPal', 'Stripe', 'Ping++', '连连支付', 'Airwallex', 'XTransfer', 'Alibaba Group'];
+    const CITIES = ['上海', '北京', '深圳', '香港', '新加坡', '伦敦', '纽约', '旧金山', '东京', '法兰克福', '迪拜', '悉尼'];
+    const COUNTRIES = ['中国', '中国', '中国', '中国香港', '新加坡', '英国', '美国', '美国', '日本', '德国', '阿联酋', '澳大利亚'];
+    const INDUSTRIES = ['银行与金融', '银行与金融', '科技与互联网', '跨境支付', '银行与金融', '咨询与专业服务', '区块链与Web3', '合规与法律', '科技与互联网', '跨境支付', '银行与金融', '科技与互联网'];
+    const FIRST_NAMES = ['王', '李', '张', '刘', '陈', '杨', '黄', '赵', '周', '吴', '徐', '孙', '马', '朱', '胡', '郭', '何', '高', '林', '罗', 'James', 'Robert', 'John', 'Michael', 'David', 'William', 'Richard', 'Joseph', 'Thomas', 'Charles'];
+    const LAST_NAMES = ['伟', '强', '磊', '军', '勇', '明', '杰', '涛', '斌', '华', '鹏', '飞', '超', '洋', '浩', 'Kevin', 'Smith', 'Brown', 'Jones', 'Miller', 'Davis', 'Wilson', 'Martinez', 'Anderson', 'Lee', 'Wang', 'Li', 'Zhang'];
+
+    function generateTalentData(count) {
+        const data = [];
+        for (let i = 0; i < count; i++) {
+            const firstName = FIRST_NAMES[i % FIRST_NAMES.length];
+            const lastName = LAST_NAMES[i % LAST_NAMES.length];
+            const ci = i % CITIES.length;
+            data.push({
+                id: i + 1,
+                name: firstName + lastName,
+                email: firstName.toLowerCase() + '.' + lastName.toLowerCase() + (i % 100 + 1) + '@example.com',
+                phone: ['+86 138', '+86 159', '+86 186', '+1 415', '+1 212', '+65 8', '+852 6', '+44 7'][i % 8] + (10000000 + (i % 90000000)).toString(),
+                position: POSITIONS[i % POSITIONS.length],
+                company: COMPANIES[i % COMPANIES.length],
+                city: CITIES[ci],
+                country: COUNTRIES[ci],
+                industry: INDUSTRIES[i % INDUSTRIES.length],
+                linkedin: 'https://linkedin.com/in/' + firstName.toLowerCase() + lastName.toLowerCase() + (i % 100),
+                inviteCount: Math.floor(Math.random() * 12),
+                isApexUser: Math.random() > 0.6,
+                selected: false
+            });
+        }
+        return data;
+    }
+
+    const TALENT_DATA = generateTalentData(1284);
+    let talentCurrentPage = 1;
+    let talentPageSize = 12;
+    let talentFilteredData = [...TALENT_DATA];
+
+    const TALENT_COLUMNS = [
+        { key: 'name', label: '姓名', visible: true },
+        { key: 'email', label: '邮箱', visible: true },
+        { key: 'phone', label: '电话', visible: true },
+        { key: 'position', label: '职位', visible: true },
+        { key: 'company', label: '当前公司', visible: true },
+        { key: 'location', label: '所在地', visible: true },
+        { key: 'industry', label: '行业', visible: true },
+        { key: 'inviteCount', label: '被邀请次数', visible: true },
+        { key: 'isApexUser', label: 'APEX用户', visible: true },
+        { key: 'linkedin', label: '领英链接', visible: false }
+    ];
+
+    function renderTalentTable() {
+        const start = (talentCurrentPage - 1) * talentPageSize;
+        const end = start + talentPageSize;
+        const pageData = talentFilteredData.slice(start, end);
+        const tbody = document.getElementById('talent-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = pageData.map(p => `
+            <tr class="hover:bg-gray-50/70 transition-colors ${p.selected ? 'bg-blue-50/30' : ''}">
+                <td class="px-4 py-2.5"><input type="checkbox" class="talent-item-check rounded text-slate-900 w-3 h-3" data-id="${p.id}" ${p.selected ? 'checked' : ''}></td>
+                <td class="px-4 py-2.5 font-medium text-gray-900 whitespace-nowrap" data-col="name">${p.name}</td>
+                <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap" data-col="email">${p.email}</td>
+                <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap" data-col="phone">${p.phone}</td>
+                <td class="px-4 py-2.5 text-gray-600 whitespace-nowrap" data-col="position">${p.position}</td>
+                <td class="px-4 py-2.5 text-gray-600 whitespace-nowrap" data-col="company">${p.company}</td>
+                <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap" data-col="location">${p.city}${p.country !== p.city ? ', ' + p.country : ''}</td>
+                <td class="px-4 py-2.5" data-col="industry"><span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[9px] rounded">${p.industry}</span></td>
+                <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap text-center" data-col="inviteCount">${p.inviteCount}</td>
+                 <td class="px-4 py-2.5 whitespace-nowrap text-center" data-col="isApexUser"><span class="px-1.5 py-0.5 text-[9px] rounded font-medium ${p.isApexUser ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-400'}">${p.isApexUser ? '是' : '否'}</span></td>
+                 <td class="px-4 py-2.5" data-col="linkedin"><a href="${p.linkedin}" target="_blank" class="text-blue-500 hover:underline text-[10px]" title="${p.linkedin}"><i data-lucide="external-link" class="w-3 h-3 inline"></i></a></td>
+                <td class="px-4 py-2.5 text-right">
+                    <button class="text-gray-500 hover:text-blue-600 text-[10px]" data-action="view-talent" data-id="${p.id}">详情</button>
+                    <button class="text-gray-500 hover:text-slate-900 text-[10px] ml-1.5" data-action="edit-talent" data-id="${p.id}">编辑</button>
+                </td>
+            </tr>
+        `).join('');
+        document.getElementById('talent-total-rows').textContent = talentFilteredData.length.toLocaleString();
+        document.getElementById('talent-total-count').textContent = talentFilteredData.length.toLocaleString();
+        applyColumnVisibility();
+        renderPagination();
+        lucide.createIcons();
+    }
+
+    function applyColumnVisibility() {
+        const visibleKeys = TALENT_COLUMNS.filter(c => c.visible).map(c => c.key);
+        document.querySelectorAll('#talent-table [data-col]').forEach(el => {
+            const col = el.getAttribute('data-col');
+            el.style.display = visibleKeys.includes(col) ? '' : 'none';
+        });
+    }
+
+    function renderColumnSelector() {
+        const list = document.getElementById('talent-col-list');
+        if (!list) return;
+        list.innerHTML = TALENT_COLUMNS.map(c => `
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="talent-col-checkbox rounded text-slate-900 w-3 h-3" data-key="${c.key}" ${c.visible ? 'checked' : ''}>
+                <span class="text-[10px] text-gray-600">${c.label}</span>
+            </label>
+        `).join('');
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(talentFilteredData.length / talentPageSize) || 1;
+        document.getElementById('talent-total-pages').textContent = totalPages;
+        document.getElementById('talent-page-jump').max = totalPages;
+        document.getElementById('talent-page-jump').value = talentCurrentPage;
+
+        const prevBtn = document.getElementById('talent-page-prev');
+        const nextBtn = document.getElementById('talent-page-next');
+        prevBtn.disabled = talentCurrentPage <= 1;
+        nextBtn.disabled = talentCurrentPage >= totalPages;
+
+        const numbersContainer = document.getElementById('talent-page-numbers');
+        let html = '';
+        const maxVisible = 7;
+        let startP = Math.max(1, talentCurrentPage - Math.floor(maxVisible / 2));
+        let endP = Math.min(totalPages, startP + maxVisible - 1);
+        if (endP - startP < maxVisible - 1) startP = Math.max(1, endP - maxVisible + 1);
+        for (let i = startP; i <= endP; i++) {
+            html += `<button class="px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${i === talentCurrentPage ? 'bg-slate-900 text-white' : 'text-gray-500 hover:bg-gray-100'}" data-page="${i}">${i}</button>`;
+        }
+        numbersContainer.innerHTML = html;
+    }
+
+    function filterTalentData() {
+        const keyword = document.getElementById('talent-search-input')?.value.toLowerCase() || '';
+        const country = document.getElementById('talent-country-filter')?.value || '';
+        const industry = document.getElementById('talent-industry-filter')?.value || '';
+        talentFilteredData = TALENT_DATA.filter(p => {
+            const matchKeyword = !keyword || p.name.toLowerCase().includes(keyword) || p.email.toLowerCase().includes(keyword) || p.phone.includes(keyword) || p.position.toLowerCase().includes(keyword) || p.company.toLowerCase().includes(keyword);
+            const matchCountry = !country || p.country === country;
+            const matchIndustry = !industry || p.industry === industry;
+            return matchKeyword && matchCountry && matchIndustry;
+        });
+        talentCurrentPage = 1;
+        renderTalentTable();
+    }
+
+    // 人才库事件绑定
+    document.getElementById('talent-search-input')?.addEventListener('input', filterTalentData);
+    document.getElementById('talent-country-filter')?.addEventListener('change', filterTalentData);
+    document.getElementById('talent-industry-filter')?.addEventListener('change', filterTalentData);
+    document.getElementById('talent-page-size')?.addEventListener('change', function() {
+        talentPageSize = parseInt(this.value);
+        talentCurrentPage = 1;
+        renderTalentTable();
+    });
+    document.getElementById('talent-page-prev')?.addEventListener('click', function() {
+        if (talentCurrentPage > 1) { talentCurrentPage--; renderTalentTable(); }
+    });
+    document.getElementById('talent-page-next')?.addEventListener('click', function() {
+        const totalPages = Math.ceil(talentFilteredData.length / talentPageSize);
+        if (talentCurrentPage < totalPages) { talentCurrentPage++; renderTalentTable(); }
+    });
+    document.getElementById('talent-pagination')?.addEventListener('click', function(e) {
+        const pageBtn = e.target.closest('[data-page]');
+        if (pageBtn) { talentCurrentPage = parseInt(pageBtn.getAttribute('data-page')); renderTalentTable(); }
+    });
+    document.getElementById('talent-page-jump')?.addEventListener('change', function() {
+        const totalPages = Math.ceil(talentFilteredData.length / talentPageSize);
+        let p = parseInt(this.value);
+        if (isNaN(p) || p < 1) p = 1;
+        if (p > totalPages) p = totalPages;
+        talentCurrentPage = p;
+        renderTalentTable();
+    });
+    document.getElementById('talent-select-all')?.addEventListener('change', function() {
+        const start = (talentCurrentPage - 1) * talentPageSize;
+        const end = start + talentPageSize;
+        for (let i = start; i < end && i < talentFilteredData.length; i++) {
+            talentFilteredData[i].selected = this.checked;
+        }
+        renderTalentTable();
+    });
+    document.getElementById('talent-tbody')?.addEventListener('change', function(e) {
+        const checkbox = e.target.closest('.talent-item-check');
+        if (checkbox) {
+            const id = parseInt(checkbox.getAttribute('data-id'));
+            const item = talentFilteredData.find(p => p.id === id);
+            if (item) item.selected = checkbox.checked;
+        }
+    });
+
+    // 人才库导航激活时初始化
+    document.querySelector('.nav-item[data-view="talent-pool"]')?.addEventListener('click', function() {
+        setTimeout(() => {
+            renderColumnSelector();
+            renderTalentTable();
+        }, 50);
+    });
+
+    // 列显示选择器
+    document.getElementById('talent-col-toggle')?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById('talent-col-dropdown');
+        if (dropdown) dropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', function(e) {
+        const selector = document.getElementById('talent-column-selector');
+        if (selector && !selector.contains(e.target)) {
+            document.getElementById('talent-col-dropdown')?.classList.add('hidden');
+        }
+    });
+    document.getElementById('talent-col-list')?.addEventListener('change', function(e) {
+        const checkbox = e.target.closest('.talent-col-checkbox');
+        if (checkbox) {
+            const key = checkbox.getAttribute('data-key');
+            const col = TALENT_COLUMNS.find(c => c.key === key);
+            if (col) {
+                col.visible = checkbox.checked;
+                applyColumnVisibility();
+            }
+        }
+    });
+
+    // 人才库操作按钮
+    document.querySelector('[data-action="refresh-talent"]')?.addEventListener('click', function() {
+        filterTalentData();
+        showToast('数据已刷新');
+    });
+    document.querySelector('[data-action="export-talent"]')?.addEventListener('click', function() {
+        const selected = talentFilteredData.filter(p => p.selected);
+        const count = selected.length;
+        showToast(count > 0 ? `已导出 ${count} 条人才数据` : '请先勾选需要导出的人才数据');
+    });
+
+    // 同步更新数据
+    document.querySelector('[data-action="sync-talent"]')?.addEventListener('click', function() {
+        const modal = document.getElementById('sync-confirm-modal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+    document.getElementById('sync-confirm-btn')?.addEventListener('click', function() {
+        const modal = document.getElementById('sync-confirm-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        showToast('正在同步 LinkedIn 最新数据...');
+        setTimeout(() => {
+            showToast('数据同步完成，共更新 1,284 条人才数据');
+        }, 2000);
+    });
+
+    // ========== 源数据 ==========
+    function generateSourceData(count) {
+        const srcNames = ['王伟', '李强', '张磊', '刘洋', '陈浩', '杨帆', '黄杰', '赵敏', '周亮', '吴超', '徐峰', '孙浩宇', '马晓燕', '朱建平', '胡文博'];
+        const srcEmails = ['wei.wang', 'qiang.li', 'lei.zhang', 'yang.liu', 'hao.chen', 'fan.yang', 'jie.huang', 'min.zhao', 'liang.zhou', 'chao.wu'];
+        const srcPositions = ['CEO', 'CTO', '产品负责人', '技术负责人', '首席架构师', '市场VP', '销售VP', '风控总监', '合规总监', '财务总监', '运营总监', '数据分析总监', '业务开发VP', '联合创始人', '高级研究员'];
+        const srcCompanies = ['华兴资本', '国泰君安', '中金公司', '百度', '阿里巴巴', '京东', '快手', '美团', '小米', '蔚来汽车', '理想汽车', '大疆创新', '宁德时代', '喜茶', '字节跳动'];
+        const srcCities = ['上海, 中国', '北京, 中国', '深圳, 中国', '杭州, 中国', '广州, 中国', '成都, 中国', '香港, 中国香港', '新加坡, 新加坡', '伦敦, 英国', '纽约, 美国'];
+        const srcIndustries = ['银行与金融', '科技与互联网', '跨境支付', '咨询与专业服务', '区块链与Web3', '合规与法律', '科技与互联网', '银行与金融', '科技与互联网', '跨境支付'];
+        const data = [];
+        for (let i = 0; i < count; i++) {
+            const idx = i % srcNames.length;
+            const ci = i % srcCities.length;
+            data.push({
+                id: 'src_' + (i + 1),
+                name: srcNames[idx],
+                email: srcEmails[i % srcEmails.length] + (i + 1) + '@example.com',
+                phone: ['+86 138', '+86 159', '+86 186', '+86 136', '+86 188'][i % 5] + (20000000 + (i * 12345) % 80000000).toString(),
+                position: srcPositions[i % srcPositions.length],
+                company: srcCompanies[i % srcCompanies.length],
+                location: srcCities[ci],
+                industry: srcIndustries[i % srcIndustries.length],
+                selected: false
+            });
+        }
+        return data;
+    }
+
+    let SOURCE_DATA = [];
+
+    document.getElementById('source-data-select-all')?.addEventListener('change', function() {
+        const checked = this.checked;
+        SOURCE_DATA.forEach(d => d.selected = checked);
+        renderSourceData();
+    });
+
+    function renderSourceData() {
+        const tbody = document.getElementById('source-data-tbody');
+        const total = document.getElementById('source-data-total');
+        if (!tbody) return;
+        tbody.innerHTML = SOURCE_DATA.map((d, idx) => `
+            <tr class="hover:bg-gray-50/70 transition-colors ${d.selected ? 'bg-blue-50/30' : ''}">
+                <td class="px-3 py-2"><input type="checkbox" class="source-data-check rounded text-slate-900 w-3 h-3" data-idx="${idx}" ${d.selected ? 'checked' : ''}></td>
+                <td class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap">${d.name}</td>
+                <td class="px-3 py-2 text-gray-500 whitespace-nowrap">${d.email}</td>
+                <td class="px-3 py-2 text-gray-500 whitespace-nowrap">${d.phone}</td>
+                <td class="px-3 py-2 text-gray-600 whitespace-nowrap">${d.position}</td>
+                <td class="px-3 py-2 text-gray-600 whitespace-nowrap">${d.company}</td>
+                <td class="px-3 py-2 text-gray-500 whitespace-nowrap">${d.location}</td>
+                <td class="px-3 py-2"><span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[9px] rounded">${d.industry}</span></td>
+            </tr>
+        `).join('');
+        total.textContent = SOURCE_DATA.length.toLocaleString();
+    }
+
+    document.getElementById('source-data-tbody')?.addEventListener('change', function(e) {
+        const check = e.target.closest('.source-data-check');
+        if (check) {
+            const idx = parseInt(check.getAttribute('data-idx'));
+            SOURCE_DATA[idx].selected = check.checked;
+            renderSourceData();
+        }
+    });
+
+    document.getElementById('source-data-add-btn')?.addEventListener('click', function() {
+        const selected = SOURCE_DATA.filter(d => d.selected);
+        if (selected.length === 0) {
+            showToast('请先勾选需要添加到人才库的数据');
+            return;
+        }
+        const nextId = TALENT_DATA.length + 1;
+        selected.forEach((d, i) => {
+            const parts = d.location.split(', ');
+            TALENT_DATA.push({
+                id: nextId + i,
+                name: d.name,
+                email: d.email,
+                phone: d.phone,
+                position: d.position,
+                company: d.company,
+                city: parts[0] || d.location,
+                country: parts[1] || '',
+                industry: d.industry,
+                linkedin: 'https://linkedin.com/in/' + d.name.toLowerCase().replace(/\s+/g, '') + (nextId + i),
+                inviteCount: 0,
+                isApexUser: false,
+                selected: false
+            });
+        });
+        SOURCE_DATA = SOURCE_DATA.filter(d => !d.selected);
+        renderSourceData();
+        renderTalentTable();
+        const modal = document.getElementById('source-data-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        showToast(`已添加 ${selected.length} 条人才数据到人才库`);
+    });
+
+    document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action="open-source-data"]');
+        if (btn) {
+            e.preventDefault();
+            const modal = document.getElementById('source-data-modal');
+            if (!modal) return;
+            SOURCE_DATA = generateSourceData(36);
+            const allCheck = document.getElementById('source-data-select-all');
+            if (allCheck) allCheck.checked = false;
+            renderSourceData();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+    });
+
+    // 人才详情查看（通过全局委托）
+    document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action="view-talent"]');
+        if (btn) {
+            const id = btn.getAttribute('data-id');
+            const item = TALENT_DATA.find(p => p.id === parseInt(id));
+            if (item) {
+                const modal = document.getElementById('talent-detail-modal');
+                if (!modal) return;
+                document.getElementById('talent-detail-name').textContent = item.name;
+                document.getElementById('talent-detail-position').textContent = item.position;
+                document.getElementById('talent-detail-company').textContent = item.company;
+                document.getElementById('talent-detail-email').textContent = item.email;
+                document.getElementById('talent-detail-phone').textContent = item.phone;
+                document.getElementById('talent-detail-location').textContent = item.city + (item.country !== item.city ? ', ' + item.country : '');
+                document.getElementById('talent-detail-industry').textContent = item.industry;
+                document.getElementById('talent-detail-invite-count').textContent = item.inviteCount;
+                document.getElementById('talent-detail-apex-user').textContent = item.isApexUser ? '是' : '否';
+                const linkedinEl = document.getElementById('talent-detail-linkedin');
+                linkedinEl.textContent = item.linkedin;
+                linkedinEl.href = item.linkedin;
+                const initials = item.name.replace(/[a-z]/g, '').substring(0, 2) || item.name.substring(0, 2);
+                document.getElementById('talent-detail-avatar').textContent = initials.toUpperCase();
+                const portraitDiv = document.getElementById('talent-detail-portrait');
+                const tagsDiv = document.getElementById('talent-detail-tags');
+                const summaryEl = document.getElementById('talent-detail-portrait-summary');
+                if (item.inviteCount > 0) {
+                    portraitDiv.classList.remove('hidden');
+                    const tagPool = ['行业专家', '高层管理者', '跨境经验', '合规背景', '技术负责人', '战略顾问', '连续创业者', '海外背景', '资深风控', '支付架构', '数据分析', '产品策略', '商务拓展', '研究输出', '项目管理'];
+                    const count = Math.min(3 + Math.floor(item.inviteCount / 2), 8);
+                    const shuffled = [...tagPool].sort(() => Math.random() - 0.5).slice(0, count);
+                    tagsDiv.innerHTML = shuffled.map(t => `<span class="px-2.5 py-1 bg-purple-50 text-purple-600 text-[10px] rounded-full font-medium border border-purple-100">${t}</span>`).join('');
+                    const summaryTemplates = [
+                        `根据过往 ${item.inviteCount} 次特邀表现分析，${item.name} 在 ${item.industry} 领域展现出突出的专业素养，尤其是在 ${item.position} 这一角色上积累了丰富的实战经验，多次获得项目方高度评价。`,
+                        `基于历史邀请数据分析，${item.name}（${item.position}）是 ${item.industry} 领域的高质量专家，过往 ${item.inviteCount} 次合作中表现出色，具备跨文化沟通能力和深入的行业洞察力。`,
+                        `AI 综合评估显示，${item.name} 在 ${item.industry} 领域担任 ${item.position}，通过 ${item.inviteCount} 次特邀合作的成果数据，其专业能力和交付质量均处于领先水平，特别擅长解决复杂业务问题。`,
+                        `画像分析：${item.name}（${item.position} @ ${item.company}）在 ${item.industry} 领域深耕多年，${item.inviteCount} 次特邀经历证明其具备优秀的研究输出能力和行业人脉资源，是平台头部专家之一。`
+                    ];
+                    summaryEl.textContent = summaryTemplates[Math.floor(Math.random() * summaryTemplates.length)];
+                } else {
+                    portraitDiv.classList.add('hidden');
+                }
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                lucide.createIcons();
+            }
+        }
+    });
+
+    // 编辑人才信息
+    document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action="edit-talent"]');
+        if (btn) {
+            const id = btn.getAttribute('data-id');
+            const item = TALENT_DATA.find(p => p.id === parseInt(id));
+            if (item) {
+                showToast(`编辑 ${item.name} 的信息（姓名: ${item.name}, 邮箱: ${item.email}, 电话: ${item.phone}, 职位: ${item.position}, 公司: ${item.company}）`);
+            }
+        }
+    });
+
+    // 匹配用户列表
+    function generateMatchedUsers(inviteName, count) {
+        const names = ['张伟', '王强', '李磊', '赵军', '陈勇', '刘明', '杨杰', '黄涛', '周斌', '吴华', 'James Wang', 'Robert Li', 'David Chen', 'Michael Zhang', 'Richard Liu'];
+        const emails = ['zhangwei', 'wangqiang', 'lilei', 'zhaojun', 'chenyong', 'lium', 'yangjie', 'huangtao', 'zhoubin', 'wuhua'];
+        const phones = ['+86 138', '+86 159', '+86 186', '+1 415', '+1 212', '+65 8', '+852 6', '+44 7'];
+        const positions = ['CEO', 'CTO', 'CFO', '合规总监', '风控总监', '产品副总裁', '技术总监', '市场总监', '运营总监', '高级经理'];
+        const companies = ['HSBC', 'Standard Chartered', '蚂蚁集团', '腾讯', '字节跳动', '汇丰银行', '高盛', 'Visa', 'Mastercard', 'Stripe'];
+        const industries = ['银行与金融', '科技与互联网', '跨境支付', '区块链与Web3', '合规与法律', '咨询与专业服务'];
+        const linkedinPrefix = 'https://linkedin.com/in/';
+        const data = [];
+        for (let i = 0; i < count; i++) {
+            const idx = i % names.length;
+            const ci = i % 6;
+            data.push({
+                name: names[idx],
+                email: emails[idx] + (i + 1) + '@example.com',
+                phone: phones[i % phones.length] + (10000000 + (i * 123456) % 90000000).toString(),
+                position: positions[i % positions.length],
+                company: companies[i % companies.length],
+                location: ['上海, 中国', '北京, 中国', '深圳, 中国', '香港, 中国香港', '新加坡, 新加坡', '伦敦, 英国'][ci],
+                industry: industries[i % industries.length],
+                linkedin: linkedinPrefix + names[idx].toLowerCase().replace(/\s+/g, '') + (i + 100)
+            });
+        }
+        return data;
+    }
+
+    document.body.addEventListener('click', function(e) {
+        const link = e.target.closest('[data-action="view-matched-users"], [data-action="review-publish"]');
+        if (link) {
+            e.preventDefault();
+            const inviteName = link.getAttribute('data-invite-name');
+            const count = parseInt(link.getAttribute('data-invite-count'));
+            const isReview = link.getAttribute('data-action') === 'review-publish';
+            const modal = document.getElementById('matched-users-modal');
+            if (!modal) return;
+            document.getElementById('matched-users-modal-title').textContent = inviteName + ' - AI匹配用户列表';
+            const users = generateMatchedUsers(inviteName, count);
+            const tbody = document.getElementById('matched-users-tbody');
+            tbody.innerHTML = users.map((u, idx) => `
+                <tr class="hover:bg-gray-50/70 transition-colors" data-user-idx="${idx}">
+                    <td class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap">${u.name}</td>
+                    <td class="px-3 py-2 text-gray-500 whitespace-nowrap">${u.email}</td>
+                    <td class="px-3 py-2 text-gray-500 whitespace-nowrap">${u.phone}</td>
+                    <td class="px-3 py-2 text-gray-600 whitespace-nowrap">${u.position}</td>
+                    <td class="px-3 py-2 text-gray-600 whitespace-nowrap">${u.company}</td>
+                    <td class="px-3 py-2 text-gray-500 whitespace-nowrap">${u.location}</td>
+                    <td class="px-3 py-2"><span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[9px] rounded">${u.industry}</span></td>
+                    <td class="px-3 py-2"><a href="${u.linkedin}" target="_blank" class="text-blue-500 hover:underline text-[10px]" title="${u.linkedin}"><i data-lucide="external-link" class="w-3 h-3 inline"></i></a></td>
+                    <td class="px-3 py-2 text-center">${isReview ? '<button class="text-red-400 hover:text-red-600 text-[10px] font-medium" data-action="exclude-matched-user">排除</button>' : ''}</td>
+                </tr>
+            `).join('');
+            document.getElementById('matched-users-count').textContent = `共 ${count} 条匹配结果`;
+            const footer = document.getElementById('matched-users-footer');
+            if (footer) footer.style.display = isReview ? 'flex' : 'none';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+    });
+
+    // 排除匹配用户
+    document.getElementById('matched-users-tbody')?.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action="exclude-matched-user"]');
+        if (btn) {
+            const row = btn.closest('tr');
+            if (row) {
+                const isExcluded = row.classList.contains('opacity-30');
+                if (isExcluded) {
+                    row.classList.remove('opacity-30', 'line-through');
+                    btn.textContent = '排除';
+                    btn.classList.remove('text-green-500', 'hover:text-green-600');
+                    btn.classList.add('text-red-400', 'hover:text-red-600');
+                    btn.classList.remove('font-bold');
+                } else {
+                    row.classList.add('opacity-30', 'line-through');
+                    btn.textContent = '恢复';
+                    btn.classList.remove('text-red-400', 'hover:text-red-600');
+                    btn.classList.add('text-green-500', 'hover:text-green-600');
+                    btn.classList.add('font-bold');
+                }
+            }
+        }
+    });
+
+    // 确认发布匹配用户
+    document.getElementById('matched-users-publish-btn')?.addEventListener('click', function() {
+        const tbody = document.getElementById('matched-users-tbody');
+        const total = tbody ? tbody.querySelectorAll('tr').length : 0;
+        const excluded = tbody ? tbody.querySelectorAll('tr.opacity-30').length : 0;
+        const published = total - excluded;
+        const titleEl = document.getElementById('matched-users-modal-title');
+        const inviteName = titleEl ? titleEl.textContent.replace(' - AI匹配用户列表', '') : '';
+        const modal = document.getElementById('matched-users-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        showToast(`特邀「${inviteName}」已发布，共邀约 ${published} 人${excluded > 0 ? '，已排除 ' + excluded + ' 人' : ''}`);
+    });
+
+    // 直接发布
+    document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action="publish-invite"]');
+        if (btn) {
+            const row = btn.closest('tr');
+            const name = row ? row.querySelector('td:first-child')?.textContent : '';
+            showToast(`特邀「${name}」已发布`);
+        }
     });
 </script>
 </body>
