@@ -6990,7 +6990,6 @@
                 const nameEn = tr.getAttribute('data-name-en') || '';
                 const labels = {'project-type': '项目类型', 'project-status': '项目状态', 'invite-type': '特邀类型', 'invite-status': '特邀状态'};
                 const label = labels[configType] || '配置项';
-                const isStatus = configType.includes('status');
                 const modal = document.getElementById('project-config-modal');
                 if (!modal) return;
                 document.getElementById('project-config-modal-title').textContent = `编辑${label}`;
