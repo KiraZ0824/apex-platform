@@ -7376,6 +7376,7 @@
             const firstName = FIRST_NAMES[i % FIRST_NAMES.length];
             const lastName = LAST_NAMES[i % LAST_NAMES.length];
             const ci = i % CITIES.length;
+            const isApex = Math.random();
             data.push({
                 id: i + 1,
                 name: firstName + lastName,
@@ -7388,7 +7389,7 @@
                 industry: INDUSTRIES[i % INDUSTRIES.length],
                 linkedin: 'https://linkedin.com/in/' + firstName.toLowerCase() + lastName.toLowerCase() + (i % 100),
                 inviteCount: Math.floor(Math.random() * 12),
-                isApexUser: Math.random() > 0.6,
+                isApexUser: isApex > 0.7 ? '是' : isApex > 0.3 ? '否' : '游客',
                 selected: false
             });
         }
@@ -7430,7 +7431,7 @@
                 <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap" data-col="location">${p.city}${p.country !== p.city ? ', ' + p.country : ''}</td>
                 <td class="px-4 py-2.5" data-col="industry"><span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[9px] rounded">${p.industry}</span></td>
                 <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap text-center" data-col="inviteCount">${p.inviteCount}</td>
-                 <td class="px-4 py-2.5 whitespace-nowrap text-center" data-col="isApexUser"><span class="px-1.5 py-0.5 text-[9px] rounded font-medium ${p.isApexUser ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-400'}">${p.isApexUser ? '是' : '否'}</span></td>
+                 <td class="px-4 py-2.5 whitespace-nowrap text-center" data-col="isApexUser"><span class="px-1.5 py-0.5 text-[9px] rounded font-medium ${p.isApexUser === '是' ? 'bg-emerald-50 text-emerald-600' : p.isApexUser === '游客' ? 'bg-amber-50 text-amber-600' : 'bg-gray-100 text-gray-400'}">${p.isApexUser}</span></td>
                  <td class="px-4 py-2.5" data-col="linkedin"><a href="${p.linkedin}" target="_blank" class="text-blue-500 hover:underline text-[10px]" title="${p.linkedin}"><i data-lucide="external-link" class="w-3 h-3 inline"></i></a></td>
                 <td class="px-4 py-2.5 text-right">
                     <button class="text-gray-500 hover:text-blue-600 text-[10px]" data-action="view-talent" data-id="${p.id}">详情</button>
@@ -7693,7 +7694,7 @@
                 industry: d.industry,
                 linkedin: 'https://linkedin.com/in/' + d.name.toLowerCase().replace(/\s+/g, '') + (nextId + i),
                 inviteCount: 0,
-                isApexUser: false,
+                isApexUser: '否',
                 selected: false
             });
         });
@@ -7741,7 +7742,7 @@
                 document.getElementById('talent-detail-location').textContent = item.city + (item.country !== item.city ? ', ' + item.country : '');
                 document.getElementById('talent-detail-industry').textContent = item.industry;
                 document.getElementById('talent-detail-invite-count').textContent = item.inviteCount;
-                document.getElementById('talent-detail-apex-user').textContent = item.isApexUser ? '是' : '否';
+                document.getElementById('talent-detail-apex-user').textContent = item.isApexUser;
                 const linkedinEl = document.getElementById('talent-detail-linkedin');
                 linkedinEl.textContent = item.linkedin;
                 linkedinEl.href = item.linkedin;
