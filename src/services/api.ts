@@ -1,5 +1,5 @@
-import { Task, Submission, User, Activity, UserStats, Project, Invitation } from '../types';
-import { mockTasks, mockActivities, mockUserStats, mockProjects, mockInvitations } from '../data/mockData';
+import { Task, Submission, User, Activity, UserStats, Project, Invitation, LearningResource, InvitationItem } from '../types';
+import { mockTasks, mockActivities, mockUserStats, mockProjects, mockInvitations, mockLearningResources, mockMyInvitations, mockPlatformInvitations } from '../data/mockData';
 
 // 模拟数据库
 let tasks = [...mockTasks];
@@ -138,5 +138,23 @@ export const api = {
   async getInvitations(): Promise<Invitation[]> {
     await delay(300);
     return [...mockInvitations];
+  },
+
+  // 学习资源
+  async getLearningResources(): Promise<LearningResource[]> {
+    await delay(300);
+    return [...mockLearningResources];
+  },
+
+  // 我的特邀
+  async getMyInvitations(): Promise<InvitationItem[]> {
+    await delay(300);
+    return [...mockMyInvitations];
+  },
+
+  // 平台最新特邀
+  async getPlatformInvitations(): Promise<InvitationItem[]> {
+    await delay(300);
+    return [...mockPlatformInvitations];
   }
 };

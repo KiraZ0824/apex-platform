@@ -81,3 +81,28 @@ export interface UserStats {
   applyingTasks: number;
   totalPoints: number;
 }
+
+export interface LearningResource {
+  id: string;
+  title: string;
+  description: string;
+  type: 'video' | 'pdf' | 'template' | 'report';
+  typeLabel: string;
+  category: string;
+  duration?: string;
+  views?: string;
+  downloads?: string;
+  points: number;
+  completed: boolean;
+  icon: string;
+}
+
+export interface InvitationItem {
+  id: string;
+  title: string;
+  type: string;
+  status: string;
+  statusLabel: string;
+  statusColor: string;
+  points?: number;
+}

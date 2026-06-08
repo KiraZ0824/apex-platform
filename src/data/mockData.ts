@@ -1,4 +1,4 @@
-import { Task, Activity, UserStats, Project, Invitation } from '../types';
+import { Task, Activity, UserStats, Project, Invitation, LearningResource, InvitationItem } from '../types';
 
 export const mockTasks: Task[] = [
   {
@@ -53,6 +53,103 @@ export const mockTasks: Task[] = [
   }
 ];
 
+export const mockLearningResources: LearningResource[] = [
+  {
+    id: 'l1',
+    title: '如何进行一次高质量的专家访谈？',
+    description: '从访谈前准备、过程中的控场技巧到访谈后的纪要整理，全方位提升您的交付质量。',
+    type: 'video',
+    typeLabel: '视频教程',
+    category: '新手必读',
+    duration: '15:24',
+    views: '1.2k',
+    points: 20,
+    completed: true,
+    icon: 'play'
+  },
+  {
+    id: 'l2',
+    title: '平台特邀顾问行为规范与红线',
+    description: '详细说明平台对顾问在保密协议（NDA）、利益冲突、合规要求等方面的强制性规定。',
+    type: 'pdf',
+    typeLabel: 'PDF 文档',
+    category: '新手必读',
+    views: '5.8k',
+    points: 10,
+    completed: false,
+    icon: 'file-text'
+  },
+  {
+    id: 'l3',
+    title: '行业研究数据测算模型模板 v2.0',
+    description: '提供标准的市场规模测算（TAM/SAM/SOM）、竞品财务对比分析模板。',
+    type: 'template',
+    typeLabel: 'Excel 模板',
+    category: '交付物模板',
+    downloads: '856',
+    points: 15,
+    completed: false,
+    icon: 'file-spreadsheet'
+  },
+  {
+    id: 'l4',
+    title: '跨境支付行业年度报告 2025',
+    description: '全球跨境支付市场规模、竞争格局、监管趋势与技术创新深度分析。',
+    type: 'report',
+    typeLabel: '行业报告',
+    category: '行业报告库',
+    views: '3.2k',
+    points: 30,
+    completed: false,
+    icon: 'bar-chart'
+  },
+  {
+    id: 'l5',
+    title: '高效会议管理与沟通技巧',
+    description: '提升跨文化沟通效率，掌握远程协作场景下的会议管理技巧。',
+    type: 'video',
+    typeLabel: '视频教程',
+    category: '技能提升 (视频)',
+    duration: '22:10',
+    views: '980',
+    points: 20,
+    completed: false,
+    icon: 'play'
+  },
+  {
+    id: 'l6',
+    title: '专家访谈纪要模板',
+    description: '标准化访谈纪要撰写模板，确保交付物专业性和一致性。',
+    type: 'template',
+    typeLabel: 'Word 模板',
+    category: '交付物模板',
+    downloads: '1.5k',
+    points: 5,
+    completed: false,
+    icon: 'file-text'
+  }
+];
+
+export const mockMyInvitations: InvitationItem[] = [
+  { id: 'm1', title: '跨境支付行业现状授课顾问', type: '项目顾问', status: 'ongoing', statusLabel: '进行中', statusColor: 'blue', points: 100 },
+  { id: 'm2', title: '中国境内支付公司中层管理联系方式获取', type: '商务合作', status: 'pending', statusLabel: '待审核', statusColor: 'amber', points: 10 },
+  { id: 'm3', title: 'Web3 合约审计安全方案咨询', type: '技术咨询', status: 'completed', statusLabel: '已完成', statusColor: 'emerald', points: 200 },
+  { id: 'm4', title: '东南亚市场电商合规政策解读', type: '行业研究', status: 'pending', statusLabel: '待结算', statusColor: 'orange' },
+  { id: 'm5', title: '新能源汽车出海专家访谈', type: '专家访谈', status: 'cancelled', statusLabel: '已取消', statusColor: 'red' },
+  { id: 'm6', title: '日本 FinTech 市场准入策略咨询', type: '战略咨询', status: 'ongoing', statusLabel: '进行中', statusColor: 'blue', points: 150 },
+  { id: 'm7', title: 'DeFi 借贷协议风险评估模型搭建', type: '技术咨询', status: 'pending', statusLabel: '待审核', statusColor: 'amber', points: 180 },
+  { id: 'm8', title: '中东数字银行市场调研报告', type: '行业研究', status: 'completed', statusLabel: '已完成', statusColor: 'emerald', points: 220 },
+];
+
+export const mockPlatformInvitations: InvitationItem[] = [
+  { id: 'p1', title: '跨境支付行业现状授课顾问', type: '特邀顾问', status: 'open', statusLabel: '开放', statusColor: 'slate', points: 100 },
+  { id: 'p2', title: '中国境内支付公司中层管理联系方式获取', type: '商务合作', status: 'open', statusLabel: '开放', statusColor: 'slate', points: 10 },
+  { id: 'p3', title: '欧洲 GDPR 合规数据迁移方案设计', type: '合规咨询', status: 'open', statusLabel: '开放', statusColor: 'slate', points: 180 },
+  { id: 'p4', title: '东南亚数字银行牌照申请顾问', type: '战略咨询', status: 'open', statusLabel: '开放', statusColor: 'slate', points: 250 },
+  { id: 'p5', title: 'AI 驱动的反欺诈模型训练数据标注', type: '数据服务', status: 'open', statusLabel: '开放', statusColor: 'slate', points: 80 },
+  { id: 'p6', title: '拉美跨境支付市场进入策略调研', type: '行业研究', status: 'open', statusLabel: '开放', statusColor: 'slate', points: 160 },
+];
+
 export const mockActivities: Activity[] = [
   {
     id: 'a1',
@@ -76,7 +173,30 @@ export const mockActivities: Activity[] = [
     target: '自动化测试脚本',
     timestamp: '1天前',
     points: 120
-  }
+  },
+  {
+    id: 'a4',
+    user: '赵六',
+    action: '参与了特邀',
+    target: '跨境支付行业现状授课顾问',
+    timestamp: '2天前',
+    points: 100
+  },
+  {
+    id: 'a5',
+    user: '孙七',
+    action: '提交了报告',
+    target: '东南亚市场电商合规政策解读',
+    timestamp: '3天前',
+    points: 60
+  },
+  {
+    id: 'a6',
+    user: '周八',
+    action: '通过了审核',
+    target: 'KYC 实名认证集成',
+    timestamp: '4天前'
+  },
 ];
 
 export const mockUserStats: UserStats = {

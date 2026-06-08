@@ -1,7 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/apex-platform/',
+  build: {
+    rollupOptions: {
+      input: {
+        mobile: resolve(__dirname, 'mobile-index.html'),
+      },
+    },
+  },
+  server: {
+    open: '/apex-platform/mobile-index.html',
+  },
 })
