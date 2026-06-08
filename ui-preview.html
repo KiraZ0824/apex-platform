@@ -3864,7 +3864,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="md:col-span-2">
                             <label class="block text-xs font-medium text-gray-500 mb-1.5">名称 <span class="text-red-500">*</span></label>
-                            <input type="text" placeholder="请输入特邀名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                            <input type="text" placeholder="请输入特邀中文名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">英文名称 <span class="text-red-500">*</span></label>
+                            <input type="text" placeholder="请输入特邀英文名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1.5">类型 <span class="text-red-500">*</span></label>
@@ -4169,7 +4173,11 @@
                 <div class="grid grid-cols-2 gap-6">
                     <div class="col-span-2 space-y-1.5">
                         <label class="text-xs font-bold text-gray-700">项目名称 <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" required placeholder="请输入全局唯一的项目名称" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
+                        <input type="text" name="name" required placeholder="请输入项目中文名称" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
+                    </div>
+                    <div class="col-span-2 space-y-1.5">
+                        <label class="text-xs font-bold text-gray-700">项目英文名称 <span class="text-red-500">*</span></label>
+                        <input type="text" name="nameEn" required placeholder="请输入项目英文名称" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
                     </div>
                     <div class="space-y-1.5">
                         <label class="text-xs font-bold text-gray-700">业务类型 <span class="text-red-500">*</span></label>
@@ -4402,8 +4410,12 @@
                 <input type="hidden" id="project-config-edit-type" value="">
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700" id="project-config-name-label">配置项名称 <span class="text-red-500">*</span></label>
-                    <input type="text" id="project-config-name" required placeholder="请输入配置项名称，需全局唯一" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
+                    <input type="text" id="project-config-name" required placeholder="请输入配置项中文名称" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
                     <p class="text-[9px] text-gray-400 mt-1" id="project-config-name-hint">配置项名称需全局唯一，修改后仅影响新增数据</p>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">配置项英文名称 <span class="text-red-500">*</span></label>
+                    <input type="text" id="project-config-name-en" required placeholder="请输入配置项英文名称" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
                 </div>
                 <div class="space-y-1.5" id="project-config-status-color-group">
                     <label class="text-xs font-bold text-gray-700">状态颜色标识</label>
@@ -5005,6 +5017,10 @@
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700">配置项名称 <span class="text-red-500">*</span></label>
                     <input type="text" id="new-dim-name" required placeholder="如：语言能力" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">配置项英文名称 <span class="text-red-500">*</span></label>
+                    <input type="text" id="new-dim-name-en" required placeholder="如：Language Skill" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
                 </div>
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700">配置说明</label>
@@ -5917,9 +5933,11 @@
         document.getElementById('add-config-dim-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('new-dim-name').value.trim();
+            const nameEn = document.getElementById('new-dim-name-en').value.trim();
             const desc = document.getElementById('new-dim-desc').value.trim();
             const tagsStr = document.getElementById('new-dim-tags').value.trim();
             if (!name) { showToast('请输入配置项名称'); return; }
+            if (!nameEn) { showToast('请输入配置项英文名称'); return; }
 
             const container = document.getElementById('profile-config-container');
             const dimId = 'custom_' + Date.now();
@@ -5937,7 +5955,7 @@
                         <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                         <div>
                             <p class="text-xs font-bold text-gray-800">${name}</p>
-                            <p class="text-[10px] text-gray-400">${desc || '自定义配置项'}</p>
+                            <p class="text-[10px] text-gray-400">${nameEn}${desc ? ' · ' + desc : ''}</p>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer shrink-0">
