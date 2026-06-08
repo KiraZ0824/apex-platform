@@ -5029,6 +5029,12 @@
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700">枚举标签（逗号分隔）</label>
                     <input type="text" id="new-dim-tags" placeholder="标签1, 标签2, 标签3" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
+                    <p class="text-[9px] text-gray-400 mt-0.5">中文标签</p>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">枚举标签英文（逗号分隔）</label>
+                    <input type="text" id="new-dim-tags-en" placeholder="Tag1, Tag2, Tag3" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
+                    <p class="text-[9px] text-gray-400 mt-0.5">英文标签，用于多语言适配</p>
                 </div>
                 <div class="pt-5 border-t border-gray-100 flex items-center justify-end gap-3">
                     <button type="button" class="px-5 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
@@ -5936,12 +5942,15 @@
             const nameEn = document.getElementById('new-dim-name-en').value.trim();
             const desc = document.getElementById('new-dim-desc').value.trim();
             const tagsStr = document.getElementById('new-dim-tags').value.trim();
+            const tagsEnStr = document.getElementById('new-dim-tags-en').value.trim();
             if (!name) { showToast('请输入配置项名称'); return; }
             if (!nameEn) { showToast('请输入配置项英文名称'); return; }
 
             const container = document.getElementById('profile-config-container');
             const dimId = 'custom_' + Date.now();
             const tags = tagsStr ? tagsStr.split(/[,，]/).map(t => t.trim()).filter(Boolean) : ['示例标签'];
+            const tagsEn = tagsEnStr ? tagsEnStr.split(/[,，]/).map(t => t.trim()).filter(Boolean) : ['Sample'];       
+            const combinedTags = tags.map((t, i) => `${t} / ${tagsEn[i] || t}`);
 
             const div = document.createElement('div');
             div.className = 'p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card';
@@ -5963,7 +5972,7 @@
                         <div class="w-7 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-violet-500"></div>
                     </label>
                 </div>
-                <div class="flex flex-wrap gap-2">${tags.map(t => `<span class="px-2.5 py-1 bg-violet-50 text-violet-700 text-[10px] rounded-full font-medium">${t}</span>`).join('')}</div>
+                <div class="flex flex-wrap gap-2">${combinedTags.map(t => `<span class="px-2.5 py-1 bg-violet-50 text-violet-700 text-[10px] rounded-full font-medium">${t}</span>`).join('')}</div>
             `;
             container.appendChild(div);
             document.getElementById('add-config-dim-modal').classList.remove('active');
