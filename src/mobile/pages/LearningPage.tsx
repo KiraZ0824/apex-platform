@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { BookOpen, Clock, Award, Play, FileText, FileSpreadsheet, BarChart, Download, CheckCircle } from 'lucide-react';
+import { BookOpen, Clock, Play, FileText, FileSpreadsheet, BarChart, Download, CheckCircle } from 'lucide-react';
 import type { LearningResource } from '../../types';
-import { replacePoints } from '../i18n';
 
 interface LearningPageProps {
   resources: LearningResource[];
@@ -35,10 +34,9 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
 
   return (
     <div className="px-4 pb-8 space-y-4">
-      <section className="grid grid-cols-3 gap-2.5">
-        <MetricCard icon={BookOpen} label={copy.completedCourses} value={`${completedCount}${copy.courseUnit}`} />
+      <section className="grid grid-cols-2 gap-2.5">
+        <MetricCard icon={BookOpen} label={copy.completedCourses} value={`${completedCount}`} />
         <MetricCard icon={Clock} label={copy.hours} value="12.5h" />
-        <MetricCard icon={Award} label={copy.earned} value={`150${copy.pointsUnit}`} accent />
       </section>
 
       <section className="glass-panel rounded-[28px] p-4">
@@ -89,7 +87,6 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
                     <p className="text-[12px] text-app-muted line-clamp-2 leading-5">{resource.description}</p>
                     <div className="flex items-center justify-between mt-4 text-[10px] text-app-soft">
                       <span>{resource.views} {copy.views}</span>
-                      <span className="text-app-accent font-medium">{replacePoints(copy.completeReward, resource.points)}</span>
                     </div>
                   </div>
                 </>
@@ -113,7 +110,6 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
                         {resource.downloads} {copy.downloads}
                       </span>
                     )}
-                    <span className="text-app-accent font-medium">{resource.points}{copy.pointsUnit}</span>
                   </div>
                 </div>
               )}
