@@ -3171,7 +3171,7 @@
                     </div>
                     <div class="space-y-6" id="profile-config-container">
                         <!-- 1. 行业 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="industry">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="industry" data-dim-name-en="Industry">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="industry" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3179,7 +3179,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">行业</p>
+                                        <p class="text-xs font-bold text-gray-800">行业 <span class="font-normal text-gray-400">/ Industry</span></p>
                                         <p class="text-[10px] text-gray-400">枚举多选，可按金融细分行业筛选，匹配专家核心业务领域</p>
                                     </div>
                                 </div>
@@ -3203,7 +3203,7 @@
                             </div>
                         </div>
                         <!-- 2. 国家/地区 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="region">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="region" data-dim-name-en="Region">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="region" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3211,7 +3211,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">国家 / 地区</p>
+                                        <p class="text-xs font-bold text-gray-800">国家 / 地区 <span class="font-normal text-gray-400">/ Region</span></p>
                                         <p class="text-[10px] text-gray-400">枚举多选，适配全球用户，支持按业务需求限定区域</p>
                                     </div>
                                 </div>
@@ -3235,7 +3235,7 @@
                             </div>
                         </div>
                         <!-- 3. 从业年限 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="experience">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="experience" data-dim-name-en="Experience">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="experience" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3243,7 +3243,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">从业年限</p>
+                                        <p class="text-xs font-bold text-gray-800">从业年限 <span class="font-normal text-gray-400">/ Experience</span></p>
                                         <p class="text-[10px] text-gray-400">区间选择，针对金融高管，默认无限制</p>
                                     </div>
                                 </div>
@@ -3265,7 +3265,7 @@
                             </div>
                         </div>
                         <!-- 4. 职业 / 职级 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="position">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="position" data-dim-name-en="Position / Level">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="position" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3273,7 +3273,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">职业 / 职级</p>
+                                        <p class="text-xs font-bold text-gray-800">职业 / 职级 <span class="font-normal text-gray-400">/ Position / Level</span></p>
                                         <p class="text-[10px] text-gray-400">层级枚举 + 关键词匹配，精准匹配高管 / 专家层级</p>
                                     </div>
                                 </div>
@@ -3311,7 +3311,7 @@
                             </div>
                         </div>
                         <!-- 5. 关键履历标签 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="resume">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="resume" data-dim-name-en="Resume Tags">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="resume" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3319,7 +3319,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">关键履历标签</p>
+                                        <p class="text-xs font-bold text-gray-800">关键履历标签 <span class="font-normal text-gray-400">/ Resume Tags</span></p>
                                         <p class="text-[10px] text-gray-400">多选标签，匹配专家核心竞争力，为适配度计算提供基础依据</p>
                                     </div>
                                 </div>
@@ -3355,7 +3355,7 @@
                             </div>
                         </div>
                         <!-- 6. 合规 / 资质标签 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="compliance">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="compliance" data-dim-name-en="Compliance">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="compliance" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3363,7 +3363,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">合规 / 资质标签</p>
+                                        <p class="text-xs font-bold text-gray-800">合规 / 资质标签 <span class="font-normal text-gray-400">/ Compliance</span></p>
                                         <p class="text-[10px] text-gray-400">多选标签，针对合规类邀请快速筛选具备专业资质的专家</p>
                                     </div>
                                 </div>
@@ -3383,7 +3383,7 @@
                             </div>
                         </div>
                         <!-- 7. 合作偏好 -->
-                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="preference">
+                        <div class="p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card" data-dim-id="preference" data-dim-name-en="Preference">
                             <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="preference" title="删除配置项">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3391,7 +3391,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-800">合作偏好</p>
+                                        <p class="text-xs font-bold text-gray-800">合作偏好 <span class="font-normal text-gray-400">/ Preference</span></p>
                                         <p class="text-[10px] text-gray-400">多选标签，提前过滤与邀请形式不匹配的专家，降低无效推送率</p>
                                     </div>
                                 </div>
@@ -5956,6 +5956,7 @@
             const div = document.createElement('div');
             div.className = 'p-4 border border-gray-100 rounded-xl hover:border-violet-200 transition-colors relative group config-dimension-card';
             div.setAttribute('data-dim-id', dimId);
+            div.setAttribute('data-dim-name-en', nameEn);
             div.innerHTML = `
                 <button class="absolute top-3 right-3 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" data-action="delete-config-dim" data-dim-id="${dimId}" title="删除配置项">
                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
@@ -5964,8 +5965,8 @@
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-violet-500 mt-1"></span>
                         <div>
-                            <p class="text-xs font-bold text-gray-800">${name}</p>
-                            <p class="text-[10px] text-gray-400">${nameEn}${desc ? ' · ' + desc : ''}</p>
+                            <p class="text-xs font-bold text-gray-800">${name} <span class="font-normal text-gray-400">/ ${nameEn}</span></p>
+                            <p class="text-[10px] text-gray-400">${desc || '自定义配置项'}</p>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer shrink-0">
