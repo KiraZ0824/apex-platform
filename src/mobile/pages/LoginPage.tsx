@@ -91,12 +91,6 @@ export default function LoginPage({ lang, onToggleLang }: LoginPageProps) {
             </button>
           </form>
         </section>
-
-        <div className="text-center">
-          <p className="text-[10px] text-app-soft">
-            {copy.showcaseNoteTop} · {copy.showcaseNoteBottom}
-          </p>
-        </div>
       </div>
     </div>
   );
