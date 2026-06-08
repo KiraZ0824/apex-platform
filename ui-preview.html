@@ -3482,7 +3482,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">行业</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">行业 <span class="text-gray-400 font-normal">/ Industry</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="25" data-weight-key="industry">
@@ -3498,7 +3498,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">国家/地区</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">国家/地区 <span class="text-gray-400 font-normal">/ Region</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="15" data-weight-key="region">
@@ -3514,7 +3514,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">从业年限</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">从业年限 <span class="text-gray-400 font-normal">/ Experience</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="15" data-weight-key="experience">
@@ -3530,7 +3530,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">职业/职级</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">职业/职级 <span class="text-gray-400 font-normal">/ Position/Level</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="15" data-weight-key="position">
@@ -3546,7 +3546,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">关键履历标签</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">关键履历标签 <span class="text-gray-400 font-normal">/ Resume Tags</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="15" data-weight-key="resume">
@@ -3562,7 +3562,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">合规/资质标签</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">合规/资质标签 <span class="text-gray-400 font-normal">/ Compliance</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="10" data-weight-key="compliance">
@@ -3578,7 +3578,7 @@
                                 <div class="flex items-center justify-between mb-1.5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2 h-2 rounded-full bg-rose-400"></span>
-                                        <span class="text-xs font-medium text-gray-700 factor-name">合作偏好</span>
+                                        <span class="text-xs font-medium text-gray-700 factor-name">合作偏好 <span class="text-gray-400 font-normal">/ Preference</span></span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="5" data-weight-key="preference">
@@ -4994,6 +4994,10 @@
                     <input type="text" id="new-factor-name" required placeholder="如：响应速度评分" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
                 </div>
                 <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">因子英文名称 <span class="text-red-500">*</span></label>
+                    <input type="text" id="new-factor-name-en" required placeholder="如：Response Score" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
+                </div>
+                <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700">默认权重 (%) <span class="text-red-500">*</span></label>
                     <input type="number" id="new-factor-weight" required placeholder="10" min="1" max="100" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none">
                 </div>
@@ -5898,8 +5902,10 @@
         document.getElementById('add-weight-factor-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('new-factor-name').value.trim();
+            const nameEn = document.getElementById('new-factor-name-en').value.trim();
             const weight = parseInt(document.getElementById('new-factor-weight').value) || 10;
             if (!name) { showToast('请输入因子名称'); return; }
+            if (!nameEn) { showToast('请输入因子英文名称'); return; }
 
             const container = document.getElementById('weight-factors-container');
             const maxId = Math.max(0, ...Array.from(container.querySelectorAll('[data-factor-id]')).map(el => parseInt(el.getAttribute('data-factor-id'))));
@@ -5915,7 +5921,7 @@
                 <div class="flex items-center justify-between mb-1.5">
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full ${color}"></span>
-                        <span class="text-xs font-medium text-gray-700 factor-name">${name}</span>
+                        <span class="text-xs font-medium text-gray-700 factor-name">${name} <span class="text-gray-400 font-normal">/ ${nameEn}</span></span>
                     </div>
                     <div class="flex items-center gap-2">
                         <input type="range" class="weight-slider w-28 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-600" min="0" max="100" value="${weight}" data-weight-key="custom_${newId}">
