@@ -27,18 +27,17 @@ export default function LoginPage({ lang }: LoginPageProps) {
       <div className="relative z-10 w-full max-w-sm space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-[2rem] leading-none tracking-[-0.04em] font-bold text-white">APEX</h1>
-          <p className="text-[12px] text-white/40 tracking-[0.2em]">Bereal青年 · 兴趣交友</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="rounded-[16px] bg-white/8 border border-white/10 px-4 py-3.5 flex items-center gap-3 transition-all focus-within:border-white/20 focus-within:bg-white/12">
-            <span className="text-[14px] font-medium text-white/60 shrink-0">+86</span>
+            <span className="text-[14px] font-medium text-white/60 shrink-0">{lang === 'zh' ? '账户' : 'Account'}</span>
             <input
               type="text"
               value={username}
               onChange={(e) => { setUsername(e.target.value); setError(''); }}
               className="w-full bg-transparent text-[14px] outline-none text-white placeholder:text-white/30"
-              placeholder={lang === 'zh' ? '请输入手机号' : 'Enter phone number'}
+              placeholder={lang === 'zh' ? '请输入账户' : 'Enter account'}
             />
           </div>
 
