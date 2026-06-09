@@ -744,29 +744,29 @@
                                     <span class="px-2 py-0.5 text-[10px] rounded font-medium bg-blue-50 text-blue-600">进行中</span>
                                 </div>
                             </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="中国境内支付公司中层管理联系方式获取" data-status="待审核">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="中国境内支付公司中层管理联系方式获取" data-status="已报名">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">中国境内支付公司中层管理联系方式获取</p>
                                 </div>
-                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-amber-50 text-amber-600">待审核</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-blue-50 text-blue-600">已报名</span>
                             </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="Web3 合约审计安全方案咨询" data-status="已完成">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="Web3 合约审计安全方案咨询" data-status="验收中">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">Web3 合约审计安全方案咨询</p>
                                 </div>
-                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-emerald-50 text-emerald-600">已完成</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-amber-50 text-amber-600">验收中</span>
                             </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="东南亚市场电商合规政策解读" data-status="待结算">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="东南亚市场电商合规政策解读" data-status="已完成">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">东南亚市场电商合规政策解读</p>
                                 </div>
-                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-orange-50 text-orange-600">待结算</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-emerald-50 text-emerald-600">已完成</span>
                             </div>
                             <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">新能源汽车出海专家访谈</p>
                                 </div>
-                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-red-50 text-red-600">已取消</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-rose-50 text-rose-600">延期</span>
                             </div>
                         </div>
                     </div>
@@ -1285,26 +1285,30 @@
             <!-- Tab Content: 我的特邀 -->
             <div id="invite-tab" class="tab-content hidden space-y-6">
                 <!-- 进度概览 -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    <div class="ant-card p-4 text-center">
-                        <p class="text-xs text-gray-500 mb-1">已报名待审核</p>
-                        <p class="text-xl font-bold text-gray-900">2</p>
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+                    <div class="ant-card p-3 text-center">
+                        <p class="text-[10px] text-gray-500 mb-1">已报名</p>
+                        <p class="text-lg font-bold text-blue-600">2</p>
                     </div>
-                    <div class="ant-card p-4 text-center">
-                        <p class="text-xs text-gray-500 mb-1">进行中</p>
-                        <p class="text-xl font-bold text-blue-600">3</p>
+                    <div class="ant-card p-3 text-center">
+                        <p class="text-[10px] text-gray-500 mb-1">已拒绝</p>
+                        <p class="text-lg font-bold text-red-400">2</p>
                     </div>
-                    <div class="ant-card p-4 text-center">
-                        <p class="text-xs text-gray-500 mb-1">待结算</p>
-                        <p class="text-xl font-bold text-amber-500">1</p>
+                    <div class="ant-card p-3 text-center">
+                        <p class="text-[10px] text-gray-500 mb-1">进行中</p>
+                        <p class="text-lg font-bold text-blue-600">3</p>
                     </div>
-                    <div class="ant-card p-4 text-center">
-                        <p class="text-xs text-gray-500 mb-1">已完成</p>
-                        <p class="text-xl font-bold text-emerald-600">12</p>
+                    <div class="ant-card p-3 text-center">
+                        <p class="text-[10px] text-gray-500 mb-1">验收中</p>
+                        <p class="text-lg font-bold text-amber-500">1</p>
                     </div>
-                    <div class="ant-card p-4 text-center">
-                        <p class="text-xs text-gray-500 mb-1">已拒绝</p>
-                        <p class="text-xl font-bold text-red-400">2</p>
+                    <div class="ant-card p-3 text-center">
+                        <p class="text-[10px] text-gray-500 mb-1">已完成</p>
+                        <p class="text-lg font-bold text-emerald-600">12</p>
+                    </div>
+                    <div class="ant-card p-3 text-center">
+                        <p class="text-[10px] text-gray-500 mb-1">延期</p>
+                        <p class="text-lg font-bold text-rose-500">1</p>
                     </div>
                 </div>
 
@@ -1314,10 +1318,12 @@
                         <p class="text-xs font-semibold text-gray-500 tracking-wide">参与中的任务</p>
                         <select class="text-xs border-gray-200 rounded text-gray-600">
                             <option>全部状态</option>
-                            <option>进行中</option>
-                            <option>待提交成果</option>
-                            <option>审核中</option>
+                            <option>已报名</option>
                             <option>已拒绝</option>
+                            <option>进行中</option>
+                            <option>验收中</option>
+                            <option>已完成</option>
+                            <option>延期</option>
                         </select>
                     </div>
                     <div class="overflow-x-auto">
@@ -1332,60 +1338,78 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-xs">
+                                <!-- 已报名 -->
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-4 font-medium text-gray-900">SaaS 企业 NDR 提升专项</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202604-001</td>
                                     <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded-full font-medium">执行中 - 方案共创阶段</span>
+                                        <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded-full font-medium">已报名</span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">3,500</td>
                                     <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-violet-600 hover:text-violet-800 text-[10px] font-medium" data-action="open-upload-deliverable" data-name="SaaS 企业 NDR 提升专项" data-type="战略咨询" data-points="3,500pt" data-desc="对 NDR 提升策略进行全面梳理与方案设计。" data-criteria="需提交包含数据分析和落地方案的战略报告。">上传成果</button>
-                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">联系项目经理</button>
+                                        <button class="text-gray-500 hover:text-red-600 text-[10px]">取消报名</button>
                                     </td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4 font-medium text-gray-900">欧洲市场合规策略梳理</td>
-                                    <td class="px-6 py-4 text-gray-400">PRJ-202604-012</td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded-full font-medium">成果审核中</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-600">1,800</td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900 text-[10px]">查看已提交文件</button>
-                                    </td>
-                                </tr>
+                                <!-- 进行中 -->
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-4 font-medium text-gray-900">跨境支付合规调研</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202605-008</td>
                                     <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-green-50 text-green-600 text-[10px] rounded-full font-medium">进行中 - D-2 调研阶段</span>
+                                        <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded-full font-medium">进行中</span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">2,200</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-violet-600 hover:text-violet-800 text-[10px] font-medium" data-action="open-upload-deliverable" data-name="跨境支付合规调研" data-type="行业研究" data-points="2,200pt" data-desc="跨境支付合规调研与风险分析。" data-criteria="需提交合规调研报告及风险矩阵。">上传成果</button>
                                     </td>
                                 </tr>
+                                <!-- 验收中 -->
                                 <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4 font-medium text-gray-400">中东金融科技准入分析</td>
-                                    <td class="px-6 py-4 text-gray-400">PRJ-202605-011</td>
+                                    <td class="px-6 py-4 font-medium text-gray-900">欧洲市场合规策略梳理</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202604-012</td>
                                     <td class="px-6 py-4">
-                                        <span class="px-2 py-0.5 bg-red-50 text-red-400 text-[10px] rounded-full font-medium">已拒绝</span>
+                                        <span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded-full font-medium">验收中</span>
                                     </td>
-                                    <td class="px-6 py-4 text-gray-400">1,500</td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-gray-400 text-[10px] cursor-not-allowed" disabled>已被拒绝</button>
+                                    <td class="px-6 py-4 text-gray-600">1,800</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">查看验收进度</button>
                                     </td>
                                 </tr>
+                                <!-- 已完成 -->
                                 <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4 font-medium text-gray-400">东南亚卡组织政策解读</td>
+                                    <td class="px-6 py-4 font-medium text-gray-900">中东金融科技准入分析</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202605-011</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full font-medium">已完成</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">1,500</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">查看验收结果</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">智慧值明细</button>
+                                    </td>
+                                </tr>
+                                <!-- 延期 -->
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-900">东南亚卡组织政策解读</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202604-025</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-0.5 bg-rose-50 text-rose-500 text-[10px] rounded-full font-medium">延期</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">800</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">查看延期原因</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">联系项目负责人</button>
+                                    </td>
+                                </tr>
+                                <!-- 已拒绝 -->
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-400">流量增长方案咨询</td>
+                                    <td class="px-6 py-4 text-gray-400">PRJ-202604-018</td>
                                     <td class="px-6 py-4">
                                         <span class="px-2 py-0.5 bg-red-50 text-red-400 text-[10px] rounded-full font-medium">已拒绝</span>
                                     </td>
-                                    <td class="px-6 py-4 text-gray-400">800</td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-gray-400 text-[10px] cursor-not-allowed" disabled>已被拒绝</button>
+                                    <td class="px-6 py-4 text-gray-400">1,200</td>
+                                    <td class="px-6 py-4 text-right space-x-2">
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">查看详情</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -5513,9 +5537,10 @@
                 const badge = document.getElementById('invite-detail-badge');
                 badge.textContent = data.status || '-';
                 const badgeColors = {
-                    '报名中': 'bg-blue-50 text-blue-600',
-                    '待分配': 'bg-amber-50 text-amber-600',
+                    '已报名': 'bg-blue-50 text-blue-600',
+                    '已拒绝': 'bg-red-50 text-red-400',
                     '进行中': 'bg-indigo-50 text-indigo-600',
+                    '验收中': 'bg-amber-50 text-amber-600',
                     '已完成': 'bg-emerald-50 text-emerald-600',
                     '延期': 'bg-rose-50 text-rose-500',
                     '草稿': 'bg-gray-100 text-gray-400'
@@ -7688,14 +7713,24 @@
                     criteria: '需完成专家访谈纪要，包含核心观点摘录、数据验证及独立分析章节。',
                     timeline: (function() {
                         var timelines = {
-                            '待审核': [
+                            '已报名': [
                                 { text: '接受特邀', time: '2026-06-02', active: true },
-                                { text: '平台审核中', time: '2026-06-03', active: true }
+                                { text: '等待平台分配', time: '2026-06-03', active: true }
+                            ],
+                            '已拒绝': [
+                                { text: '接受特邀', time: '2026-06-02', active: true },
+                                { text: '已拒绝', time: '2026-06-05', active: true }
                             ],
                             '进行中': [
                                 { text: '接受特邀', time: '2026-06-02', active: true },
                                 { text: 'AI 匹配启动', time: '2026-06-03', active: true },
                                 { text: '成果提交', time: '2026-06-09', active: true }
+                            ],
+                            '验收中': [
+                                { text: '接受特邀', time: '2026-06-02', active: true },
+                                { text: 'AI 匹配启动', time: '2026-06-03', active: true },
+                                { text: '成果已提交', time: '2026-06-07', active: true },
+                                { text: '验收中', time: '2026-06-09', active: true }
                             ],
                             '已完成': [
                                 { text: '接受特邀', time: '2026-06-02', active: true },
@@ -7703,16 +7738,10 @@
                                 { text: '成果提交', time: '2026-06-07', active: true },
                                 { text: '特邀完成', time: '2026-06-09', active: true }
                             ],
-                            '待结算': [
+                            '延期': [
                                 { text: '接受特邀', time: '2026-06-02', active: true },
                                 { text: 'AI 匹配启动', time: '2026-06-03', active: true },
-                                { text: '成果提交', time: '2026-06-07', active: true },
-                                { text: '特邀完成', time: '2026-06-08', active: true },
-                                { text: '待结算', time: '2026-06-09', active: true }
-                            ],
-                            '已取消': [
-                                { text: '接受特邀', time: '2026-06-02', active: true },
-                                { text: '已取消', time: '2026-06-05', active: true }
+                                { text: '延期', time: '2026-06-09', active: true }
                             ]
                         };
                         return timelines[status] || [
