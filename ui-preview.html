@@ -4001,15 +4001,26 @@
                 </div>
                 <!-- Verification Results -->
                 <div id="invite-detail-verify-section" class="space-y-3 hidden">
-                    <div class="flex items-center gap-2 mb-2">
+                    <div class="flex items-center gap-2 mb-1">
                         <span class="w-1 h-5 bg-purple-500 rounded-full"></span>
                         <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">成果验收</label>
                     </div>
-                    <div class="space-y-3" id="invite-detail-verify-list">
+                    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-500 text-[9px] uppercase tracking-wider">
+                                    <th class="px-3 py-2.5 text-left font-medium">专家</th>
+                                    <th class="px-3 py-2.5 text-left font-medium">提交成果</th>
+                                    <th class="px-3 py-2.5 text-center font-medium w-[140px]">验收结果</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invite-detail-verify-list" class="divide-y divide-gray-100">
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
-                        <button class="px-4 py-2 text-xs font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-500 transition-colors" data-action="verify-all-pass">全部通过</button>
-                        <button class="px-4 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
+                    <div class="flex items-center justify-end gap-3">
+                        <button class="px-3 py-1.5 text-[10px] font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="verify-all-pass">全部通过</button>
+                        <button class="px-3 py-1.5 text-[10px] font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
                     </div>
                 </div>
                 <!-- Actions -->
@@ -5437,46 +5448,33 @@
                 if (data.verifyMode && data.verifyUsers && data.verifyUsers.length > 0) {
                     verifySection.classList.remove('hidden');
                     verifyList.innerHTML = data.verifyUsers.map((u, i) => `
-                        <div class="p-4 rounded-xl bg-gray-50 border border-gray-100" data-verify-user="${i}">
-                            <div class="flex items-center justify-between mb-3">
+                        <tr data-verify-user="${i}">
+                            <td class="px-3 py-3">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-bold">${u.name[0]}</div>
-                                    <div>
-                                        <p class="text-xs font-medium text-gray-700">${u.name}</p>
-                                        <p class="text-[9px] text-gray-400">${u.position}</p>
+                                    <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[9px] font-bold shrink-0">${u.name[0]}</div>
+                                    <div class="min-w-0">
+                                        <p class="text-[10px] font-medium text-gray-700 leading-tight">${u.name}</p>
+                                        <p class="text-[8px] text-gray-400 leading-tight">${u.position}</p>
                                     </div>
                                 </div>
-                                <span class="text-[9px] px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">已报名</span>
-                            </div>
-                            <div class="mb-3 space-y-2">
-                                <p class="text-[9px] text-gray-400 font-medium">提交成果</p>
-                                ${u.files ? u.files.map(f => {
-                                    const ext = f.name.split('.').pop().toLowerCase();
-                                    const iconMap = { pdf: 'file-text', doc: 'file-text', docx: 'file-text', xls: 'file-spreadsheet', xlsx: 'file-spreadsheet', ppt: 'presentation', pptx: 'presentation', png: 'image', jpg: 'image', jpeg: 'image', gif: 'image', svg: 'image', mp4: 'video', zip: 'archive', rar: 'archive', '7z': 'archive' };
-                                    const icon = iconMap[ext] || 'file';
-                                    const colorMap = { pdf: 'text-red-500 bg-red-50 border-red-100', doc: 'text-blue-500 bg-blue-50 border-blue-100', docx: 'text-blue-500 bg-blue-50 border-blue-100', xls: 'text-emerald-500 bg-emerald-50 border-emerald-100', xlsx: 'text-emerald-500 bg-emerald-50 border-emerald-100', ppt: 'text-orange-500 bg-orange-50 border-orange-100', pptx: 'text-orange-500 bg-orange-50 border-orange-100', png: 'text-purple-500 bg-purple-50 border-purple-100', jpg: 'text-purple-500 bg-purple-50 border-purple-100', jpeg: 'text-purple-500 bg-purple-50 border-purple-100', mp4: 'text-rose-500 bg-rose-50 border-rose-100', zip: 'text-amber-500 bg-amber-50 border-amber-100', rar: 'text-amber-500 bg-amber-50 border-amber-100', '7z': 'text-amber-500 bg-amber-50 border-amber-100' };
-                                    const colors = colorMap[ext] || 'text-gray-500 bg-gray-50 border-gray-200';
-                                    return `
-                                        <div class="flex items-center justify-between p-2 px-3 rounded-lg bg-white border ${colors.split(' ').slice(2).join(' ')} cursor-pointer hover:shadow-sm transition-all">
-                                            <div class="flex items-center gap-2.5 min-w-0">
-                                                <div class="w-8 h-8 rounded-lg ${colors.split(' ').slice(0, 2).join(' ')} ${colors.split(' ').slice(2).join(' ')} flex items-center justify-center shrink-0">
-                                                    <i data-lucide="${icon}" class="w-4 h-4"></i>
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <p class="text-[10px] font-medium text-gray-700 truncate">${f.name}</p>
-                                                    <p class="text-[8px] text-gray-400">${f.size}</p>
-                                                </div>
-                                            </div>
-                                            <i data-lucide="download" class="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 shrink-0"></i>
-                                        </div>
-                                    `;
-                                }).join('') : `<p class="text-[10px] text-gray-400">暂无附件</p>`}
-                            </div>
-                            <div class="flex items-center gap-2" data-verify-actions="${i}">
-                                <button class="flex-1 px-3 py-1.5 text-[10px] font-medium rounded-lg border transition-all ${u.result === 'pass' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600'}" data-action="verify-user-pass" data-index="${i}">通过</button>
-                                <button class="flex-1 px-3 py-1.5 text-[10px] font-medium rounded-lg border transition-all ${u.result === 'fail' ? 'bg-red-50 border-red-300 text-red-700' : 'border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600'}" data-action="verify-user-fail" data-index="${i}">不通过</button>
-                            </div>
-                        </div>
+                            </td>
+                            <td class="px-3 py-3">
+                                <div class="flex flex-wrap gap-1.5 max-w-xs">
+                                    ${u.files ? u.files.map(f => {
+                                        const ext = f.name.split('.').pop().toLowerCase();
+                                        const iconMap = { pdf: 'file-text', doc: 'file-text', docx: 'file-text', xls: 'file-spreadsheet', xlsx: 'file-spreadsheet', ppt: 'presentation', pptx: 'presentation', png: 'image', jpg: 'image', jpeg: 'image', mp4: 'video', zip: 'archive', rar: 'archive', '7z': 'archive' };
+                                        const icon = iconMap[ext] || 'file';
+                                        return `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gray-50 border border-gray-200 text-[8px] text-gray-500 leading-tight"><i data-lucide="${icon}" class="w-2.5 h-2.5"></i>${f.name}</span>`;
+                                    }).join('') : '<span class="text-[9px] text-gray-400">暂无附件</span>'}
+                                </div>
+                            </td>
+                            <td class="px-3 py-3 text-center">
+                                <div class="flex items-center justify-center gap-1.5" data-verify-actions="${i}">
+                                    <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'pass' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600'}" data-action="verify-user-pass" data-index="${i}">通过</button>
+                                    <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'fail' ? 'bg-red-50 border-red-300 text-red-700' : 'border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600'}" data-action="verify-user-fail" data-index="${i}">不通过</button>
+                                </div>
+                            </td>
+                        </tr>
                     `).join('');
                     verifySection.setAttribute('data-invite-name', data.name);
                 } else {
