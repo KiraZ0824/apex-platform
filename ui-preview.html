@@ -3999,6 +3999,19 @@
                     <div class="space-y-3" id="invite-detail-timeline">
                     </div>
                 </div>
+                <!-- Verification Results -->
+                <div id="invite-detail-verify-section" class="space-y-3 hidden">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-1 h-5 bg-purple-500 rounded-full"></span>
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">验收成果</label>
+                    </div>
+                    <div class="space-y-3" id="invite-detail-verify-list">
+                    </div>
+                    <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+                        <button class="px-4 py-2 text-xs font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-500 transition-colors" data-action="verify-all-pass">全部通过</button>
+                        <button class="px-4 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
+                    </div>
+                </div>
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-100" id="invite-detail-actions">
                     <button class="px-4 py-2 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="close-modal">关闭</button>
@@ -5417,6 +5430,38 @@
                     `).join('');
                 } else {
                     timeline.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无进度信息</p>';
+                }
+
+                const verifySection = document.getElementById('invite-detail-verify-section');
+                const verifyList = document.getElementById('invite-detail-verify-list');
+                if (data.verifyMode && data.verifyUsers && data.verifyUsers.length > 0) {
+                    verifySection.classList.remove('hidden');
+                    verifyList.innerHTML = data.verifyUsers.map((u, i) => `
+                        <div class="p-4 rounded-xl bg-gray-50 border border-gray-100" data-verify-user="${i}">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-bold">${u.name[0]}</div>
+                                    <div>
+                                        <p class="text-xs font-medium text-gray-700">${u.name}</p>
+                                        <p class="text-[9px] text-gray-400">${u.position}</p>
+                                    </div>
+                                </div>
+                                <span class="text-[9px] px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">已报名</span>
+                            </div>
+                            <div class="mb-3 p-3 rounded-lg bg-white border border-gray-200">
+                                <p class="text-[9px] text-gray-400 mb-1.5 font-medium">提交成果</p>
+                                <p class="text-[10px] text-gray-700 leading-relaxed">${u.deliverable}</p>
+                            </div>
+                            <div class="flex items-center gap-2" data-verify-actions="${i}">
+                                <button class="flex-1 px-3 py-1.5 text-[10px] font-medium rounded-lg border transition-all ${u.result === 'pass' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600'}" data-action="verify-user-pass" data-index="${i}">通过</button>
+                                <button class="flex-1 px-3 py-1.5 text-[10px] font-medium rounded-lg border transition-all ${u.result === 'fail' ? 'bg-red-50 border-red-300 text-red-700' : 'border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600'}" data-action="verify-user-fail" data-index="${i}">不通过</button>
+                            </div>
+                        </div>
+                    `).join('');
+                    verifySection.setAttribute('data-invite-name', data.name);
+                } else {
+                    verifySection.classList.add('hidden');
+                    verifyList.innerHTML = '';
                 }
 
                 const modal = document.getElementById('invite-detail-modal');
@@ -7505,7 +7550,97 @@
             }
 
             if (action === 'verify-invite') {
-                showToast('已进入验收流程');
+                e.preventDefault();
+                const tr = target.closest('tr');
+                if (!tr) return;
+                const cells = tr.cells;
+                const name = cells[0] ? (cells[0].textContent || '').trim() : '特邀';
+                showInviteDetail({
+                    verifyMode: true,
+                    name: name,
+                    type: cells[1] ? (cells[1].textContent || '').trim() : '-',
+                    status: '进行中',
+                    points: '-',
+                    createdAt: '2026-06-01',
+                    deadline: '2026-07-15',
+                    nameEn: '-',
+                    projectDesc: '该项目旨在通过行业专家深度访谈，获取市场前沿洞察与战略建议。',
+                    desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
+                    timeline: [
+                        { text: '特邀创建', time: '2026-06-01 10:00', active: true },
+                        { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true },
+                        { text: '专家报名完成', time: '2026-06-05 14:00', active: true },
+                        { text: '成果提交完成，等待验收', time: '2026-06-09', active: true }
+                    ],
+                    verifyUsers: [
+                        { name: '张明远', position: '跨境支付总监', deliverable: '完成了跨境支付合规调研报告，涵盖东南亚六国支付牌照要求、反洗钱法规对比及准入建议。报告共 45 页，包含 12 个数据表格和 8 个流程图。', result: '' },
+                        { name: '陈思雨', position: '合规经理', deliverable: '提交了全球跨境支付体系优化方案初稿，重点分析了中国、新加坡、阿联酋三国的监管框架差异，并提出 5 条合规优化建议。', result: '' },
+                        { name: '李伟杰', position: 'FinTech 顾问', deliverable: '提供了中东金融科技市场准入分析报告，包括沙特、阿联酋、卡塔尔三国的支付牌照申请流程对比，以及当地合作伙伴推荐清单。', result: 'pass' },
+                        { name: '王思涵', position: '风控分析师', deliverable: '完成了风控模型评估报告，针对现有跨境支付流程识别了 7 个风险点，并给出了对应的 mitigation 策略。', result: '' }
+                    ]
+                });
+                return;
+            }
+
+            if (action === 'verify-user-pass') {
+                e.preventDefault();
+                const index = parseInt(target.getAttribute('data-index'));
+                const wrapper = document.querySelector(`[data-verify-user="${index}"]`);
+                if (!wrapper) return;
+                const actions = wrapper.querySelector('[data-verify-actions]');
+                if (!actions) return;
+                const btns = actions.querySelectorAll('button');
+                btns.forEach(b => {
+                    b.classList.remove('bg-emerald-50', 'border-emerald-300', 'text-emerald-700', 'bg-red-50', 'border-red-300', 'text-red-700');
+                    b.classList.add('border-gray-200', 'text-gray-500');
+                });
+                btns[0].classList.remove('border-gray-200', 'text-gray-500');
+                btns[0].classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-700');
+                showToast('已标记为通过');
+                return;
+            }
+
+            if (action === 'verify-user-fail') {
+                e.preventDefault();
+                const index = parseInt(target.getAttribute('data-index'));
+                const wrapper = document.querySelector(`[data-verify-user="${index}"]`);
+                if (!wrapper) return;
+                const actions = wrapper.querySelector('[data-verify-actions]');
+                if (!actions) return;
+                const btns = actions.querySelectorAll('button');
+                btns.forEach(b => {
+                    b.classList.remove('bg-emerald-50', 'border-emerald-300', 'text-emerald-700', 'bg-red-50', 'border-red-300', 'text-red-700');
+                    b.classList.add('border-gray-200', 'text-gray-500');
+                });
+                btns[1].classList.remove('border-gray-200', 'text-gray-500');
+                btns[1].classList.add('bg-red-50', 'border-red-300', 'text-red-700');
+                showToast('已标记为不通过');
+                return;
+            }
+
+            if (action === 'verify-all-pass') {
+                e.preventDefault();
+                document.querySelectorAll('[data-verify-actions]').forEach(actions => {
+                    const btns = actions.querySelectorAll('button');
+                    btns.forEach(b => {
+                        b.classList.remove('bg-emerald-50', 'border-emerald-300', 'text-emerald-700', 'bg-red-50', 'border-red-300', 'text-red-700');
+                        b.classList.add('border-gray-200', 'text-gray-500');
+                    });
+                    btns[0].classList.remove('border-gray-200', 'text-gray-500');
+                    btns[0].classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-700');
+                });
+                showToast('全部已标记为通过');
+                return;
+            }
+
+            if (action === 'verify-submit') {
+                e.preventDefault();
+                const passed = document.querySelectorAll('[data-verify-actions] button.bg-emerald-50').length;
+                const failed = document.querySelectorAll('[data-verify-actions] button.bg-red-50').length;
+                if (passed + failed === 0) { showToast('请先为每位专家标记通过或不通过'); return; }
+                showToast(`验收结果已提交：${passed} 人通过，${failed} 人不通过`);
+                const modal = document.getElementById('invite-detail-modal');
+                if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
                 return;
             }
 
