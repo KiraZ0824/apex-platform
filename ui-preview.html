@@ -3972,7 +3972,7 @@
                         <p class="text-xs text-gray-500" id="invite-detail-name-en">-</p>
                     </div>
                     <div class="space-y-1.5">
-                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">智慧值预算</label>
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">总智慧值</label>
                         <p class="text-xs font-bold text-amber-600" id="invite-detail-points">-</p>
                     </div>
                     <div class="space-y-1.5">
@@ -5416,7 +5416,15 @@
 
                 document.getElementById('invite-detail-type').textContent = data.type || '-';
                 document.getElementById('invite-detail-name-en').textContent = data.nameEn || '-';
-                document.getElementById('invite-detail-points').textContent = data.points || '-';
+                if (data.verifyMode && data.verifyUsers) {
+                    const total = data.verifyUsers.reduce(function(sum, u) {
+                        var pts = parseInt(u.points) || 0;
+                        return sum + pts;
+                    }, 0);
+                    document.getElementById('invite-detail-points').textContent = total + 'pt';
+                } else {
+                    document.getElementById('invite-detail-points').textContent = data.points || '-';
+                }
                 document.getElementById('invite-detail-created').textContent = data.createdAt || '-';
                 document.getElementById('invite-detail-deadline').textContent = data.deadline || '-';
                 document.getElementById('invite-detail-project-desc').textContent = data.projectDesc || '暂无描述';
