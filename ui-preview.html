@@ -514,7 +514,7 @@
                         连接全球行业精英，智能匹配、高效协作、精准洞察
                     </p>
                     <div class="flex items-center gap-4 mt-6">
-                        <button class="px-7 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 shadow-lg transition-all flex items-center gap-2" data-action="landing-login">
+                        <button class="px-7 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 shadow-lg transition-all flex items-center gap-2" data-action="landing-start">
                             开始使用 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                         <button class="px-7 py-2.5 text-sm font-medium text-slate-200 bg-white/15 border border-white/25 rounded-xl hover:bg-white/25 backdrop-blur-md transition-all" data-action="landing-about">
@@ -5538,6 +5538,14 @@
                 e.preventDefault();
                 const modal = document.getElementById('login-modal');
                 if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
+            }
+            if (action === 'landing-start') {
+                e.preventDefault();
+                const landing = document.getElementById('landing-page');
+                if (landing) landing.style.display = 'none';
+                document.body.style.overflow = '';
+                document.body.classList.remove('overflow-hidden');
+                showToast('欢迎来到 APEX！');
             }
             if (action === 'landing-register') {
                 e.preventDefault();
