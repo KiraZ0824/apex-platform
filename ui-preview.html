@@ -738,7 +738,7 @@
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">跨境支付行业现状授课顾问</p>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0 ml-4">
-                                    <span data-action="open-upload-deliverable" data-name="跨境支付行业现状授课顾问" data-type="授课顾问" data-points="100pt" data-desc="根据您的项目背景，需对跨境支付行业现状进行深度分析与授课讲解。">
+                                    <span data-action="open-upload-deliverable" data-name="跨境支付行业现状授课顾问" data-type="授课顾问" data-points="100pt" data-desc="根据您的项目背景，需对跨境支付行业现状进行深度分析与授课讲解。" data-criteria="需完成专家访谈纪要，包含核心观点摘录、数据验证及独立分析章节。">
                                         <button class="px-2 py-1 text-[9px] font-medium text-violet-600 bg-violet-50 rounded-md hover:bg-violet-100 transition-colors pointer-events-none">上传成果</button>
                                     </span>
                                     <span class="px-2 py-0.5 text-[10px] rounded font-medium bg-blue-50 text-blue-600">进行中</span>
@@ -4091,6 +4091,10 @@
                         <div class="col-span-2">
                             <span class="text-[8px] text-gray-400">特邀说明</span>
                             <p class="text-[10px] text-gray-600 leading-relaxed" id="upload-deliverable-desc">-</p>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="text-[8px] text-gray-400">验收标准</span>
+                            <p class="text-[10px] text-gray-600 leading-relaxed" id="upload-deliverable-criteria">-</p>
                         </div>
                     </div>
                 </div>
@@ -7885,11 +7889,13 @@
                 const type = target.getAttribute('data-type') || '-';
                 const points = target.getAttribute('data-points') || '-';
                 const desc = target.getAttribute('data-desc') || '暂无描述';
+                const criteria = target.getAttribute('data-criteria') || '暂无验收标准';
                 document.getElementById('upload-deliverable-title').textContent = name;
                 document.getElementById('upload-deliverable-badge').textContent = '进行中';
                 document.getElementById('upload-deliverable-type').textContent = type;
                 document.getElementById('upload-deliverable-points').textContent = points;
                 document.getElementById('upload-deliverable-desc').textContent = desc;
+                document.getElementById('upload-deliverable-criteria').textContent = criteria;
                 document.getElementById('upload-deliverable-remark').value = '';
                 document.getElementById('upload-deliverable-files').classList.add('hidden');
                 document.getElementById('upload-deliverable-files').innerHTML = '<p class="text-[9px] text-gray-400 font-medium">已选文件</p>';
