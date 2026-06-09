@@ -4007,38 +4007,14 @@
                         <p class="text-xs text-gray-500" id="invite-detail-deadline">-</p>
                     </div>
                 </div>
-                <!-- Stats -->
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="p-3 rounded-lg bg-blue-50/60 border border-blue-100 text-center">
-                        <p class="text-lg font-bold text-blue-600" id="invite-detail-registered">0</p>
-                        <p class="text-[9px] text-blue-400 mt-0.5">已报名</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-green-50/60 border border-green-100 text-center">
-                        <p class="text-lg font-bold text-green-600" id="invite-detail-matched">0</p>
-                        <p class="text-[9px] text-green-400 mt-0.5">匹配用户</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-amber-50/60 border border-amber-100 text-center">
-                        <p class="text-lg font-bold text-amber-600" id="invite-detail-assigned">0</p>
-                        <p class="text-[9px] text-amber-400 mt-0.5">已分配</p>
-                    </div>
-                </div>
                 <!-- Description -->
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">项目描述</label>
+                    <p class="text-xs text-gray-600 leading-relaxed" id="invite-detail-project-desc">暂无描述</p>
+                </div>
                 <div class="space-y-1.5">
                     <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">特邀说明</label>
                     <p class="text-xs text-gray-600 leading-relaxed" id="invite-detail-desc">暂无描述</p>
-                </div>
-                <!-- AI Match Summary -->
-                <div class="space-y-2">
-                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">AI 匹配结果</label>
-                    <div class="p-3 rounded-lg border border-violet-100 bg-violet-50/30" id="invite-detail-match-summary">
-                        <p class="text-xs text-violet-700 leading-relaxed">基于行业、从业年限、职业/职级等多维画像权重计算，已为您匹配到符合条件的专家。</p>
-                    </div>
-                </div>
-                <!-- Recent Matched Users -->
-                <div class="space-y-2">
-                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">已匹配专家（部分）</label>
-                    <div class="space-y-2" id="invite-detail-users">
-                    </div>
                 </div>
                 <!-- Timeline -->
                 <div class="space-y-2">
@@ -4049,7 +4025,6 @@
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-100" id="invite-detail-actions">
                     <button class="px-4 py-2 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="close-modal">关闭</button>
-                    <button class="px-4 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="view-matched-users-modal">查看全部匹配</button>
                 </div>
             </div>
         </div>
@@ -5447,28 +5422,8 @@
                 document.getElementById('invite-detail-points').textContent = data.points || '-';
                 document.getElementById('invite-detail-created').textContent = data.createdAt || '-';
                 document.getElementById('invite-detail-deadline').textContent = data.deadline || '-';
-                document.getElementById('invite-detail-registered').textContent = data.registered || '0';
-                document.getElementById('invite-detail-matched').textContent = data.matched || '0';
-                document.getElementById('invite-detail-assigned').textContent = data.assigned || '0';
+                document.getElementById('invite-detail-project-desc').textContent = data.projectDesc || '暂无描述';
                 document.getElementById('invite-detail-desc').textContent = data.desc || '暂无描述';
-
-                const usersContainer = document.getElementById('invite-detail-users');
-                if (data.matchedUsers && data.matchedUsers.length > 0) {
-                    usersContainer.innerHTML = data.matchedUsers.slice(0, 4).map(u => `
-                        <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100">
-                            <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[8px] font-bold">${u.name[0]}</div>
-                                <div>
-                                    <p class="text-[10px] font-medium text-gray-700">${u.name}</p>
-                                    <p class="text-[8px] text-gray-400">${u.position} \u00B7 ${u.match}% 匹配</p>
-                                </div>
-                            </div>
-                            <span class="text-[8px] px-1.5 py-0.5 rounded-full ${u.registered ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}">${u.registered ? '已报名' : '待邀请'}</span>
-                        </div>
-                    `).join('');
-                } else {
-                    usersContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无可匹配专家</p>';
-                }
 
                 const timeline = document.getElementById('invite-detail-timeline');
                 if (data.timeline && data.timeline.length > 0) {
@@ -7515,37 +7470,30 @@
                     const cells = tr.cells;
                     const statusCell = cells[2];
                     const statusText = statusCell ? (statusCell.textContent || '').replace(/[^a-zA-Z\u4e00-\u9fa5]/g, '').trim() : '-';
-                    const regCount = cells[3] ? (cells[3].textContent || '').replace(/[^0-9]/g, '') : '0';
-                    const matchCount = cells[4] ? (cells[4].textContent || '').replace(/[^0-9]/g, '') : '0';
                     data = {
                         name: cells[0] ? (cells[0].textContent || '').trim() : '特邀',
                         type: cells[1] ? (cells[1].textContent || '').trim() : '-',
                         status: statusText,
-                        registered: regCount || '0',
-                        matched: matchCount || '0',
                         project: cells[5] ? (cells[5].textContent || '').trim() : '-',
                         nameEn: '-', points: '-', createdAt: '2026-06-01', deadline: '2026-07-15',
-                        assigned: '0',
+                        projectDesc: '该项目旨在通过行业专家深度访谈，获取市场前沿洞察与战略建议。',
                         desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
-                        matchedUsers: [],
                         timeline: [{ text: '特邀创建', time: '2026-06-01 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true }, { text: '等待专家报名', time: '2026-06-09', active: true }]
                     };
                 } else {
                     const index = parseInt(target.getAttribute('data-index')) || 0;
                     const invites = [
-                        { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', project: '东南亚市场电商履约模式研究', registered: '12', matched: '4', nameEn: 'SaaS Growth Strategy Expert Interview' },
-                        { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', project: '新能源汽车出海合规政策解读', registered: '8', matched: '3', nameEn: 'Web3 Contract Audit Expert Search' },
-                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', project: '全球跨境支付体系优化', registered: '5', matched: '2', nameEn: 'Cross-border Payment Compliance Research' },
-                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', project: 'RemiCore 海外版图扩张计划', registered: '15', matched: '6', nameEn: 'Middle East FinTech Access Analysis' },
-                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', project: '东南亚卡支付市场调研', registered: '3', matched: '0', nameEn: 'SE Asia Card Scheme Policy' }
+                        { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', project: '东南亚市场电商履约模式研究', nameEn: 'SaaS Growth Strategy Expert Interview', projectDesc: '深入分析东南亚电商市场的履约模式与增长策略，为平台扩张提供决策支持。' },
+                        { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', project: '新能源汽车出海合规政策解读', nameEn: 'Web3 Contract Audit Expert Search', projectDesc: '研究新能源汽车出海目的地国家的合规政策，建立法务与合规框架。' },
+                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', project: '全球跨境支付体系优化', nameEn: 'Cross-border Payment Compliance Research', projectDesc: '优化全球跨境支付体系，降低交易成本，提升合规风控能力。' },
+                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', project: 'RemiCore 海外版图扩张计划', nameEn: 'Middle East FinTech Access Analysis', projectDesc: '评估中东金融科技市场准入条件，制定区域市场进入策略。' },
+                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', project: '东南亚卡支付市场调研', nameEn: 'SE Asia Card Scheme Policy', projectDesc: '调研东南亚各国卡组织支付政策与市场格局，为产品本地化提供依据。' }
                     ];
                     const inv = invites[index] || invites[0];
                     data = Object.assign({}, inv, {
                         createdAt: '2026-06-0' + (index + 1),
                         deadline: '2026-07-1' + (index + 1),
-                        assigned: String(Math.floor(Math.random() * 3)),
                         desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
-                        matchedUsers: [],
                         timeline: [{ text: '特邀创建', time: '2026-06-0' + (index + 1) + ' 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-0' + (index + 1) + ' 10:05', active: index < 4 }, { text: index < 2 ? '等待专家报名' : index < 4 ? '专家正在执行' : '特邀已完成', time: '2026-06-09', active: index < 4 }]
                     });
                 }
@@ -7565,16 +7513,9 @@
                     points: '80pt',
                     createdAt: '2026-06-01',
                     deadline: '2026-07-15',
-                    registered: '2',
-                    matched: '5',
-                    assigned: '1',
                     nameEn: '-',
+                    projectDesc: '该项目旨在通过行业专家深度访谈，获取市场前沿洞察与战略建议。',
                     desc: '您在 APEX 平台上受邀参与的特邀任务。通过 AI 智能匹配系统，已为您推荐了合适的专家资源。',
-                    matchedUsers: [
-                        { name: '张明远', position: '跨境支付总监', match: 92, registered: true },
-                        { name: '陈思雨', position: '合规经理', match: 87, registered: true },
-                        { name: '李伟杰', position: 'FinTech 顾问', match: 85, registered: false }
-                    ],
                     timeline: [
                         { text: '接受特邀', time: '2026-06-02', active: true },
                         { text: 'AI 匹配启动', time: '2026-06-03', active: true },
