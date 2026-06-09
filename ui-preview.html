@@ -777,25 +777,25 @@
                             </span>
                         </div>
                         <div class="divide-y divide-gray-100">
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="跨境支付行业现状授课顾问" data-status="进行中">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">跨境支付行业现状授课顾问</p>
                                 </div>
                                 <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-blue-50 text-blue-600">进行中</span>
                             </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="中国境内支付公司中层管理联系方式获取" data-status="待审核">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">中国境内支付公司中层管理联系方式获取</p>
                                 </div>
                                 <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-amber-50 text-amber-600">待审核</span>
                             </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="Web3 合约审计安全方案咨询" data-status="已完成">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">Web3 合约审计安全方案咨询</p>
                                 </div>
                                 <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-emerald-50 text-emerald-600">已完成</span>
                             </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="东南亚市场电商合规政策解读" data-status="待结算">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">东南亚市场电商合规政策解读</p>
                                 </div>
@@ -3967,6 +3967,94 @@
         </div>
     </div>
 
+    <!-- 特邀详情弹窗 -->
+    <div id="invite-detail-modal" class="modal-overlay">
+        <div class="modal-container custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                    <h3 class="text-sm font-bold text-gray-900 truncate" id="invite-detail-title">特邀详情</h3>
+                    <span class="px-2 py-0.5 text-[10px] rounded-full font-medium shrink-0" id="invite-detail-badge"></span>
+                </div>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6">
+                <!-- Basic Info -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">特邀类型</label>
+                        <p class="text-xs font-medium text-gray-700" id="invite-detail-type">-</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">英文名称</label>
+                        <p class="text-xs text-gray-500" id="invite-detail-name-en">-</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">关联项目</label>
+                        <p class="text-xs font-medium text-blue-600" id="invite-detail-project">-</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">智慧值预算</label>
+                        <p class="text-xs font-bold text-amber-600" id="invite-detail-points">-</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">创建时间</label>
+                        <p class="text-xs text-gray-500" id="invite-detail-created">-</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">截止报名</label>
+                        <p class="text-xs text-gray-500" id="invite-detail-deadline">-</p>
+                    </div>
+                </div>
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="p-3 rounded-lg bg-blue-50/60 border border-blue-100 text-center">
+                        <p class="text-lg font-bold text-blue-600" id="invite-detail-registered">0</p>
+                        <p class="text-[9px] text-blue-400 mt-0.5">已报名</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-green-50/60 border border-green-100 text-center">
+                        <p class="text-lg font-bold text-green-600" id="invite-detail-matched">0</p>
+                        <p class="text-[9px] text-green-400 mt-0.5">匹配用户</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-amber-50/60 border border-amber-100 text-center">
+                        <p class="text-lg font-bold text-amber-600" id="invite-detail-assigned">0</p>
+                        <p class="text-[9px] text-amber-400 mt-0.5">已分配</p>
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">特邀说明</label>
+                    <p class="text-xs text-gray-600 leading-relaxed" id="invite-detail-desc">暂无描述</p>
+                </div>
+                <!-- AI Match Summary -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">AI 匹配结果</label>
+                    <div class="p-3 rounded-lg border border-violet-100 bg-violet-50/30" id="invite-detail-match-summary">
+                        <p class="text-xs text-violet-700 leading-relaxed">基于行业、从业年限、职业/职级等多维画像权重计算，已为您匹配到符合条件的专家。</p>
+                    </div>
+                </div>
+                <!-- Recent Matched Users -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">已匹配专家（部分）</label>
+                    <div class="space-y-2" id="invite-detail-users">
+                    </div>
+                </div>
+                <!-- Timeline -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">进度时间线</label>
+                    <div class="space-y-3" id="invite-detail-timeline">
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-100" id="invite-detail-actions">
+                    <button class="px-4 py-2 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="close-modal">关闭</button>
+                    <button class="px-4 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="view-matched-users-modal">查看全部匹配</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 新增特邀弹窗 -->
     <div id="add-invite-modal" class="modal-overlay">
         <div class="modal-container custom-scrollbar">
@@ -5336,6 +5424,74 @@
                 </div>
             `).join('');
         })();
+
+        // ========== Invite Detail Modal ==========
+        function showInviteDetail(data) {
+            document.getElementById('invite-detail-title').textContent = data.name || '特邀详情';
+            const badge = document.getElementById('invite-detail-badge');
+            badge.textContent = data.status || '-';
+            const badgeColors = {
+                '报名中': 'bg-blue-50 text-blue-600',
+                '待分配': 'bg-amber-50 text-amber-600',
+                '进行中': 'bg-indigo-50 text-indigo-600',
+                '已完成': 'bg-emerald-50 text-emerald-600',
+                '延期': 'bg-rose-50 text-rose-500',
+                '草稿': 'bg-gray-100 text-gray-400'
+            };
+            badge.className = 'px-2 py-0.5 text-[10px] rounded-full font-medium shrink-0 ' + (badgeColors[data.status] || 'bg-gray-100 text-gray-500');
+
+            document.getElementById('invite-detail-type').textContent = data.type || '-';
+            document.getElementById('invite-detail-name-en').textContent = data.nameEn || '-';
+            document.getElementById('invite-detail-project').textContent = data.project || '-';
+            document.getElementById('invite-detail-points').textContent = data.points || '-';
+            document.getElementById('invite-detail-created').textContent = data.createdAt || '-';
+            document.getElementById('invite-detail-deadline').textContent = data.deadline || '-';
+            document.getElementById('invite-detail-registered').textContent = data.registered || '0';
+            document.getElementById('invite-detail-matched').textContent = data.matched || '0';
+            document.getElementById('invite-detail-assigned').textContent = data.assigned || '0';
+            document.getElementById('invite-detail-desc').textContent = data.desc || '暂无描述';
+
+            const usersContainer = document.getElementById('invite-detail-users');
+            if (data.matchedUsers && data.matchedUsers.length > 0) {
+                usersContainer.innerHTML = data.matchedUsers.slice(0, 4).map(u => `
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[8px] font-bold">${u.name[0]}</div>
+                            <div>
+                                <p class="text-[10px] font-medium text-gray-700">${u.name}</p>
+                                <p class="text-[8px] text-gray-400">${u.position} · ${u.match}% 匹配</p>
+                            </div>
+                        </div>
+                        <span class="text-[8px] px-1.5 py-0.5 rounded-full ${u.registered ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}">${u.registered ? '已报名' : '待邀请'}</span>
+                    </div>
+                `).join('');
+            } else {
+                usersContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无可匹配专家</p>';
+            }
+
+            const timeline = document.getElementById('invite-detail-timeline');
+            if (data.timeline && data.timeline.length > 0) {
+                timeline.innerHTML = data.timeline.map(t => `
+                    <div class="flex items-start gap-3">
+                        <div class="flex flex-col items-center">
+                            <div class="w-2 h-2 rounded-full ${t.active ? 'bg-blue-500' : 'bg-gray-300'}"></div>
+                            <div class="w-px h-full min-h-[20px] bg-gray-200"></div>
+                        </div>
+                        <div class="pb-3">
+                            <p class="text-[10px] font-medium text-gray-700">${t.text}</p>
+                            <p class="text-[8px] text-gray-400">${t.time}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                timeline.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无进度信息</p>';
+            }
+
+            const modal = document.getElementById('invite-detail-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
 
         // ========== Landing Page & Auth ==========
         document.body.addEventListener('click', function(e) {
@@ -7346,12 +7502,93 @@
                 return;
             }
 
-            if (action === 'view-invite') {
-                showToast('正在打开特邀详情...');
+            if (action === 'view-invite' || action === 'view-invite-detail') {
+                e.preventDefault();
+                let data;
+                if (action === 'view-invite') {
+                    const tr = btn.closest('tr');
+                    if (!tr) return;
+                    const cells = tr.querySelectorAll('td');
+                    data = {
+                        name: cells[0]?.textContent.trim() || '特邀',
+                        type: cells[1]?.textContent.trim() || '-',
+                        status: cells[2]?.textContent.trim().replace(/[^\u4e00-\u9fa5]/g, '') || '-',
+                        registered: (cells[3]?.textContent.trim().replace(/[^0-9]/g, '') || '0'),
+                        matched: (cells[4]?.textContent.trim().replace(/[^0-9]/g, '') || '0'),
+                        project: cells[5]?.textContent.trim() || '-',
+                        nameEn: '-',
+                        points: '-',
+                        createdAt: '2026-06-01',
+                        deadline: '2026-07-15',
+                        assigned: '0',
+                        desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
+                        matchedUsers: [],
+                        timeline: [
+                            { text: '特邀创建', time: '2026-06-01 10:00', active: true },
+                            { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true },
+                            { text: '等待专家报名', time: '2026-06-09', active: true }
+                        ]
+                    };
+                } else {
+                    const index = parseInt(btn.getAttribute('data-index'));
+                    const invites = [
+                        { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', project: '东南亚市场电商履约模式研究', registered: '12', matched: '4', nameEn: 'SaaS Growth Strategy Expert Interview' },
+                        { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', project: '新能源汽车出海合规政策解读', registered: '8', matched: '3', nameEn: 'Web3 Contract Audit Expert Search' },
+                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', project: '全球跨境支付体系优化', registered: '5', matched: '2', nameEn: 'Cross-border Payment Compliance Research' },
+                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', project: 'RemiCore 海外版图扩张计划', registered: '15', matched: '6', nameEn: 'Middle East FinTech Access Analysis' },
+                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', project: '东南亚卡支付市场调研', registered: '3', matched: '0', nameEn: 'SE Asia Card Scheme Policy' }
+                    ];
+                    const inv = invites[index] || invites[0];
+                    data = {
+                        ...inv,
+                        createdAt: '2026-06-0' + (index + 1),
+                        deadline: '2026-07-1' + (index + 1),
+                        assigned: Math.floor(Math.random() * 3).toString(),
+                        desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
+                        matchedUsers: [],
+                        timeline: [
+                            { text: '特邀创建', time: '2026-06-0' + (index + 1) + ' 10:00', active: true },
+                            { text: 'AI 匹配完成', time: '2026-06-0' + (index + 1) + ' 10:05', active: index < 4 },
+                            { text: index < 2 ? '等待专家报名' : index < 4 ? '专家正在执行' : '特邀已完成', time: '2026-06-09', active: index < 4 }
+                        ]
+                    };
+                }
+                showInviteDetail(data);
                 return;
             }
 
-            if (action === 'publish-invite') {
+            if (action === 'open-my-invite-detail') {
+                e.preventDefault();
+                const name = btn.getAttribute('data-name') || '特邀任务';
+                const status = btn.getAttribute('data-status') || '进行中';
+                showInviteDetail({
+                    name: name,
+                    type: '专家访谈',
+                    status: status,
+                    project: '关联项目',
+                    points: '80pt',
+                    createdAt: '2026-06-01',
+                    deadline: '2026-07-15',
+                    registered: '2',
+                    matched: '5',
+                    assigned: '1',
+                    nameEn: '-',
+                    desc: '您在 APEX 平台上受邀参与的特邀任务。通过 AI 智能匹配系统，已为您推荐了合适的专家资源。',
+                    matchedUsers: [
+                        { name: '张明远', position: '跨境支付总监', match: 92, registered: true },
+                        { name: '陈思雨', position: '合规经理', match: 87, registered: true },
+                        { name: '李伟杰', position: 'FinTech 顾问', match: 85, registered: false }
+                    ],
+                    timeline: [
+                        { text: '接受特邀', time: '2026-06-02', active: true },
+                        { text: 'AI 匹配启动', time: '2026-06-03', active: true },
+                        { text: status === '已完成' ? '特邀完成' : status === '待结算' ? '待结算' : '进行中', time: '2026-06-09', active: status !== '已完成' }
+                    ]
+                });
+                return;
+            }
+
+            if (action === 'open-invite-detail') {
                 showToast('特邀已成功发布');
                 return;
             }
