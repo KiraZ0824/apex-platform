@@ -733,11 +733,14 @@
                             </span>
                         </div>
                         <div class="divide-y divide-gray-100">
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="跨境支付行业现状授课顾问" data-status="进行中">
+                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group" data-action="open-my-invite-detail" data-name="跨境支付行业现状授课顾问" data-status="进行中">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
                                     <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">跨境支付行业现状授课顾问</p>
                                 </div>
-                                <span class="px-2 py-0.5 text-[10px] rounded font-medium shrink-0 ml-4 bg-blue-50 text-blue-600">进行中</span>
+                                <div class="flex items-center gap-2 shrink-0 ml-4">
+                                    <button class="px-2 py-1 text-[9px] font-medium text-violet-600 bg-violet-50 rounded-md hover:bg-violet-100 transition-colors" data-action="open-upload-deliverable" data-name="跨境支付行业现状授课顾问" data-type="授课顾问" data-points="100pt" data-desc="根据您的项目背景，需对跨境支付行业现状进行深度分析与授课讲解。">上传成果</button>
+                                    <span class="px-2 py-0.5 text-[10px] rounded font-medium bg-blue-50 text-blue-600">进行中</span>
+                                </div>
                             </div>
                             <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors group cursor-pointer" data-action="open-my-invite-detail" data-name="中国境内支付公司中层管理联系方式获取" data-status="待审核">
                                 <div class="flex items-center gap-3 flex-1 min-w-0">
@@ -4043,6 +4046,81 @@
                         <button class="px-3 py-1.5 text-[10px] font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="verify-all-pass">全部采纳</button>
                         <button class="px-3 py-1.5 text-[10px] font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传成果弹窗 -->
+    <div id="upload-deliverable-modal" class="modal-overlay">
+        <div class="modal-container custom-scrollbar" style="max-width: 520px;">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <div class="flex items-center gap-2">
+                    <span class="w-1 h-5 bg-violet-500 rounded-full"></span>
+                    <h3 class="text-sm font-bold text-gray-900">上传成果</h3>
+                </div>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-5">
+                <!-- Invite Detail Summary -->
+                <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <i data-lucide="briefcase" class="w-4 h-4 text-gray-400 shrink-0"></i>
+                            <p class="text-sm font-bold text-gray-900 truncate" id="upload-deliverable-title">-</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded-full font-medium shrink-0 ml-3 bg-blue-50 text-blue-600" id="upload-deliverable-badge">进行中</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-2">
+                        <div>
+                            <span class="text-[8px] text-gray-400">特邀类型</span>
+                            <p class="text-[10px] font-medium text-gray-700" id="upload-deliverable-type">-</p>
+                        </div>
+                        <div>
+                            <span class="text-[8px] text-gray-400">智慧值</span>
+                            <p class="text-[10px] font-bold text-amber-600" id="upload-deliverable-points">-</p>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="text-[8px] text-gray-400">特邀说明</span>
+                            <p class="text-[10px] text-gray-600 leading-relaxed" id="upload-deliverable-desc">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="upload" class="w-4 h-4 text-gray-400"></i>
+                        <span class="text-[10px] font-semibold text-gray-600">选择文件</span>
+                    </div>
+                    <div class="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-violet-300 hover:bg-violet-50/20 transition-all cursor-pointer" id="upload-deliverable-dropzone">
+                        <div class="w-10 h-10 rounded-full bg-violet-50 flex items-center justify-center mx-auto mb-3">
+                            <i data-lucide="cloud-upload" class="w-5 h-5 text-violet-500"></i>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-1">拖拽文件到此处，或<span class="text-violet-600 font-medium">点击选择文件</span></p>
+                        <p class="text-[9px] text-gray-400">支持 PDF、Word、Excel、PPT、图片、视频等多种格式</p>
+                        <input type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.mp4,.zip,.rar" class="hidden" id="upload-deliverable-input">
+                    </div>
+                    <div id="upload-deliverable-files" class="space-y-2 hidden">
+                        <p class="text-[9px] text-gray-400 font-medium">已选文件</p>
+                    </div>
+                </div>
+
+                <!-- Remark -->
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">备注说明</label>
+                    <textarea rows="2" placeholder="可选，补充成果说明..." class="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 resize-none" id="upload-deliverable-remark"></textarea>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button class="px-4 py-2 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="close-modal">取消</button>
+                    <button class="px-4 py-2 text-xs font-medium text-white bg-violet-600 rounded-lg hover:bg-violet-500 transition-colors flex items-center gap-1.5" id="upload-deliverable-submit">
+                        <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                        提交成果
+                    </button>
                 </div>
             </div>
         </div>
@@ -7791,6 +7869,27 @@
                 return;
             }
 
+            if (action === 'open-upload-deliverable') {
+                e.preventDefault();
+                const name = target.getAttribute('data-name') || '特邀任务';
+                const type = target.getAttribute('data-type') || '-';
+                const points = target.getAttribute('data-points') || '-';
+                const desc = target.getAttribute('data-desc') || '暂无描述';
+                document.getElementById('upload-deliverable-title').textContent = name;
+                document.getElementById('upload-deliverable-badge').textContent = '进行中';
+                document.getElementById('upload-deliverable-type').textContent = type;
+                document.getElementById('upload-deliverable-points').textContent = points;
+                document.getElementById('upload-deliverable-desc').textContent = desc;
+                document.getElementById('upload-deliverable-remark').value = '';
+                document.getElementById('upload-deliverable-files').classList.add('hidden');
+                document.getElementById('upload-deliverable-files').innerHTML = '<p class="text-[9px] text-gray-400 font-medium">已选文件</p>';
+                const modal = document.getElementById('upload-deliverable-modal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                lucide.createIcons();
+                return;
+            }
+
             if (action === 'open-invite-detail') {
                 showToast('打开特邀任务详情（原型交互）');
             }
@@ -7951,6 +8050,49 @@
             const fileInput = uploadArea.querySelector('input[type="file"]');
             if (fileInput) fileInput.click();
         }
+    });
+
+    // 上传成果弹窗 - 点击虚线区域触发文件选择
+    document.getElementById('upload-deliverable-dropzone')?.addEventListener('click', function() {
+        document.getElementById('upload-deliverable-input').click();
+    });
+
+    // 上传成果弹窗 - 文件选择后显示列表
+    document.getElementById('upload-deliverable-input')?.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+        const container = document.getElementById('upload-deliverable-files');
+        container.classList.remove('hidden');
+        let html = '<p class="text-[9px] text-gray-400 font-medium mb-1.5">已选文件</p>';
+        for (let i = 0; i < files.length; i++) {
+            const f = files[i];
+            const ext = f.name.split('.').pop().toLowerCase();
+            const iconMap = { pdf: 'file-text', doc: 'file-text', docx: 'file-text', xls: 'file-spreadsheet', xlsx: 'file-spreadsheet', ppt: 'presentation', pptx: 'presentation', png: 'image', jpg: 'image', jpeg: 'image', mp4: 'video', zip: 'archive', rar: 'archive', '7z': 'archive' };
+            const icon = iconMap[ext] || 'file';
+            const size = f.size > 1024 * 1024 ? (f.size / 1024 / 1024).toFixed(1) + ' MB' : (f.size / 1024).toFixed(1) + ' KB';
+            html += '<div class="flex items-center justify-between p-2 px-3 rounded-lg bg-white border border-gray-200">';
+            html += '<div class="flex items-center gap-2.5 min-w-0">';
+            html += '<i data-lucide="' + icon + '" class="w-4 h-4 text-gray-400 shrink-0"></i>';
+            html += '<p class="text-[10px] text-gray-700 truncate">' + f.name + '</p>';
+            html += '</div>';
+            html += '<span class="text-[8px] text-gray-400 shrink-0 ml-2">' + size + '</span>';
+            html += '</div>';
+        }
+        container.innerHTML = html;
+        lucide.createIcons();
+    });
+
+    // 上传成果弹窗 - 提交成果
+    document.getElementById('upload-deliverable-submit')?.addEventListener('click', function() {
+        const files = document.getElementById('upload-deliverable-input').files;
+        if (!files || files.length === 0) { showToast('请先选择要上传的成果文件'); return; }
+        const title = document.getElementById('upload-deliverable-title').textContent;
+        showToast('成果提交成功！' + files.length + ' 个文件已上传至「' + title + '」');
+        const modal = document.getElementById('upload-deliverable-modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        document.getElementById('upload-deliverable-input').value = '';
+        document.getElementById('upload-deliverable-files').classList.add('hidden');
     });
 
     // ========== 人才库 ==========
