@@ -771,26 +771,31 @@
                     </div>
                 </div>
 
-                <!-- Right 1/5: 4 compact stat cards in 2x2 grid -->
-                <div class="xl:col-span-1 xl:row-start-1 xl:col-start-5">
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="ant-card p-3 cursor-pointer flex flex-col items-center justify-center text-center" data-action="go-to-my-invites">
-                            <p class="text-base font-black text-gray-900 leading-none">0</p>
-                            <span class="text-[8px] text-blue-500 font-medium mt-0.5">进行中</span>
-                            <span class="text-[8px] text-gray-400">我的特邀</span>
+                <!-- Right 1/5: 4 stat cards with visual hierarchy -->
+                <div class="xl:col-span-1 xl:row-start-1 xl:col-start-5 flex flex-col">
+                    <div class="flex-1 grid grid-cols-2 gap-2 auto-rows-fr">
+                        <div class="ant-card p-4 cursor-pointer flex flex-col justify-center col-span-2" data-action="go-to-my-invites">
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-black text-gray-900 leading-none">0</p>
+                                <span class="text-[9px] text-blue-500 font-medium">进行中</span>
+                            </div>
+                            <span class="text-[8px] text-gray-400 mt-0.5">我的特邀</span>
                         </div>
-                        <div class="ant-card p-3 flex flex-col items-center justify-center text-center">
-                            <p class="text-base font-black text-gray-900 leading-none">0</p>
-                            <span class="text-[8px] text-emerald-500 font-medium mt-0.5">已完成</span>
-                            <span class="text-[8px] text-gray-400">我的特邀</span>
+                        <div class="ant-card p-3.5 flex flex-col justify-center">
+                            <p class="text-xl font-black text-gray-900 leading-none">0</p>
+                            <span class="text-[8px] text-emerald-500 font-medium mt-1">已完成</span>
+                            <span class="text-[7px] text-gray-400">我的特邀</span>
                         </div>
-                        <div class="ant-card p-3 flex flex-col items-center justify-center text-center">
-                            <p class="text-base font-black text-gray-900 leading-none">2</p>
-                            <span class="text-[8px] text-emerald-500 font-medium mt-0.5">可参与</span>
-                            <span class="text-[8px] text-gray-400">平台特邀</span>
+                        <div class="ant-card p-3.5 flex flex-col justify-center">
+                            <p class="text-xl font-black text-gray-900 leading-none">2</p>
+                            <span class="text-[8px] text-emerald-500 font-medium mt-1">可参与</span>
+                            <span class="text-[7px] text-gray-400">平台特邀</span>
                         </div>
-                        <div class="ant-card p-3 cursor-pointer flex flex-col items-center justify-center text-center" data-action="toggle-points-log">
-                            <p class="text-base font-black text-amber-500 leading-none">12,480</p>
+                        <div class="ant-card p-3.5 cursor-pointer flex flex-col justify-center col-span-2" data-action="toggle-points-log">
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-2xl font-black text-amber-500 leading-none">12,480</p>
+                                <i data-lucide="coins" class="w-3.5 h-3.5 text-amber-400"></i>
+                            </div>
                             <span class="text-[8px] text-gray-400 mt-0.5">智慧值</span>
                         </div>
                     </div>
