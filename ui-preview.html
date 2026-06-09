@@ -1371,7 +1371,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">1,800</td>
                                     <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">联系项目负责人</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]" data-action="contact-project-lead">联系项目负责人</button>
                                     </td>
                                 </tr>
                                 <!-- 已完成 -->
@@ -1397,7 +1397,7 @@
                                     <td class="px-6 py-4 text-gray-600">800</td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-gray-500 hover:text-gray-700 text-[10px]">查看延期原因</button>
-                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">联系项目负责人</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]" data-action="contact-project-lead">联系项目负责人</button>
                                     </td>
                                 </tr>
                                 <!-- 已拒绝 -->
@@ -7973,6 +7973,16 @@
                     if (tr) tr.remove();
                     showToast('已取消报名，截止前仍可重新报名');
                 }
+                return;
+            }
+
+            if (action === 'contact-project-lead') {
+                e.preventDefault();
+                e.stopPropagation();
+                const panel = document.getElementById('ai-assist-panel');
+                const isOpen = panel && !panel.classList.contains('opacity-0');
+                if (!isOpen) toggleAiAssist();
+                showToast('已为您打开智能助手，可咨询项目相关问题');
                 return;
             }
 
