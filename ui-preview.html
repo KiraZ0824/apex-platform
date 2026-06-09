@@ -7510,7 +7510,7 @@
                 e.preventDefault();
                 let data;
                 if (action === 'view-invite') {
-                    const tr = btn.closest('tr');
+                    const tr = target.closest('tr');
                     if (!tr) { showToast('未找到特邀数据'); return; }
                     const cells = tr.cells;
                     const statusCell = cells[2];
@@ -7531,7 +7531,7 @@
                         timeline: [{ text: '特邀创建', time: '2026-06-01 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true }, { text: '等待专家报名', time: '2026-06-09', active: true }]
                     };
                 } else {
-                    const index = parseInt(btn.getAttribute('data-index')) || 0;
+                    const index = parseInt(target.getAttribute('data-index')) || 0;
                     const invites = [
                         { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', project: '东南亚市场电商履约模式研究', registered: '12', matched: '4', nameEn: 'SaaS Growth Strategy Expert Interview' },
                         { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', project: '新能源汽车出海合规政策解读', registered: '8', matched: '3', nameEn: 'Web3 Contract Audit Expert Search' },
@@ -7555,8 +7555,8 @@
 
             if (action === 'open-my-invite-detail') {
                 e.preventDefault();
-                const name = btn.getAttribute('data-name') || '特邀任务';
-                const status = btn.getAttribute('data-status') || '进行中';
+                const name = target.getAttribute('data-name') || '特邀任务';
+                const status = target.getAttribute('data-status') || '进行中';
                 showInviteDetail({
                     name: name,
                     type: '专家访谈',
