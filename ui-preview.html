@@ -482,19 +482,19 @@
 </head>
 <body class="flex">
     <!-- Landing Page -->
-    <div id="landing-page" class="fixed inset-0 z-50 flex items-center justify-center" style="background: radial-gradient(900px 520px at 72% 38%, rgba(255, 122, 26, 0.22), transparent 56%), radial-gradient(820px 520px at 22% 16%, rgba(255, 178, 93, 0.20), transparent 58%), linear-gradient(180deg, var(--apex-bg-1) 0%, var(--apex-bg-0) 100%);">
+    <div id="landing-page" class="fixed inset-0 z-50 flex flex-col" style="background: radial-gradient(900px 520px at 72% 38%, rgba(255, 122, 26, 0.22), transparent 56%), radial-gradient(820px 520px at 22% 16%, rgba(255, 178, 93, 0.20), transparent 58%), linear-gradient(180deg, var(--apex-bg-1) 0%, var(--apex-bg-0) 100%);">
         <div class="absolute inset-0 overflow-hidden">
             <div class="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-20" style="background: radial-gradient(circle, rgba(255,122,26,0.3), transparent 70%);"></div>
             <div class="absolute -bottom-60 -left-60 w-[500px] h-[500px] rounded-full opacity-15" style="background: radial-gradient(circle, rgba(255,178,93,0.25), transparent 70%);"></div>
         </div>
-        <div class="relative z-10 w-full max-w-5xl mx-auto px-8">
+        <div class="relative z-10 flex flex-col min-h-screen">
             <!-- Nav -->
-            <div class="flex items-center justify-between mb-16">
+            <div class="flex items-center justify-between px-10 py-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-lg">
-                        <span class="text-white font-bold text-sm">A</span>
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center shadow-lg">
+                        <span class="text-white font-bold text-xs">A</span>
                     </div>
-                    <span class="text-xl font-bold text-slate-900 tracking-tight">APEX</span>
+                    <span class="text-lg font-bold text-slate-900 tracking-tight">APEX</span>
                 </div>
                 <div class="flex items-center gap-6">
                     <button class="text-sm text-slate-600 hover:text-slate-900 transition-colors" data-action="landing-about">About</button>
@@ -502,53 +502,31 @@
                     <button class="px-5 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 shadow-sm transition-all" data-action="landing-register">注册</button>
                 </div>
             </div>
-            <!-- Hero -->
-            <div class="text-center mb-20">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 border border-white/70 backdrop-blur-md text-xs text-slate-600 mb-8 shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    AI-Powered Expert eXchange Platform
-                </div>
-                <h1 class="text-5xl font-bold text-slate-900 leading-tight mb-6 tracking-tight">
-                    智慧值管理系统
-                </h1>
-                <p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mb-10">
-                    AI 驱动的专家交换平台，连接全球行业精英，<br>智能匹配、高效协作、精准洞察。
-                </p>
-                <div class="flex items-center justify-center gap-4">
-                    <button class="px-8 py-3 text-sm font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 shadow-lg transition-all flex items-center gap-2" data-action="landing-login">
-                        开始使用 <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                    <button class="px-8 py-3 text-sm font-medium text-slate-600 bg-white/60 border border-white/70 rounded-xl hover:bg-white/80 backdrop-blur-md shadow-sm transition-all" data-action="landing-about">
-                        了解更多
-                    </button>
-                </div>
-            </div>
-            <!-- Features -->
-            <div class="grid grid-cols-3 gap-6">
-                <div class="p-6 rounded-2xl bg-white/60 border border-white/70 backdrop-blur-md shadow-sm hover:shadow-md hover:bg-white/80 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
-                        <i data-lucide="brain" class="w-5 h-5 text-blue-500"></i>
+            <!-- Banner section -->
+            <div class="flex-1 flex items-center justify-center px-10 pb-8">
+                <div class="relative w-full max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl" style="aspect-ratio: 16/9;">
+                    <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=abstract%20technology%20network%20connection%20global%20expert%20exchange%20platform%20digital%20nodes%20lines%20connecting%20worldwide%20professional%20dark%20blue%20orange%20accent%20futuristic%20business%20intelligence&image_size=landscape_16_9" alt="APEX Banner" class="w-full h-full object-cover">
+                    <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.05) 100%);"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-10">
+                        <p class="text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-lg" style="text-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                            AI-Powered<br>Expert eXchange
+                        </p>
+                        <p class="text-white/80 text-sm md:text-base mt-3 max-w-xl drop-shadow" style="text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                            连接全球行业精英，智能匹配、高效协作、精准洞察
+                        </p>
+                        <div class="flex items-center gap-4 mt-6">
+                            <button class="px-7 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-xl hover:bg-slate-800 shadow-lg transition-all flex items-center gap-2" data-action="landing-login">
+                                开始使用 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            <button class="px-7 py-2.5 text-sm font-medium text-slate-200 bg-white/15 border border-white/25 rounded-xl hover:bg-white/25 backdrop-blur-md transition-all" data-action="landing-about">
+                                了解更多
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="text-sm font-bold text-slate-900 mb-2">AI 智能匹配</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">基于多维画像与权重算法，精准匹配行业专家与项目需求</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-white/60 border border-white/70 backdrop-blur-md shadow-sm hover:shadow-md hover:bg-white/80 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
-                        <i data-lucide="users" class="w-5 h-5 text-orange-500"></i>
-                    </div>
-                    <h3 class="text-sm font-bold text-slate-900 mb-2">全球人才库</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">整合亮数据与 LinkedIn 资源，构建跨境金融专家网络</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-white/60 border border-white/70 backdrop-blur-md shadow-sm hover:shadow-md hover:bg-white/80 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center mb-4">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-emerald-500"></i>
-                    </div>
-                    <h3 class="text-sm font-bold text-slate-900 mb-2">合规与风控</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">内置合规资质标签与风控评分，确保专家合作安全合规</p>
                 </div>
             </div>
             <!-- Footer -->
-            <div class="text-center mt-16 text-xs text-slate-400">
+            <div class="relative z-10 text-center pb-6 text-xs text-slate-400">
                 © 2026 APEX · AI-Powered Expert eXchange
             </div>
         </div>
@@ -636,24 +614,6 @@
                     </div>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed">APEX 是一个 AI 驱动的专家交换平台，专为跨境金融行业设计。通过智能匹配算法、全球人才库和合规风控体系，连接行业精英与项目需求，实现高效协作与精准洞察。</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="p-3 rounded-lg bg-blue-50/50 border border-blue-100">
-                        <p class="text-xs font-bold text-blue-700 mb-1">智能匹配</p>
-                        <p class="text-[10px] text-blue-500">多维画像 + 权重算法</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-orange-50/50 border border-orange-100">
-                        <p class="text-xs font-bold text-orange-700 mb-1">全球人才</p>
-                        <p class="text-[10px] text-orange-500">LinkedIn + 亮数据整合</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-emerald-50/50 border border-emerald-100">
-                        <p class="text-xs font-bold text-emerald-700 mb-1">合规风控</p>
-                        <p class="text-[10px] text-emerald-500">资质标签 + 风控评分</p>
-                    </div>
-                    <div class="p-3 rounded-lg bg-violet-50/50 border border-violet-100">
-                        <p class="text-xs font-bold text-violet-700 mb-1">项目管理</p>
-                        <p class="text-[10px] text-violet-500">特邀 + 验收全流程</p>
-                    </div>
-                </div>
                 <div class="text-center text-xs text-slate-400 pt-2">© 2026 APEX · v1.0</div>
             </div>
         </div>
