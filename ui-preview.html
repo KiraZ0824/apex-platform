@@ -1339,7 +1339,7 @@
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-xs">
                                 <!-- 已报名 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-action="open-my-invite-detail" data-name="SaaS 企业 NDR 提升专项" data-status="已报名">
                                     <td class="px-6 py-4 font-medium text-gray-900">SaaS 企业 NDR 提升专项</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202604-001</td>
                                     <td class="px-6 py-4">
@@ -1347,11 +1347,11 @@
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">3,500</td>
                                     <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-gray-500 hover:text-red-600 text-[10px]">取消报名</button>
+                                        <button class="text-gray-500 hover:text-red-600 text-[10px]" data-action="cancel-invite-registration">取消报名</button>
                                     </td>
                                 </tr>
                                 <!-- 进行中 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-action="open-my-invite-detail" data-name="跨境支付合规调研" data-status="进行中">
                                     <td class="px-6 py-4 font-medium text-gray-900">跨境支付合规调研</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202605-008</td>
                                     <td class="px-6 py-4">
@@ -1363,7 +1363,7 @@
                                     </td>
                                 </tr>
                                 <!-- 验收中 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-action="open-my-invite-detail" data-name="欧洲市场合规策略梳理" data-status="验收中">
                                     <td class="px-6 py-4 font-medium text-gray-900">欧洲市场合规策略梳理</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202604-012</td>
                                     <td class="px-6 py-4">
@@ -1371,11 +1371,11 @@
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">1,800</td>
                                     <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">查看验收进度</button>
+                                        <button class="text-gray-500 hover:text-gray-700 text-[10px]">联系项目负责人</button>
                                     </td>
                                 </tr>
                                 <!-- 已完成 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-action="open-my-invite-detail" data-name="中东金融科技准入分析" data-status="已完成">
                                     <td class="px-6 py-4 font-medium text-gray-900">中东金融科技准入分析</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202605-011</td>
                                     <td class="px-6 py-4">
@@ -1388,7 +1388,7 @@
                                     </td>
                                 </tr>
                                 <!-- 延期 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-action="open-my-invite-detail" data-name="东南亚卡组织政策解读" data-status="延期">
                                     <td class="px-6 py-4 font-medium text-gray-900">东南亚卡组织政策解读</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202604-025</td>
                                     <td class="px-6 py-4">
@@ -1401,7 +1401,7 @@
                                     </td>
                                 </tr>
                                 <!-- 已拒绝 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-action="open-my-invite-detail" data-name="流量增长方案咨询" data-status="已拒绝">
                                     <td class="px-6 py-4 font-medium text-gray-400">流量增长方案咨询</td>
                                     <td class="px-6 py-4 text-gray-400">PRJ-202604-018</td>
                                     <td class="px-6 py-4">
@@ -7962,6 +7962,17 @@
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 lucide.createIcons();
+                return;
+            }
+
+            if (action === 'cancel-invite-registration') {
+                e.preventDefault();
+                e.stopPropagation();
+                if (confirm('确认取消报名该特邀？')) {
+                    const tr = target.closest('tr');
+                    if (tr) tr.remove();
+                    showToast('已取消报名，截止前仍可重新报名');
+                }
                 return;
             }
 
