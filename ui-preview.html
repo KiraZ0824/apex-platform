@@ -5427,70 +5427,74 @@
 
         // ========== Invite Detail Modal ==========
         function showInviteDetail(data) {
-            document.getElementById('invite-detail-title').textContent = data.name || '特邀详情';
-            const badge = document.getElementById('invite-detail-badge');
-            badge.textContent = data.status || '-';
-            const badgeColors = {
-                '报名中': 'bg-blue-50 text-blue-600',
-                '待分配': 'bg-amber-50 text-amber-600',
-                '进行中': 'bg-indigo-50 text-indigo-600',
-                '已完成': 'bg-emerald-50 text-emerald-600',
-                '延期': 'bg-rose-50 text-rose-500',
-                '草稿': 'bg-gray-100 text-gray-400'
-            };
-            badge.className = 'px-2 py-0.5 text-[10px] rounded-full font-medium shrink-0 ' + (badgeColors[data.status] || 'bg-gray-100 text-gray-500');
+            try {
+                document.getElementById('invite-detail-title').textContent = data.name || '特邀详情';
+                const badge = document.getElementById('invite-detail-badge');
+                badge.textContent = data.status || '-';
+                const badgeColors = {
+                    '报名中': 'bg-blue-50 text-blue-600',
+                    '待分配': 'bg-amber-50 text-amber-600',
+                    '进行中': 'bg-indigo-50 text-indigo-600',
+                    '已完成': 'bg-emerald-50 text-emerald-600',
+                    '延期': 'bg-rose-50 text-rose-500',
+                    '草稿': 'bg-gray-100 text-gray-400'
+                };
+                badge.className = 'px-2 py-0.5 text-[10px] rounded-full font-medium shrink-0 ' + (badgeColors[data.status] || 'bg-gray-100 text-gray-500');
 
-            document.getElementById('invite-detail-type').textContent = data.type || '-';
-            document.getElementById('invite-detail-name-en').textContent = data.nameEn || '-';
-            document.getElementById('invite-detail-project').textContent = data.project || '-';
-            document.getElementById('invite-detail-points').textContent = data.points || '-';
-            document.getElementById('invite-detail-created').textContent = data.createdAt || '-';
-            document.getElementById('invite-detail-deadline').textContent = data.deadline || '-';
-            document.getElementById('invite-detail-registered').textContent = data.registered || '0';
-            document.getElementById('invite-detail-matched').textContent = data.matched || '0';
-            document.getElementById('invite-detail-assigned').textContent = data.assigned || '0';
-            document.getElementById('invite-detail-desc').textContent = data.desc || '暂无描述';
+                document.getElementById('invite-detail-type').textContent = data.type || '-';
+                document.getElementById('invite-detail-name-en').textContent = data.nameEn || '-';
+                document.getElementById('invite-detail-project').textContent = data.project || '-';
+                document.getElementById('invite-detail-points').textContent = data.points || '-';
+                document.getElementById('invite-detail-created').textContent = data.createdAt || '-';
+                document.getElementById('invite-detail-deadline').textContent = data.deadline || '-';
+                document.getElementById('invite-detail-registered').textContent = data.registered || '0';
+                document.getElementById('invite-detail-matched').textContent = data.matched || '0';
+                document.getElementById('invite-detail-assigned').textContent = data.assigned || '0';
+                document.getElementById('invite-detail-desc').textContent = data.desc || '暂无描述';
 
-            const usersContainer = document.getElementById('invite-detail-users');
-            if (data.matchedUsers && data.matchedUsers.length > 0) {
-                usersContainer.innerHTML = data.matchedUsers.slice(0, 4).map(u => `
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[8px] font-bold">${u.name[0]}</div>
-                            <div>
-                                <p class="text-[10px] font-medium text-gray-700">${u.name}</p>
-                                <p class="text-[8px] text-gray-400">${u.position} · ${u.match}% 匹配</p>
+                const usersContainer = document.getElementById('invite-detail-users');
+                if (data.matchedUsers && data.matchedUsers.length > 0) {
+                    usersContainer.innerHTML = data.matchedUsers.slice(0, 4).map(u => `
+                        <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50 border border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[8px] font-bold">${u.name[0]}</div>
+                                <div>
+                                    <p class="text-[10px] font-medium text-gray-700">${u.name}</p>
+                                    <p class="text-[8px] text-gray-400">${u.position} \u00B7 ${u.match}% 匹配</p>
+                                </div>
+                            </div>
+                            <span class="text-[8px] px-1.5 py-0.5 rounded-full ${u.registered ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}">${u.registered ? '已报名' : '待邀请'}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    usersContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无可匹配专家</p>';
+                }
+
+                const timeline = document.getElementById('invite-detail-timeline');
+                if (data.timeline && data.timeline.length > 0) {
+                    timeline.innerHTML = data.timeline.slice(0, 6).map((t, ti) => `
+                        <div class="flex items-start gap-3">
+                            <div class="flex flex-col items-center">
+                                <div class="w-2 h-2 rounded-full ${t.active ? 'bg-blue-500' : 'bg-gray-300'}"></div>
+                                ${ti < data.timeline.length - 1 ? '<div class="w-px h-full min-h-[20px] bg-gray-200"></div>' : ''}
+                            </div>
+                            <div class="pb-3">
+                                <p class="text-[10px] font-medium text-gray-700">${t.text}</p>
+                                <p class="text-[8px] text-gray-400">${t.time}</p>
                             </div>
                         </div>
-                        <span class="text-[8px] px-1.5 py-0.5 rounded-full ${u.registered ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}">${u.registered ? '已报名' : '待邀请'}</span>
-                    </div>
-                `).join('');
-            } else {
-                usersContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无可匹配专家</p>';
-            }
+                    `).join('');
+                } else {
+                    timeline.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无进度信息</p>';
+                }
 
-            const timeline = document.getElementById('invite-detail-timeline');
-            if (data.timeline && data.timeline.length > 0) {
-                timeline.innerHTML = data.timeline.map(t => `
-                    <div class="flex items-start gap-3">
-                        <div class="flex flex-col items-center">
-                            <div class="w-2 h-2 rounded-full ${t.active ? 'bg-blue-500' : 'bg-gray-300'}"></div>
-                            <div class="w-px h-full min-h-[20px] bg-gray-200"></div>
-                        </div>
-                        <div class="pb-3">
-                            <p class="text-[10px] font-medium text-gray-700">${t.text}</p>
-                            <p class="text-[8px] text-gray-400">${t.time}</p>
-                        </div>
-                    </div>
-                `).join('');
-            } else {
-                timeline.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">暂无进度信息</p>';
+                const modal = document.getElementById('invite-detail-modal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                lucide.createIcons();
+            } catch(e) {
+                showToast('打开详情失败: ' + e.message);
             }
-
-            const modal = document.getElementById('invite-detail-modal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
         }
 
         // ========== Landing Page & Auth ==========
@@ -7507,30 +7511,27 @@
                 let data;
                 if (action === 'view-invite') {
                     const tr = btn.closest('tr');
-                    if (!tr) return;
-                    const cells = tr.querySelectorAll('td');
+                    if (!tr) { showToast('未找到特邀数据'); return; }
+                    const cells = tr.cells;
+                    const statusCell = cells[2];
+                    const statusText = statusCell ? (statusCell.textContent || '').replace(/[^a-zA-Z\u4e00-\u9fa5]/g, '').trim() : '-';
+                    const regCount = cells[3] ? (cells[3].textContent || '').replace(/[^0-9]/g, '') : '0';
+                    const matchCount = cells[4] ? (cells[4].textContent || '').replace(/[^0-9]/g, '') : '0';
                     data = {
-                        name: cells[0]?.textContent.trim() || '特邀',
-                        type: cells[1]?.textContent.trim() || '-',
-                        status: cells[2]?.textContent.trim().replace(/[^\u4e00-\u9fa5]/g, '') || '-',
-                        registered: (cells[3]?.textContent.trim().replace(/[^0-9]/g, '') || '0'),
-                        matched: (cells[4]?.textContent.trim().replace(/[^0-9]/g, '') || '0'),
-                        project: cells[5]?.textContent.trim() || '-',
-                        nameEn: '-',
-                        points: '-',
-                        createdAt: '2026-06-01',
-                        deadline: '2026-07-15',
+                        name: cells[0] ? (cells[0].textContent || '').trim() : '特邀',
+                        type: cells[1] ? (cells[1].textContent || '').trim() : '-',
+                        status: statusText,
+                        registered: regCount || '0',
+                        matched: matchCount || '0',
+                        project: cells[5] ? (cells[5].textContent || '').trim() : '-',
+                        nameEn: '-', points: '-', createdAt: '2026-06-01', deadline: '2026-07-15',
                         assigned: '0',
                         desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
                         matchedUsers: [],
-                        timeline: [
-                            { text: '特邀创建', time: '2026-06-01 10:00', active: true },
-                            { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true },
-                            { text: '等待专家报名', time: '2026-06-09', active: true }
-                        ]
+                        timeline: [{ text: '特邀创建', time: '2026-06-01 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true }, { text: '等待专家报名', time: '2026-06-09', active: true }]
                     };
                 } else {
-                    const index = parseInt(btn.getAttribute('data-index'));
+                    const index = parseInt(btn.getAttribute('data-index')) || 0;
                     const invites = [
                         { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', project: '东南亚市场电商履约模式研究', registered: '12', matched: '4', nameEn: 'SaaS Growth Strategy Expert Interview' },
                         { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', project: '新能源汽车出海合规政策解读', registered: '8', matched: '3', nameEn: 'Web3 Contract Audit Expert Search' },
@@ -7539,19 +7540,14 @@
                         { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', project: '东南亚卡支付市场调研', registered: '3', matched: '0', nameEn: 'SE Asia Card Scheme Policy' }
                     ];
                     const inv = invites[index] || invites[0];
-                    data = {
-                        ...inv,
+                    data = Object.assign({}, inv, {
                         createdAt: '2026-06-0' + (index + 1),
                         deadline: '2026-07-1' + (index + 1),
-                        assigned: Math.floor(Math.random() * 3).toString(),
+                        assigned: String(Math.floor(Math.random() * 3)),
                         desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
                         matchedUsers: [],
-                        timeline: [
-                            { text: '特邀创建', time: '2026-06-0' + (index + 1) + ' 10:00', active: true },
-                            { text: 'AI 匹配完成', time: '2026-06-0' + (index + 1) + ' 10:05', active: index < 4 },
-                            { text: index < 2 ? '等待专家报名' : index < 4 ? '专家正在执行' : '特邀已完成', time: '2026-06-09', active: index < 4 }
-                        ]
-                    };
+                        timeline: [{ text: '特邀创建', time: '2026-06-0' + (index + 1) + ' 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-0' + (index + 1) + ' 10:05', active: index < 4 }, { text: index < 2 ? '等待专家报名' : index < 4 ? '专家正在执行' : '特邀已完成', time: '2026-06-09', active: index < 4 }]
+                    });
                 }
                 showInviteDetail(data);
                 return;
