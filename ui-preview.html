@@ -818,21 +818,7 @@
                                 <p class="text-[11px] font-semibold text-gray-600">平台最新特邀</p>
                             </div>
                         </div>
-                        <div class="divide-y divide-gray-100">
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer group">
-                                <div class="flex items-center gap-3 flex-1 min-w-0">
-                                    <span class="px-2 py-0.5 border border-blue-100 text-blue-500 text-[10px] rounded shrink-0">特邀顾问</span>
-                                    <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">跨境支付行业现状授课顾问</p>
-                                </div>
-                                <span class="text-[11px] font-semibold text-amber-600 ml-4 shrink-0">100pt</span>
-                            </div>
-                            <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer group">
-                                <div class="flex items-center gap-3 flex-1 min-w-0">
-                                    <span class="px-2 py-0.5 border border-purple-100 text-purple-500 text-[10px] rounded shrink-0">商务合作</span>
-                                    <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">中国境内支付公司中层管理联系方式获取</p>
-                                </div>
-                                <span class="text-[11px] font-semibold text-amber-600 ml-4 shrink-0">10pt</span>
-                            </div>
+                        <div class="divide-y divide-gray-100" id="latest-invites-container">
                         </div>
                     </div>
 
@@ -5328,6 +5314,28 @@
         });
 
         lucide.createIcons();
+
+        // ========== Render latest 5 invites on workbench ==========
+        (function renderLatestInvites() {
+            const container = document.getElementById('latest-invites-container');
+            if (!container) return;
+            const latestInvites = [
+                { type: '专家访谈', typeClass: 'border-blue-100 text-blue-500', name: 'SaaS 增长策略专家访谈', points: '100pt' },
+                { type: '行业研究', typeClass: 'border-sky-100 text-sky-500', name: 'Web3 合约审计专家寻访', points: '80pt' },
+                { type: '战略咨询', typeClass: 'border-violet-100 text-violet-500', name: '跨境支付合规调研', points: '60pt' },
+                { type: '专家访谈', typeClass: 'border-blue-100 text-blue-500', name: '中东金融科技准入分析', points: '50pt' },
+                { type: '行业研究', typeClass: 'border-sky-100 text-sky-500', name: '东南亚卡组织政策解读', points: '40pt' }
+            ];
+            container.innerHTML = latestInvites.map((inv, i) => `
+                <div class="px-5 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer group" data-action="view-invite-detail" data-index="${i}">
+                    <div class="flex items-center gap-3 flex-1 min-w-0">
+                        <span class="px-2 py-0.5 border ${inv.typeClass} text-[10px] rounded shrink-0">${inv.type}</span>
+                        <p class="text-xs font-medium text-gray-700 truncate group-hover:text-blue-600">${inv.name}</p>
+                    </div>
+                    <span class="text-[11px] font-semibold text-amber-600 ml-4 shrink-0">${inv.points}</span>
+                </div>
+            `).join('');
+        })();
 
         // ========== Landing Page & Auth ==========
         document.body.addEventListener('click', function(e) {
