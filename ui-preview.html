@@ -7686,11 +7686,41 @@
                     projectDesc: '该项目旨在通过行业专家深度访谈，获取市场前沿洞察与战略建议。',
                     desc: '您在 APEX 平台上受邀参与的特邀任务。通过 AI 智能匹配系统，已为您推荐了合适的专家资源。',
                     criteria: '需完成专家访谈纪要，包含核心观点摘录、数据验证及独立分析章节。',
-                    timeline: [
-                        { text: '接受特邀', time: '2026-06-02', active: true },
-                        { text: 'AI 匹配启动', time: '2026-06-03', active: true },
-                        { text: status === '已完成' ? '特邀完成' : status === '待结算' ? '待结算' : '进行中', time: '2026-06-09', active: status !== '已完成' }
-                    ]
+                    timeline: (function() {
+                        var timelines = {
+                            '待审核': [
+                                { text: '特邀创建', time: '2026-06-01', active: true },
+                                { text: '平台审核中', time: '2026-06-03', active: true }
+                            ],
+                            '进行中': [
+                                { text: '接受特邀', time: '2026-06-02', active: true },
+                                { text: 'AI 匹配启动', time: '2026-06-03', active: true },
+                                { text: '成果提交', time: '2026-06-09', active: true }
+                            ],
+                            '已完成': [
+                                { text: '接受特邀', time: '2026-06-02', active: true },
+                                { text: 'AI 匹配启动', time: '2026-06-03', active: true },
+                                { text: '成果提交', time: '2026-06-07', active: true },
+                                { text: '特邀完成', time: '2026-06-09', active: true }
+                            ],
+                            '待结算': [
+                                { text: '接受特邀', time: '2026-06-02', active: true },
+                                { text: 'AI 匹配启动', time: '2026-06-03', active: true },
+                                { text: '成果提交', time: '2026-06-07', active: true },
+                                { text: '特邀完成', time: '2026-06-08', active: true },
+                                { text: '待结算', time: '2026-06-09', active: true }
+                            ],
+                            '已取消': [
+                                { text: '特邀创建', time: '2026-06-01', active: true },
+                                { text: '已取消', time: '2026-06-03', active: true }
+                            ]
+                        };
+                        return timelines[status] || [
+                            { text: '接受特邀', time: '2026-06-02', active: true },
+                            { text: 'AI 匹配启动', time: '2026-06-03', active: true },
+                            { text: status, time: '2026-06-09', active: true }
+                        ];
+                    })()
                 });
                 return;
             }
