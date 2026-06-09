@@ -4010,8 +4010,9 @@
                             <thead>
                                 <tr class="bg-gray-50 text-gray-500 text-[9px] uppercase tracking-wider">
                                     <th class="px-3 py-2.5 text-left font-medium">专家</th>
+                                    <th class="px-3 py-2.5 text-left font-medium">智慧值</th>
                                     <th class="px-3 py-2.5 text-left font-medium">提交成果</th>
-                                    <th class="px-3 py-2.5 text-center font-medium w-[140px]">验收结果</th>
+                                    <th class="px-3 py-2.5 text-center font-medium w-[160px]">验收结果</th>
                                 </tr>
                             </thead>
                             <tbody id="invite-detail-verify-list" class="divide-y divide-gray-100">
@@ -4019,7 +4020,7 @@
                         </table>
                     </div>
                     <div class="flex items-center justify-end gap-3">
-                        <button class="px-3 py-1.5 text-[10px] font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="verify-all-pass">全部通过</button>
+                        <button class="px-3 py-1.5 text-[10px] font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="verify-all-pass">全部采纳</button>
                         <button class="px-3 py-1.5 text-[10px] font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
                     </div>
                 </div>
@@ -5458,6 +5459,9 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-3 py-3 align-top">
+                                <span class="text-[10px] font-semibold text-amber-600">${u.points}</span>
+                            </td>
                             <td class="px-3 py-3">
                                 <div class="flex flex-wrap gap-1.5 max-w-xs">
                                     ${u.files ? u.files.map(f => {
@@ -5469,9 +5473,14 @@
                                 </div>
                             </td>
                             <td class="px-3 py-3 text-center">
-                                <div class="flex items-center justify-center gap-1.5" data-verify-actions="${i}">
-                                    <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'pass' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600'}" data-action="verify-user-pass" data-index="${i}">通过</button>
-                                    <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'fail' ? 'bg-red-50 border-red-300 text-red-700' : 'border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600'}" data-action="verify-user-fail" data-index="${i}">不通过</button>
+                                <div class="flex flex-col items-center gap-1.5" data-verify-actions="${i}">
+                                    <div class="flex items-center justify-center gap-1.5">
+                                        <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'pass' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600'}" data-action="verify-user-pass" data-index="${i}">采纳</button>
+                                        <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'fail' ? 'bg-red-50 border-red-300 text-red-700' : 'border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600'}" data-action="verify-user-fail" data-index="${i}">不采纳</button>
+                                    </div>
+                                    <div class="verify-reason hidden w-full" data-reason-input="${i}">
+                                        <input type="text" placeholder="请输入不采纳理由" class="w-full px-2 py-1 text-[8px] border border-red-200 rounded-md outline-none focus:ring-1 focus:ring-red-300" data-action="verify-reason-input" data-index="${i}">
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -7591,10 +7600,10 @@
                         { text: '成果提交完成，等待验收', time: '2026-06-09', active: true }
                     ],
                     verifyUsers: [
-                        { name: '张明远', position: '跨境支付总监', files: [{ name: '跨境支付合规调研报告_v2.pdf', size: '4.2 MB' }, { name: '支付牌照要求对比表.xlsx', size: '1.8 MB' }], result: '' },
-                        { name: '陈思雨', position: '合规经理', files: [{ name: '全球跨境支付体系优化方案.docx', size: '2.5 MB' }, { name: '监管框架差异分析.pptx', size: '3.1 MB' }, { name: '合规优化建议清单.pdf', size: '1.2 MB' }], result: '' },
-                        { name: '李伟杰', position: 'FinTech 顾问', files: [{ name: '中东金融科技市场准入分析报告.pdf', size: '5.6 MB' }], result: 'pass' },
-                        { name: '王思涵', position: '风控分析师', files: [{ name: '风控模型评估报告_v3.pdf', size: '3.4 MB' }, { name: '风险点识别矩阵.xlsx', size: '0.8 MB' }], result: '' }
+                        { name: '张明远', position: '跨境支付总监', points: '100pt', files: [{ name: '跨境支付合规调研报告_v2.pdf', size: '4.2 MB' }, { name: '支付牌照要求对比表.xlsx', size: '1.8 MB' }], result: '' },
+                        { name: '陈思雨', position: '合规经理', points: '80pt', files: [{ name: '全球跨境支付体系优化方案.docx', size: '2.5 MB' }, { name: '监管框架差异分析.pptx', size: '3.1 MB' }, { name: '合规优化建议清单.pdf', size: '1.2 MB' }], result: '' },
+                        { name: '李伟杰', position: 'FinTech 顾问', points: '60pt', files: [{ name: '中东金融科技市场准入分析报告.pdf', size: '5.6 MB' }], result: 'pass' },
+                        { name: '王思涵', position: '风控分析师', points: '50pt', files: [{ name: '风控模型评估报告_v3.pdf', size: '3.4 MB' }, { name: '风险点识别矩阵.xlsx', size: '0.8 MB' }], result: '' }
                     ]
                 });
                 return;
@@ -7614,7 +7623,9 @@
                 });
                 btns[0].classList.remove('border-gray-200', 'text-gray-500');
                 btns[0].classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-700');
-                showToast('已标记为通过');
+                const reasonInput = actions.querySelector('[data-reason-input]');
+                if (reasonInput) reasonInput.classList.add('hidden');
+                showToast('已标记为采纳');
                 return;
             }
 
@@ -7632,7 +7643,9 @@
                 });
                 btns[1].classList.remove('border-gray-200', 'text-gray-500');
                 btns[1].classList.add('bg-red-50', 'border-red-300', 'text-red-700');
-                showToast('已标记为不通过');
+                const reasonInput = actions.querySelector('[data-reason-input]');
+                if (reasonInput) reasonInput.classList.remove('hidden');
+                showToast('已标记为不采纳，请填写理由');
                 return;
             }
 
@@ -7646,8 +7659,10 @@
                     });
                     btns[0].classList.remove('border-gray-200', 'text-gray-500');
                     btns[0].classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-700');
+                    const reasonInput = actions.querySelector('[data-reason-input]');
+                    if (reasonInput) reasonInput.classList.add('hidden');
                 });
-                showToast('全部已标记为通过');
+                showToast('全部已标记为采纳');
                 return;
             }
 
@@ -7655,8 +7670,25 @@
                 e.preventDefault();
                 const passed = document.querySelectorAll('[data-verify-actions] button.bg-emerald-50').length;
                 const failed = document.querySelectorAll('[data-verify-actions] button.bg-red-50').length;
-                if (passed + failed === 0) { showToast('请先为每位专家标记通过或不通过'); return; }
-                showToast(`验收结果已提交：${passed} 人通过，${failed} 人不通过`);
+                if (passed + failed === 0) { showToast('请先为每位专家标记采纳或不采纳'); return; }
+                const reasons = [];
+                document.querySelectorAll('[data-verify-actions]').forEach(actions => {
+                    const failBtn = actions.querySelector('button.bg-red-50');
+                    if (failBtn) {
+                        const index = failBtn.getAttribute('data-index');
+                        const reasonInput = document.querySelector(`[data-reason-input="${index}"] input`);
+                        const reason = reasonInput ? reasonInput.value.trim() : '';
+                        if (!reason) {
+                            showToast('不采纳的专家请填写理由');
+                            if (reasonInput) reasonInput.focus();
+                            reasons.push(null);
+                            return;
+                        }
+                        reasons.push(reason);
+                    }
+                });
+                if (reasons.includes(null)) return;
+                showToast(`验收结果已提交：${passed} 人采纳，${failed} 人不采纳`);
                 const modal = document.getElementById('invite-detail-modal');
                 if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
                 return;
