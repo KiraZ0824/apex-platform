@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Bot, MessageSquare, Search } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { LearningResource, InvitationItem, Invitation, Activity } from '../types';
+import { LearningResource, InvitationItem, Invitation } from '../types';
 import { api } from '../services/api';
 import LoginPage from './pages/LoginPage';
 import SplashPage from './pages/SplashPage';
@@ -24,7 +24,6 @@ export default function MobileApp() {
   const [myInvitations, setMyInvitations] = useState<InvitationItem[]>([]);
   const [platformInvitations, setPlatformInvitations] = useState<InvitationItem[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
-  const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedInvitationId, setSelectedInvitationId] = useState<string | null>(null);
   const [appReady, setAppReady] = useState(false);
 
@@ -37,18 +36,16 @@ export default function MobileApp() {
   const fetchData = async () => {
     if (!user) return;
     try {
-      const [lr, mi, pi, i, a] = await Promise.all([
+      const [lr, mi, pi, i] = await Promise.all([
         api.getLearningResources(),
         api.getMyInvitations(),
         api.getPlatformInvitations(),
         api.getInvitations(),
-        api.getActivities(),
       ]);
       setLearningResources(lr);
       setMyInvitations(mi);
       setPlatformInvitations(pi);
       setInvitations(i);
-      setActivities(a);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -60,8 +57,8 @@ export default function MobileApp() {
 
   if (!appReady) {
     return (
-      <div className="min-h-screen flex justify-center bg-[#0f0f12]">
-        <div className="w-full max-w-[430px]">
+      <div className="min-h-screen bg-slate-200 flex justify-center">
+        <div className="w-full max-w-[430px] h-screen flex items-center justify-center bg-[#0f0f12] overflow-hidden">
           <SplashPage onComplete={() => setAppReady(true)} />
         </div>
       </div>
@@ -99,7 +96,7 @@ export default function MobileApp() {
             user={user}
             myInvitations={myInvitations}
             platformInvitations={platformInvitations}
-            activities={activities}
+            learningResources={learningResources}
             copy={copy.dashboard}
           />
         );
