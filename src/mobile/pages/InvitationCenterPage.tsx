@@ -1,17 +1,30 @@
 import { useState } from 'react';
 import { Mail, Search, List } from 'lucide-react';
-import { Invitation } from '../../types';
+import { Invitation, InvitationItem } from '../../types';
 import { replaceCount } from '../i18n';
 
 interface InvitationCenterPageProps {
   invitations: Invitation[];
+  myInvitations: InvitationItem[];
   copy: any;
   onSelect: (id: string) => void;
 }
 
-export default function InvitationCenterPage({ invitations, copy, onSelect }: InvitationCenterPageProps) {
+export default function InvitationCenterPage({ invitations, myInvitations, copy, onSelect }: InvitationCenterPageProps) {
   const [tab, setTab] = useState<'invitations' | 'my'>('invitations');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const statusClass = (color: string) => {
+    const map: Record<string, string> = {
+      blue: 'bg-blue-50/80 text-blue-700',
+      amber: 'bg-amber-50/80 text-amber-700',
+      emerald: 'bg-emerald-50/80 text-emerald-700',
+      orange: 'bg-orange-50/80 text-orange-700',
+      red: 'bg-rose-50/80 text-rose-600',
+      slate: 'bg-slate-100/80 text-slate-600',
+    };
+    return map[color] || 'bg-slate-100/80 text-slate-600';
+  };
 
   const filteredInvitations = invitations.filter(inv =>
     inv.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -121,22 +134,28 @@ export default function InvitationCenterPage({ invitations, copy, onSelect }: In
           </div>
 
           <div className="space-y-2.5">
-            {[
-              { title: '跨境支付行业现状授课顾问', status: copy.ongoing, cls: 'bg-blue-50/80 text-blue-700', points: 100 },
-              { title: '中国境内支付公司中层管理联系方式获取', status: copy.pendingReview, cls: 'bg-amber-50/80 text-amber-700', points: 10 },
-              { title: 'Web3 合约审计安全方案咨询', status: copy.completed, cls: 'bg-emerald-50/80 text-emerald-700', points: 280 },
-            ].map((item) => (
-              <div key={item.title} className="glass-panel rounded-[22px] p-3.5 flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[13px] font-medium leading-5 text-slate-900">{item.title}</p>
-                  <p className="text-[10px] text-app-muted mt-0.5">{copy.autoLinked}</p>
+            {myInvitations.slice(0, 5).map(item => {
+              const matchedInv = invitations.find(inv => inv.title === item.title);
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => matchedInv && onSelect(matchedInv.id)}
+                  className={`glass-panel rounded-[22px] p-3.5 flex items-center justify-between gap-3 ${matchedInv ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''}`}
+                >
+                  <div className="min-w-0">
+                    <p className="text-[13px] font-medium leading-5 text-slate-900">{item.title}</p>
+                    <p className="text-[10px] text-app-muted mt-0.5">{copy.autoLinked}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {item.points != null && <span className="text-[11px] font-bold text-app-accent">{item.points}pt</span>}
+                    <span className={`text-[10px] px-2.5 py-1 rounded-full ${statusClass(item.statusColor)}`}>{item.statusLabel}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[11px] font-bold text-app-accent">{item.points}pt</span>
-                  <span className={`text-[10px] px-2.5 py-1 rounded-full ${item.cls}`}>{item.status}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
+            {myInvitations.length === 0 && (
+              <p className="text-[10px] text-app-muted text-center py-4">{copy.emptyPoints}</p>
+            )}
           </div>
         </section>
       )}

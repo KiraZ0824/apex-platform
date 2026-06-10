@@ -116,6 +116,7 @@ export default function MobileApp() {
         return (
           <InvitationCenterPage
             invitations={invitations}
+            myInvitations={myInvitations}
             copy={copy.invitationCenter}
             onSelect={setSelectedInvitationId}
           />
