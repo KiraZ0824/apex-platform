@@ -615,6 +615,10 @@
             </div>
             <div class="p-6 space-y-4">
                 <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">邮箱 <span class="text-red-500">*</span></label>
+                    <input type="email" id="invite-email" placeholder="请输入邮箱" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900/20 focus:border-gray-900 outline-none transition-all">
+                </div>
+                <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
                         <i data-lucide="ticket" class="w-3.5 h-3.5 text-gray-500"></i>
                         特邀码 <span class="text-red-500">*</span>
@@ -624,10 +628,6 @@
                         <button class="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-[9px] text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition-colors" id="invite-code-paste">粘贴</button>
                     </div>
                     <p class="text-[9px] text-gray-400">特邀码通常由项目负责人通过邮件发送给您</p>
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700">邮箱 <span class="text-red-500">*</span></label>
-                    <input type="email" id="invite-email" placeholder="请输入邮箱" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900/20 focus:border-gray-900 outline-none transition-all">
                 </div>
                 <div class="border-t border-gray-100 pt-3 space-y-3">
                     <label class="flex items-start gap-2.5 cursor-pointer">
@@ -5766,11 +5766,7 @@
                 e.preventDefault();
                 const inviteModal = document.getElementById('invite-register-modal');
                 if (inviteModal) { inviteModal.classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
-                const urlParams = new URLSearchParams(window.location.search);
-                const code = urlParams.get('code') || '';
-                const email = urlParams.get('email') || '';
-                if (code) document.getElementById('invite-code').value = code;
-                if (email) document.getElementById('invite-email').value = email;
+                autoFillInviteCode();
             }
             if (action === 'do-login') {
                 e.preventDefault();
@@ -5836,7 +5832,7 @@
                 const loginModal = document.getElementById('login-modal');
                 const inviteModal = document.getElementById('invite-register-modal');
                 if (loginModal) loginModal.classList.remove('active');
-                if (inviteModal) { inviteModal.classList.add('active'); lucide.createIcons(); }
+                if (inviteModal) { inviteModal.classList.add('active'); lucide.createIcons(); autoFillInviteCode(); }
             }
             if (action === 'switch-to-login') {
                 e.preventDefault();
@@ -8351,6 +8347,29 @@
         modal.classList.remove('active');
         document.body.style.overflow = '';
     });
+
+    function autoFillInviteCode() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var code = urlParams.get('code') || '';
+        var email = urlParams.get('email') || '';
+        var codeInput = document.getElementById('invite-code');
+        var emailInput = document.getElementById('invite-email');
+        if (code && codeInput) {
+            codeInput.value = code;
+            codeInput.style.transition = 'background 0.6s ease';
+            codeInput.style.background = '#f0fdf4';
+            setTimeout(function() { codeInput.style.background = ''; }, 1200);
+        }
+        if (email && emailInput) {
+            emailInput.value = email;
+            emailInput.style.transition = 'background 0.6s ease';
+            emailInput.style.background = '#f0fdf4';
+            setTimeout(function() { emailInput.style.background = ''; }, 1200);
+        }
+        if (code || email) {
+            showToast('已自动填充特邀信息');
+        }
+    }
 
     // 特邀注册 - 粘贴特邀码
     document.getElementById('invite-code-paste')?.addEventListener('click', function() {
