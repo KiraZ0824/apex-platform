@@ -751,90 +751,75 @@
                         <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
                     </div>
                     <!-- Notification Dropdown -->
-                    <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50">
-                        <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                    <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-2 w-[360px] bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50">
+                        <div class="px-5 py-3.5 border-b border-gray-200 flex items-center justify-between bg-white">
                             <h4 class="text-sm font-bold text-gray-900">消息通知</h4>
-                            <span class="text-[10px] text-gray-400">共 6 条未读</span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">6 条未读</span>
+                            </div>
                         </div>
                         <div class="max-h-80 overflow-y-auto">
-                            <div class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="message-circle" class="w-4 h-4 text-blue-600"></i>
-                                </div>
+                            <div class="px-5 py-3.5 flex items-start gap-3 hover:bg-blue-50/50 cursor-pointer transition-all border-b border-gray-100 border-l-2 border-l-blue-500">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">系统通知</span>
-                                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full shrink-0"></span>
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">您的特邀「跨境支付行业现状授课顾问」已被审核通过，请尽快上传成果。</p>
-                                    <span class="text-[10px] text-gray-400 mt-1">2 分钟前</span>
+                                    <p class="text-xs text-gray-700 mt-1 leading-relaxed">您的特邀「跨境支付行业现状授课顾问」已被审核通过，请尽快上传成果。</p>
+                                    <span class="text-[10px] text-gray-500 mt-1.5 block">2 分钟前</span>
                                 </div>
                             </div>
-                            <div class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50">
-                                <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
-                                </div>
+                            <div class="px-5 py-3.5 flex items-start gap-3 hover:bg-blue-50/50 cursor-pointer transition-all border-b border-gray-100 border-l-2 border-l-emerald-500">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">项目完成</span>
-                                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full shrink-0"></span>
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">东南亚市场电商合规政策解读项目已验收通过，获得 100 智慧值。</p>
-                                    <span class="text-[10px] text-gray-400 mt-1">1 小时前</span>
+                                    <p class="text-xs text-gray-700 mt-1 leading-relaxed">东南亚市场电商合规政策解读项目已验收通过，获得 100 智慧值。</p>
+                                    <span class="text-[10px] text-gray-500 mt-1.5 block">1 小时前</span>
                                 </div>
                             </div>
-                            <div class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50">
-                                <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i>
-                                </div>
+                            <div class="px-5 py-3.5 flex items-start gap-3 hover:bg-blue-50/50 cursor-pointer transition-all border-b border-gray-100 border-l-2 border-l-amber-500">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">截止日期提醒</span>
-                                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full shrink-0"></span>
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">Web3 合约审计安全方案咨询的截止日期为明天，请尽快提交成果。</p>
-                                    <span class="text-[10px] text-gray-400 mt-1">3 小时前</span>
+                                    <p class="text-xs text-gray-700 mt-1 leading-relaxed">Web3 合约审计安全方案咨询的截止日期为明天，请尽快提交成果。</p>
+                                    <span class="text-[10px] text-gray-500 mt-1.5 block">3 小时前</span>
                                 </div>
                             </div>
-                            <div class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50">
-                                <div class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="user-plus" class="w-4 h-4 text-violet-600"></i>
-                                </div>
+                            <div class="px-5 py-3.5 flex items-start gap-3 hover:bg-blue-50/50 cursor-pointer transition-all border-b border-gray-100 border-l-2 border-l-violet-500">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">新特邀邀请</span>
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">您收到一个新的特邀邀请：中东金融科技准入分析，点击查看详情。</p>
-                                    <span class="text-[10px] text-gray-400 mt-1">昨天</span>
+                                    <p class="text-xs text-gray-700 mt-1 leading-relaxed">您收到一个新的特邀邀请：中东金融科技准入分析，点击查看详情。</p>
+                                    <span class="text-[10px] text-gray-500 mt-1.5 block">昨天</span>
                                 </div>
                             </div>
-                            <div class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50">
-                                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-gray-600"></i>
-                                </div>
+                            <div class="px-5 py-3.5 flex items-start gap-3 hover:bg-blue-50/50 cursor-pointer transition-all border-b border-gray-100 border-l-2 border-l-gray-300">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">知识库更新</span>
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">平台新增专家访谈纪要模板（中英双语），欢迎查阅。</p>
-                                    <span class="text-[10px] text-gray-400 mt-1">2 天前</span>
+                                    <p class="text-xs text-gray-700 mt-1 leading-relaxed">平台新增专家访谈纪要模板（中英双语），欢迎查阅。</p>
+                                    <span class="text-[10px] text-gray-500 mt-1.5 block">2 天前</span>
                                 </div>
                             </div>
-                            <div class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition-colors">
-                                <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="x-circle" class="w-4 h-4 text-rose-600"></i>
-                                </div>
+                            <div class="px-5 py-3.5 flex items-start gap-3 hover:bg-blue-50/50 cursor-pointer transition-all border-l-2 border-l-rose-500">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">特邀被拒</span>
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">您的特邀申请「新能源汽车出海专家访谈」已被拒绝，原因：不符合项目要求。</p>
-                                    <span class="text-[10px] text-gray-400 mt-1">3 天前</span>
+                                    <p class="text-xs text-gray-700 mt-1 leading-relaxed">您的特邀申请「新能源汽车出海专家访谈」已被拒绝，原因：不符合项目要求。</p>
+                                    <span class="text-[10px] text-gray-500 mt-1.5 block">3 天前</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="px-4 py-3 border-t border-gray-100 bg-gray-50/50">
-                            <button class="text-xs text-gray-500 hover:text-gray-900 transition-colors w-full text-center" data-action="mark-all-read">全部标记为已读</button>
+                        <div class="px-5 py-3 border-t border-gray-200 bg-gray-50 flex items-center gap-2">
+                            <button class="flex-1 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="mark-all-read">全部已读</button>
+                            <button class="flex-1 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors" data-action="open-message-center">消息中心</button>
                         </div>
                     </div>
                 </div>
@@ -8457,7 +8442,20 @@
 
             if (action === 'mark-all-read') {
                 e.stopPropagation();
-                showToast('全部标记为已读');
+                const unreadDots = document.querySelectorAll('#notification-dropdown .bg-blue-500.rounded-full');
+                unreadDots.forEach(function(dot) { dot.remove(); });
+                var badge = document.querySelector('#notification-dropdown .text-blue-600.bg-blue-50');
+                if (badge) { badge.textContent = '0 条未读'; badge.className = 'text-[10px] font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full'; }
+                var bellDot = document.querySelector('#notification-bell .bg-red-500');
+                if (bellDot) bellDot.remove();
+                showToast('全部消息已标记为已读');
+                return;
+            }
+
+            if (action === 'open-message-center') {
+                e.stopPropagation();
+                document.getElementById('notification-dropdown').classList.add('hidden');
+                showToast('打开消息中心（完整界面开发中）');
                 return;
             }
 
