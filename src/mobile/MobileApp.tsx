@@ -26,7 +26,7 @@ export default function MobileApp() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedInvitationId, setSelectedInvitationId] = useState<string | null>(null);
-  const [splashDone, setSplashDone] = useState(false);
+  const [appReady, setAppReady] = useState(false);
 
   const copy = appCopy[lang];
 
@@ -58,6 +58,16 @@ export default function MobileApp() {
     fetchData();
   }, [user]);
 
+  if (!appReady) {
+    return (
+      <div className="min-h-screen flex justify-center bg-[#0f0f12]">
+        <div className="w-full max-w-[430px]">
+          <SplashPage onComplete={() => setAppReady(true)} />
+        </div>
+      </div>
+    );
+  }
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-slate-100 flex justify-center">
@@ -72,15 +82,6 @@ export default function MobileApp() {
   }
 
   if (!user) {
-    if (!splashDone) {
-      return (
-        <div className="min-h-screen flex justify-center bg-[#0f0f12]">
-          <div className="w-full max-w-[430px]">
-            <SplashPage onComplete={() => setSplashDone(true)} />
-          </div>
-        </div>
-      );
-    }
     return (
       <div className="min-h-screen bg-slate-100 flex justify-center">
         <div className="app-shell w-full max-w-[430px] min-h-screen">
