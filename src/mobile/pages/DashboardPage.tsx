@@ -33,14 +33,13 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
   return (
     <div className="px-4 pb-8 space-y-4">
 
-      <section>
-        <h2 className="text-[13px] font-medium text-slate-900 mb-2.5">{copy.knowledgeBase}</h2>
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-none">
+      <section className="-mx-4 px-4">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
           {learningResources.slice(0, 5).map(r => {
             const Icon = resourceIcons[r.type] || BookOpen;
             return (
-              <div key={r.id} className="rounded-[10px] bg-white/72 border border-white/80 w-[170px] shrink-0 overflow-hidden">
-                <div className="h-[80px] bg-slate-200/70 relative overflow-hidden">
+              <div key={r.id} className="rounded-[10px] bg-white/72 border border-white/80 min-w-[170px] w-[42vw] shrink-0 overflow-hidden">
+                <div className="h-[110px] bg-slate-200/70 relative overflow-hidden">
                   {r.cover ? (
                     <img src={r.cover} alt="" className="w-full h-full object-cover" />
                   ) : (
