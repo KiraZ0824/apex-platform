@@ -48,10 +48,12 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
                       <Icon className="w-6 h-6 text-slate-400" />
                     </div>
                   )}
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-2.5 pb-1.5 pt-4">
+                    <p className="text-[11px] font-medium text-white leading-4 line-clamp-2">{r.title}</p>
+                  </div>
                 </div>
-                <div className="p-2.5">
-                  <p className="text-[11px] font-medium text-slate-900 leading-4 line-clamp-2">{r.title}</p>
-                  <p className="text-[8px] text-app-muted mt-1">{r.typeLabel}</p>
+                <div className="px-2.5 py-1.5">
+                  <p className="text-[8px] text-app-muted">{r.typeLabel}</p>
                 </div>
               </div>
             );
