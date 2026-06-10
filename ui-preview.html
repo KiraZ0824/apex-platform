@@ -499,7 +499,6 @@
                 <div class="flex items-center gap-6">
                     <button class="text-sm text-slate-600 hover:text-slate-900 transition-colors" data-action="landing-about">About</button>
                     <button class="px-5 py-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-white/60 hover:border-slate-300 transition-all" data-action="landing-login">登录</button>
-                    <button class="px-5 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 shadow-sm transition-all" data-action="landing-register">注册</button>
                     <button class="px-5 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all" data-action="landing-invite-register">特邀注册</button>
                 </div>
             </div>
@@ -562,41 +561,8 @@
                 </div>
                 <button class="w-full py-2.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="do-login">登录</button>
                 <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
-                    <span>还没有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">立即注册</a></span>
-                    <span class="text-gray-300">|</span>
-                    <span><a href="#" class="text-blue-500 hover:underline" data-action="switch-to-invite-register">特邀注册</a></span>
+                    <span>还没有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-invite-register">特邀注册</a></span>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div id="register-modal" class="modal-overlay">
-        <div class="modal-container max-w-md">
-            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-                <h3 class="text-sm font-bold text-gray-900">注册 APEX</h3>
-                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
-                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
-                </button>
-            </div>
-            <div class="p-6 space-y-4">
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700">邮箱</label>
-                    <input type="email" id="register-email" placeholder="请输入邮箱" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700">密码</label>
-                    <input type="password" id="register-password" placeholder="请输入密码（至少6位）" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700">确认密码</label>
-                    <input type="password" id="register-password-confirm" placeholder="请再次输入密码" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
-                </div>
-                <label class="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
-                    <input type="checkbox" id="register-agree" class="rounded text-slate-900 w-3 h-3"> 授权注册登录，同意<span class="text-blue-500">服务条款</span>和<span class="text-blue-500">隐私政策</span>
-                </label>
-                <button class="w-full py-2.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="do-register">注册</button>
-                <p class="text-center text-xs text-gray-400">已有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-login">立即登录</a></p>
             </div>
         </div>
     </div>
@@ -638,8 +604,6 @@
                 <button class="w-full py-2.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 shadow-sm transition-all" data-action="do-invite-register">授权注册并登录</button>
                 <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
                     <span>已有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-login">立即登录</a></span>
-                    <span class="text-gray-300">|</span>
-                    <span><a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">普通注册</a></span>
                 </div>
             </div>
         </div>
@@ -5752,11 +5716,6 @@
                 document.body.classList.remove('overflow-hidden');
                 showToast('欢迎来到 APEX！');
             }
-            if (action === 'landing-register') {
-                e.preventDefault();
-                const modal = document.getElementById('register-modal');
-                if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
-            }
             if (action === 'landing-about') {
                 e.preventDefault();
                 const modal = document.getElementById('about-modal');
@@ -5781,24 +5740,6 @@
                 document.body.classList.remove('overflow-hidden');
                 showToast('登录成功，欢迎回来！');
             }
-            if (action === 'do-register') {
-                e.preventDefault();
-                const email = document.getElementById('register-email').value.trim();
-                const password = document.getElementById('register-password').value.trim();
-                const confirm = document.getElementById('register-password-confirm').value.trim();
-                const agree = document.getElementById('register-agree').checked;
-                if (!email || !password) { showToast('请填写所有必填字段'); return; }
-                if (password !== confirm) { showToast('两次密码输入不一致'); return; }
-                if (password.length < 6) { showToast('密码至少需要6位'); return; }
-                if (!agree) { showToast('请阅读并同意服务条款和隐私政策'); return; }
-                const landing = document.getElementById('landing-page');
-                const registerModal = document.getElementById('register-modal');
-                if (landing) landing.style.display = 'none';
-                if (registerModal) registerModal.classList.remove('active');
-                document.body.style.overflow = '';
-                document.body.classList.remove('overflow-hidden');
-                showToast('注册成功，欢迎加入 APEX！');
-            }
             if (action === 'do-invite-register') {
                 e.preventDefault();
                 const code = document.getElementById('invite-code').value.trim();
@@ -5820,13 +5761,6 @@
                 // Simulate auto-registered & logged in
                 document.getElementById('current-language').textContent = '中文';
             }
-            if (action === 'switch-to-register') {
-                e.preventDefault();
-                const loginModal = document.getElementById('login-modal');
-                const registerModal = document.getElementById('register-modal');
-                if (loginModal) loginModal.classList.remove('active');
-                if (registerModal) { registerModal.classList.add('active'); lucide.createIcons(); }
-            }
             if (action === 'switch-to-invite-register') {
                 e.preventDefault();
                 const loginModal = document.getElementById('login-modal');
@@ -5836,10 +5770,8 @@
             }
             if (action === 'switch-to-login') {
                 e.preventDefault();
-                const registerModal = document.getElementById('register-modal');
                 const inviteModal = document.getElementById('invite-register-modal');
                 const loginModal = document.getElementById('login-modal');
-                if (registerModal) registerModal.classList.remove('active');
                 if (inviteModal) inviteModal.classList.remove('active');
                 if (loginModal) { loginModal.classList.add('active'); lucide.createIcons(); }
             }
