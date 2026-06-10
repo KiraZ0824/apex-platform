@@ -615,6 +615,10 @@
             </div>
             <div class="p-6 space-y-4">
                 <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">邮箱 <span class="text-red-500">*</span></label>
+                    <input type="email" id="invite-email" placeholder="请输入邮箱" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900/20 focus:border-gray-900 outline-none transition-all">
+                </div>
+                <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
                         <i data-lucide="ticket" class="w-3.5 h-3.5 text-gray-500"></i>
                         特邀码 <span class="text-red-500">*</span>
@@ -625,10 +629,6 @@
                     </div>
                     <p class="text-[9px] text-gray-400">特邀码通常由项目负责人通过邮件发送给您</p>
                 </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700">邮箱 <span class="text-red-500">*</span></label>
-                    <input type="email" id="invite-email" placeholder="请输入邮箱" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900/20 focus:border-gray-900 outline-none transition-all">
-                </div>
                 <div class="border-t border-gray-100 pt-3 space-y-3">
                     <label class="flex items-start gap-2.5 cursor-pointer">
                         <input type="checkbox" id="invite-anonymous" class="mt-0.5 rounded text-gray-900 w-3.5 h-3.5 shrink-0">
@@ -638,8 +638,6 @@
                 <button class="w-full py-2.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 shadow-sm transition-all" data-action="do-invite-register">授权注册并登录</button>
                 <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
                     <span>已有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-login">立即登录</a></span>
-                    <span class="text-gray-300">|</span>
-                    <span><a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">普通注册</a></span>
                 </div>
             </div>
         </div>
@@ -5766,11 +5764,8 @@
                 e.preventDefault();
                 const inviteModal = document.getElementById('invite-register-modal');
                 if (inviteModal) { inviteModal.classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
-                const urlParams = new URLSearchParams(window.location.search);
-                const code = urlParams.get('code') || '';
-                const email = urlParams.get('email') || '';
-                if (code) document.getElementById('invite-code').value = code;
-                if (email) document.getElementById('invite-email').value = email;
+                document.getElementById('invite-email').value = '4646146581@gmail.com';
+                document.getElementById('invite-code').value = '3451GJ66';
             }
             if (action === 'do-login') {
                 e.preventDefault();
@@ -5837,6 +5832,8 @@
                 const inviteModal = document.getElementById('invite-register-modal');
                 if (loginModal) loginModal.classList.remove('active');
                 if (inviteModal) { inviteModal.classList.add('active'); lucide.createIcons(); }
+                document.getElementById('invite-email').value = '4646146581@gmail.com';
+                document.getElementById('invite-code').value = '3451GJ66';
             }
             if (action === 'switch-to-login') {
                 e.preventDefault();
