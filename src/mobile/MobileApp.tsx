@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { LearningResource, InvitationItem, Invitation, Activity } from '../types';
 import { api } from '../services/api';
 import LoginPage from './pages/LoginPage';
+import SplashPage from './pages/SplashPage';
 import DashboardPage from './pages/DashboardPage';
 import InvitationCenterPage from './pages/InvitationCenterPage';
 import InvitationDetailPage from './pages/InvitationDetailPage';
@@ -25,6 +26,7 @@ export default function MobileApp() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedInvitationId, setSelectedInvitationId] = useState<string | null>(null);
+  const [splashDone, setSplashDone] = useState(false);
 
   const copy = appCopy[lang];
 
@@ -69,13 +71,24 @@ export default function MobileApp() {
     );
   }
 
-  if (!user) return (
-    <div className="min-h-screen bg-slate-100 flex justify-center">
-      <div className="app-shell w-full max-w-[430px] min-h-screen">
-        <LoginPage lang={lang} onToggleLang={toggleLang} />
+  if (!user) {
+    if (!splashDone) {
+      return (
+        <div className="min-h-screen flex justify-center bg-[#0f0f12]">
+          <div className="w-full max-w-[430px]">
+            <SplashPage onComplete={() => setSplashDone(true)} />
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="min-h-screen bg-slate-100 flex justify-center">
+        <div className="app-shell w-full max-w-[430px] min-h-screen">
+          <LoginPage lang={lang} onToggleLang={toggleLang} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   const renderPage = () => {
     switch (activeTab) {

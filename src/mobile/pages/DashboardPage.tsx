@@ -41,12 +41,7 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
 
   return (
     <div className="px-4 pb-8 space-y-4">
-      <section className="px-1 pt-1">
-        <h1 className="text-[1.7rem] leading-none tracking-[-0.05em] font-bold text-slate-900">
-          {copy.hello}
-        </h1>
-        <p className="mt-2.5 text-[12px] text-app-muted leading-5 tracking-[-0.01em]">{copy.welcome}</p>
-      </section>
+      <section className="px-1 pt-1" />
 
       <section className="glass-panel-strong rounded-[28px] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_28px_rgba(75,47,28,0.08)]">
         <div className="grid grid-cols-4 gap-1.5">
