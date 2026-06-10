@@ -762,7 +762,7 @@
             <!-- Header section -->
             <div class="mb-6 flex items-start justify-between">
                 <div>
-                    <h1 class="text-xl font-bold text-gray-900">Kira Zhang，您好</h1>
+                    <h1 class="text-xl font-bold text-gray-900">Welcome to APEX. Turn expertise into impact.</h1>
                 </div>
             </div>
 
@@ -4084,6 +4084,10 @@
                         <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">截止报名</label>
                         <p class="text-xs text-gray-500" id="invite-detail-deadline">-</p>
                     </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">已报名人数</label>
+                        <p class="text-xs font-medium text-blue-600" id="invite-detail-registered">-</p>
+                    </div>
                 </div>
                 <!-- Description -->
                 <div class="space-y-1.5">
@@ -5651,6 +5655,7 @@
                 }
                 document.getElementById('invite-detail-created').textContent = data.createdAt || '-';
                 document.getElementById('invite-detail-deadline').textContent = data.deadline || '-';
+                document.getElementById('invite-detail-registered').textContent = data.registeredCount != null ? data.registeredCount + ' 人' : '-';
                 document.getElementById('invite-detail-project-desc').textContent = data.projectDesc || '暂无描述';
                 document.getElementById('invite-detail-desc').textContent = data.desc || '暂无描述';
                 document.getElementById('invite-detail-criteria').textContent = data.criteria || '暂无验收标准';
