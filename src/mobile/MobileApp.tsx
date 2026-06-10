@@ -97,7 +97,12 @@ export default function MobileApp() {
             myInvitations={myInvitations}
             platformInvitations={platformInvitations}
             learningResources={learningResources}
+            invitations={invitations}
             copy={copy.dashboard}
+            onSelect={(id) => {
+              setSelectedInvitationId(id);
+              setActiveTab('invitation_center');
+            }}
           />
         );
       case 'invitation_center': {

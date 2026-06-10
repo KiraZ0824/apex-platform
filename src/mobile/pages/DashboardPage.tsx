@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Clock3, CheckCircle2, ListTodo, Circle, BookOpen, FileText, Play } from 'lucide-react';
-import type { User, InvitationItem, LearningResource } from '../../types';
+import type { User, InvitationItem, Invitation, LearningResource } from '../../types';
 
 interface DashboardPageProps {
   user: User;
   myInvitations: InvitationItem[];
   platformInvitations: InvitationItem[];
   learningResources: LearningResource[];
+  invitations: Invitation[];
   copy: any;
+  onSelect: (id: string) => void;
 }
 
 const statusStyles: Record<string, { bg: string; text: string; dot: string }> = {
@@ -24,7 +26,7 @@ const resourceIcons: Record<string, any> = {
   report: BookOpen,
 };
 
-export default function DashboardPage({ user, myInvitations, platformInvitations, learningResources, copy }: DashboardPageProps) {
+export default function DashboardPage({ user, myInvitations, platformInvitations, learningResources, invitations, copy, onSelect }: DashboardPageProps) {
   const ongoingCount = myInvitations.filter(i => i.status === 'ongoing').length;
   const completedCount = myInvitations.filter(i => i.status === 'completed').length;
   const openCount = platformInvitations.filter(inv => inv.status === 'open').length;
@@ -95,8 +97,13 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
         <div className="px-3 py-2 space-y-1.5">
           {tab === 'my' && myInvitations.slice(0, 5).map(inv => {
             const style = statusStyles[inv.status] || statusStyles.pending;
+            const matchedInv = invitations.find(i => i.title === inv.title);
             return (
-              <div key={inv.id} className="rounded-[8px] bg-white/60 border border-white/70 px-2.5 py-2">
+              <div
+                key={inv.id}
+                onClick={() => matchedInv && onSelect(matchedInv.id)}
+                className={`rounded-[8px] bg-white/60 border border-white/70 px-2.5 py-2 ${matchedInv ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''}`}
+              >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <div className="flex items-center gap-1">
@@ -110,15 +117,22 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
               </div>
             );
           })}
-          {tab === 'latest' && platformInvitations.slice(0, 5).map(inv => (
-            <div key={inv.id} className="rounded-[8px] bg-white/60 border border-white/70 px-2.5 py-2 flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <span className="text-[7px] px-1.5 py-0.5 rounded-full bg-black/5 text-app-muted">{inv.type}</span>
-                <p className="mt-0.5 text-[11px] leading-4 font-medium text-slate-900">{inv.title}</p>
+          {tab === 'latest' && platformInvitations.slice(0, 5).map(inv => {
+            const matchedInv = invitations.find(i => i.title === inv.title);
+            return (
+              <div
+                key={inv.id}
+                onClick={() => matchedInv && onSelect(matchedInv.id)}
+                className={`rounded-[8px] bg-white/60 border border-white/70 px-2.5 py-2 flex items-center justify-between gap-3 ${matchedInv ? 'cursor-pointer active:scale-[0.98] transition-transform' : ''}`}
+              >
+                <div className="min-w-0">
+                  <span className="text-[7px] px-1.5 py-0.5 rounded-full bg-black/5 text-app-muted">{inv.type}</span>
+                  <p className="mt-0.5 text-[11px] leading-4 font-medium text-slate-900">{inv.title}</p>
+                </div>
+                <span className="text-[9px] font-bold text-app-accent shrink-0">{inv.points}{copy.pointSuffix}</span>
               </div>
-              <span className="text-[9px] font-bold text-app-accent shrink-0">{inv.points}{copy.pointSuffix}</span>
-            </div>
-          ))}
+            );
+          })}
           {(tab === 'my' && myInvitations.length === 0) && (
             <p className="text-[10px] text-app-muted text-center py-4">{copy.emptyPoints}</p>
           )}
