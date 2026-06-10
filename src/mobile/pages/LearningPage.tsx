@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, Play, FileText, FileSpreadsheet, BarChart, Download, CheckCircle } from 'lucide-react';
+import { BookOpen, Coins, Play, FileText, FileSpreadsheet, BarChart, Download, CheckCircle } from 'lucide-react';
 import type { LearningResource } from '../../types';
 
 interface LearningPageProps {
@@ -25,6 +25,7 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
   const [activeCategory, setActiveCategory] = useState(copy.categories?.['新手必读'] || '新手必读');
 
   const completedCount = resources.filter(r => r.completed).length;
+  const earnedPoints = resources.filter(r => r.completed).reduce((sum, r) => sum + r.points, 0);
   const filtered = resources.filter(r => {
     const catKey = Object.keys(copy.categories).find(k => copy.categories[k] === activeCategory) || activeCategory;
     return r.category === catKey;
@@ -35,7 +36,8 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
   return (
     <div className="px-4 pb-8 space-y-4">
       <section className="grid grid-cols-2 gap-2.5">
-        <MetricCard icon={BookOpen} label={copy.completedCourses} value={`${completedCount}`} />
+        <MetricCard icon={BookOpen} label={copy.historyLearned} value={`${completedCount}${copy.courseUnit ? ` ${copy.courseUnit}` : ''}`} />
+        <MetricCard icon={Coins} label={copy.earnedPoints} value={`${earnedPoints}${copy.pointsUnit ? ` ${copy.pointsUnit}` : ''}`} accent />
       </section>
 
       <section className="glass-panel rounded-[28px] p-4">
