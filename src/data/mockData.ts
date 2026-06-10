@@ -65,7 +65,8 @@ export const mockLearningResources: LearningResource[] = [
     views: '1.2k',
     points: 20,
     completed: true,
-    icon: 'play'
+    icon: 'play',
+    cover: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20interview%20scene%20office%20table%20recording%20equipment%20minimalist%20style&image_size=landscape_4_3'
   },
   {
     id: 'l2',
@@ -77,7 +78,8 @@ export const mockLearningResources: LearningResource[] = [
     views: '5.8k',
     points: 10,
     completed: false,
-    icon: 'file-text'
+    icon: 'file-text',
+    cover: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=document%20compliance%20rules%20guidelines%20paper%20minimalist%20style&image_size=landscape_4_3'
   },
   {
     id: 'l3',
@@ -89,7 +91,8 @@ export const mockLearningResources: LearningResource[] = [
     downloads: '856',
     points: 15,
     completed: false,
-    icon: 'file-spreadsheet'
+    icon: 'file-spreadsheet',
+    cover: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=data%20analytics%20chart%20spreadsheet%20numbers%20minimalist%20style&image_size=landscape_4_3'
   },
   {
     id: 'l4',
@@ -101,7 +104,8 @@ export const mockLearningResources: LearningResource[] = [
     views: '3.2k',
     points: 30,
     completed: false,
-    icon: 'bar-chart'
+    icon: 'bar-chart',
+    cover: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=global%20payment%20industry%20report%20world%20map%20finance%20chart%20minimalist&image_size=landscape_4_3'
   },
   {
     id: 'l5',
@@ -114,7 +118,8 @@ export const mockLearningResources: LearningResource[] = [
     views: '980',
     points: 20,
     completed: false,
-    icon: 'play'
+    icon: 'play',
+    cover: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=conference%20meeting%20team%20collaboration%20remote%20work%20modern%20office&image_size=landscape_4_3'
   },
   {
     id: 'l6',
@@ -126,7 +131,8 @@ export const mockLearningResources: LearningResource[] = [
     downloads: '1.5k',
     points: 5,
     completed: false,
-    icon: 'file-text'
+    icon: 'file-text',
+    cover: 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=document%20template%20writing%20notes%20paper%20pen%20minimalist%20style&image_size=landscape_4_3'
   }
 ];
 

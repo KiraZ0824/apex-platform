@@ -102,6 +102,7 @@ export interface LearningResource {
   points: number;
   completed: boolean;
   icon: string;
+  cover?: string;
 }
 
 export interface InvitationItem {
