@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Bot, MessageSquare, Search } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { LearningResource, InvitationItem, Project, Invitation, Activity } from '../types';
+import { LearningResource, InvitationItem, Invitation, Activity } from '../types';
 import { api } from '../services/api';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -21,7 +21,6 @@ export default function MobileApp() {
   const [learningResources, setLearningResources] = useState<LearningResource[]>([]);
   const [myInvitations, setMyInvitations] = useState<InvitationItem[]>([]);
   const [platformInvitations, setPlatformInvitations] = useState<InvitationItem[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
 
@@ -34,18 +33,16 @@ export default function MobileApp() {
   const fetchData = async () => {
     if (!user) return;
     try {
-      const [lr, mi, pi, p, i, a] = await Promise.all([
+      const [lr, mi, pi, i, a] = await Promise.all([
         api.getLearningResources(),
         api.getMyInvitations(),
         api.getPlatformInvitations(),
-        api.getProjects(),
         api.getInvitations(),
         api.getActivities(),
       ]);
       setLearningResources(lr);
       setMyInvitations(mi);
       setPlatformInvitations(pi);
-      setProjects(p);
       setInvitations(i);
       setActivities(a);
     } catch (error) {
@@ -93,7 +90,6 @@ export default function MobileApp() {
       case 'invitation_center':
         return (
           <InvitationCenterPage
-            projects={projects}
             invitations={invitations}
             copy={copy.invitationCenter}
           />

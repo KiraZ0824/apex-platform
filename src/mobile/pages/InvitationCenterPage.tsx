@@ -1,29 +1,14 @@
 import { useState } from 'react';
-import { Mail, Calendar, Search, List } from 'lucide-react';
+import { Mail, Search, List } from 'lucide-react';
 import { Invitation } from '../../types';
 import { replaceCount } from '../i18n';
 
 interface InvitationCenterPageProps {
-  projects: any[];
   invitations: Invitation[];
   copy: any;
 }
 
-const statusColors: Record<string, string> = {
-  open: 'bg-slate-300',
-  in_progress: 'bg-blue-500',
-  completed: 'bg-emerald-500',
-  urgent: 'bg-rose-500',
-};
-
-const priorityStyles: Record<string, string> = {
-  urgent: 'bg-rose-50 text-rose-600',
-  high: 'bg-amber-50 text-amber-600',
-  medium: 'bg-blue-50 text-blue-600',
-  low: 'bg-slate-50 text-slate-600',
-};
-
-export default function InvitationCenterPage({ projects: _projects, invitations, copy }: InvitationCenterPageProps) {
+export default function InvitationCenterPage({ invitations, copy }: InvitationCenterPageProps) {
   const [tab, setTab] = useState<'invitations' | 'my'>('invitations');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -86,38 +71,24 @@ export default function InvitationCenterPage({ projects: _projects, invitations,
             {filteredInvitations.map(invitation => (
               <div key={invitation.id} className="glass-panel rounded-[24px] p-3.5">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className={`w-2 h-2 rounded-full shrink-0 ${statusColors[invitation.status] || 'bg-slate-300'}`} />
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50/80 text-emerald-700 font-medium">{copy.openStatus}</span>
                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-black/5 text-app-muted">{invitation.typeLabel}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${(priorityStyles[invitation.priority] || priorityStyles.medium)}`}>
-                        {invitation.priority}
-                      </span>
                     </div>
                     <h3 className="text-[1rem] leading-5 tracking-[-0.03em] font-medium text-slate-900">{invitation.title}</h3>
                   </div>
-                  <span className="text-[13px] font-bold text-app-accent shrink-0">{invitation.points}pt</span>
+                  <div className="text-right shrink-0">
+                    <p className="text-[13px] font-bold text-app-accent">{invitation.points}pt</p>
+                    <p className="text-[9px] text-app-muted mt-0.5">{invitation.deadline}</p>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 mt-3">
-                  <div className="rounded-[16px] bg-white/62 border border-white/70 px-2.5 py-2">
-                    <p className="text-[9px] text-app-muted mb-1">{copy.deadline}</p>
-                    <div className="flex items-center text-sm font-medium text-slate-900">
-                      <Calendar className="w-3 h-3 mr-1.5 text-app-soft" />
-                      {invitation.deadline}
-                    </div>
-                  </div>
-                  <div className="rounded-[16px] bg-white/62 border border-white/70 px-2.5 py-2">
-                    <p className="text-[9px] text-app-muted mb-1">{copy.matchedTalent}</p>
-                    {invitation.talent ? (
-                      <div className="flex items-center text-sm font-medium text-slate-900">
-                        {invitation.talentAvatar && <img src={invitation.talentAvatar} alt="" className="w-4 h-4 rounded-full mr-1.5" />}
-                        {invitation.talent}
-                      </div>
-                    ) : (
-                      <p className="text-sm font-medium text-app-muted">{copy.pendingMatch}</p>
-                    )}
-                  </div>
+                <div className="flex items-center justify-between gap-3 mt-3">
+                  <p className="text-[11px] text-app-muted">{replaceCount(copy.applicantCount, Math.floor(Math.random() * 20) + 3)}</p>
+                  <button className="pill-dark text-[11px] px-4 py-2 rounded-full font-medium">
+                    {copy.apply}
+                  </button>
                 </div>
 
                 {invitation.tags && invitation.tags.length > 0 && (
