@@ -38,8 +38,8 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
           {learningResources.slice(0, 5).map(r => {
             const Icon = resourceIcons[r.type] || BookOpen;
             return (
-              <div key={r.id} className="rounded-[10px] bg-white/72 border border-white/80 min-w-[170px] w-[42vw] shrink-0 overflow-hidden">
-                <div className="h-[110px] bg-slate-200/70 relative overflow-hidden">
+              <div key={r.id} className="rounded-[10px] bg-white/72 border border-white/80 w-[170px] shrink-0 overflow-hidden">
+                <div className="h-[140px] bg-slate-200/70 relative overflow-hidden">
                   {r.cover ? (
                     <img src={r.cover} alt="" className="w-full h-full object-cover" />
                   ) : (
