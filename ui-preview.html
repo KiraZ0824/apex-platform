@@ -614,10 +614,6 @@
                 </button>
             </div>
             <div class="p-6 space-y-4">
-                <div class="p-3 rounded-xl bg-gray-50 border border-gray-200 flex items-start gap-2.5">
-                    <i data-lucide="info" class="w-4 h-4 text-gray-500 shrink-0 mt-0.5"></i>
-                    <p class="text-[10px] text-gray-600 leading-relaxed">使用特邀码注册后，系统将自动拉取 LinkedIn 信息补充基础资料（头像、职业身份等），匿名模式下个人信息对外不可见。</p>
-                </div>
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
                         <i data-lucide="ticket" class="w-3.5 h-3.5 text-gray-500"></i>
@@ -635,15 +631,11 @@
                 </div>
                 <div class="border-t border-gray-100 pt-3 space-y-3">
                     <label class="flex items-start gap-2.5 cursor-pointer">
-                        <input type="checkbox" id="invite-agree" class="mt-0.5 rounded text-gray-900 w-3.5 h-3.5 shrink-0">
-                        <span class="text-[10px] text-gray-600 leading-relaxed">同意授权使用邮箱注册 APEX 账号，并授权系统自动拉取 <span class="font-medium text-gray-700">LinkedIn</span> 信息补充基础资料（头像、职业身份等）。</span>
-                    </label>
-                    <label class="flex items-start gap-2.5 cursor-pointer">
                         <input type="checkbox" id="invite-anonymous" class="mt-0.5 rounded text-gray-900 w-3.5 h-3.5 shrink-0">
                         <span class="text-[10px] text-gray-600 leading-relaxed"><span class="font-medium">匿名登录</span> — 启用后您的个人信息（姓名、头像、职业身份等）对平台其他用户不可见，后台仍会完整记录便于项目管理。</span>
                     </label>
                 </div>
-                <button class="w-full py-2.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 shadow-sm transition-all" data-action="do-invite-register">立即注册并登录</button>
+                <button class="w-full py-2.5 bg-gray-900 text-white rounded-lg text-xs font-medium hover:bg-gray-800 shadow-sm transition-all" data-action="do-invite-register">授权注册并登录</button>
                 <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
                     <span>已有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-login">立即登录</a></span>
                     <span class="text-gray-300">|</span>
@@ -5815,11 +5807,9 @@
                 e.preventDefault();
                 const code = document.getElementById('invite-code').value.trim();
                 const email = document.getElementById('invite-email').value.trim();
-                const agree = document.getElementById('invite-agree').checked;
                 const anonymous = document.getElementById('invite-anonymous').checked;
                 if (!code) { showToast('请输入特邀码'); document.getElementById('invite-code').focus(); return; }
                 if (!email) { showToast('请输入邮箱'); document.getElementById('invite-email').focus(); return; }
-                if (!agree) { showToast('请阅读并同意授权条款'); return; }
                 const landing = document.getElementById('landing-page');
                 const inviteModal = document.getElementById('invite-register-modal');
                 if (landing) landing.style.display = 'none';
