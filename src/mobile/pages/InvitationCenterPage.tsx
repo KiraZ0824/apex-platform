@@ -122,16 +122,19 @@ export default function InvitationCenterPage({ invitations, copy, onSelect }: In
 
           <div className="space-y-2.5">
             {[
-              { title: '跨境支付行业现状授课顾问', status: copy.ongoing, cls: 'bg-blue-50/80 text-blue-700' },
-              { title: '中国境内支付公司中层管理联系方式获取', status: copy.pendingReview, cls: 'bg-amber-50/80 text-amber-700' },
-              { title: 'Web3 合约审计安全方案咨询', status: copy.completed, cls: 'bg-emerald-50/80 text-emerald-700' },
+              { title: '跨境支付行业现状授课顾问', status: copy.ongoing, cls: 'bg-blue-50/80 text-blue-700', points: 100 },
+              { title: '中国境内支付公司中层管理联系方式获取', status: copy.pendingReview, cls: 'bg-amber-50/80 text-amber-700', points: 10 },
+              { title: 'Web3 合约审计安全方案咨询', status: copy.completed, cls: 'bg-emerald-50/80 text-emerald-700', points: 280 },
             ].map((item) => (
               <div key={item.title} className="glass-panel rounded-[22px] p-3.5 flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <p className="text-[13px] font-medium leading-5 text-slate-900">{item.title}</p>
                   <p className="text-[10px] text-app-muted mt-0.5">{copy.autoLinked}</p>
                 </div>
-                <span className={`text-[10px] px-2.5 py-1 rounded-full shrink-0 ${item.cls}`}>{item.status}</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-[11px] font-bold text-app-accent">{item.points}pt</span>
+                  <span className={`text-[10px] px-2.5 py-1 rounded-full ${item.cls}`}>{item.status}</span>
+                </div>
               </div>
             ))}
           </div>
