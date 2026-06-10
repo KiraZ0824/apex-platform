@@ -5576,6 +5576,86 @@
     </div>
 
     <!-- 人才详情弹窗 -->
+    <!-- 编辑人才弹窗 -->
+    <div id="talent-edit-modal" class="modal-overlay">
+        <div class="modal-container max-w-2xl custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-sm font-bold text-gray-900" id="talent-edit-title">编辑人才信息</h3>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-6">
+                <input type="hidden" id="talent-edit-id">
+                <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center text-blue-600 font-bold shrink-0 text-lg" id="talent-edit-avatar">ZL</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="talent-edit-name" class="text-lg font-bold text-gray-900 bg-transparent border-0 border-b border-transparent focus:border-gray-300 focus:ring-0 outline-none px-0 py-0.5 w-full" placeholder="姓名">
+                            <span id="talent-edit-apex-badge" class="hidden px-1.5 py-0.5 bg-slate-100 text-slate-600 text-[9px] rounded font-medium shrink-0">APEX用户</span>
+                        </div>
+                        <input type="text" id="talent-edit-position" class="text-sm text-gray-500 bg-transparent border-0 border-b border-transparent focus:border-gray-300 focus:ring-0 outline-none px-0 py-0.5 w-full mt-0.5" placeholder="职位">
+                        <input type="text" id="talent-edit-company" class="text-xs text-gray-400 bg-transparent border-0 border-b border-transparent focus:border-gray-300 focus:ring-0 outline-none px-0 py-0.5 w-full" placeholder="当前公司">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-4 p-5 bg-gray-50/80 rounded-xl border border-gray-100">
+                    <div class="space-y-1">
+                        <label class="text-[10px] text-gray-400 font-medium">邮箱</label>
+                        <input type="email" id="talent-edit-email" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed" placeholder="邮箱">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] text-gray-400 font-medium">电话</label>
+                        <input type="text" id="talent-edit-phone" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed" placeholder="电话">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] text-gray-400 font-medium">所在地</label>
+                        <input type="text" id="talent-edit-location" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed" placeholder="所在地">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] text-gray-400 font-medium">行业</label>
+                        <input type="text" id="talent-edit-industry" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed" placeholder="行业">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] text-gray-400 font-medium">领英链接</label>
+                        <input type="url" id="talent-edit-linkedin" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed" placeholder="https://linkedin.com/in/">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] text-gray-400 font-medium">被邀请次数</label>
+                        <input type="text" id="talent-edit-invite-count" class="w-full text-sm text-gray-500 bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 cursor-not-allowed" disabled placeholder="0">
+                    </div>
+                </div>
+                <!-- 用户画像编辑区 -->
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-1 h-5 bg-gradient-to-b from-purple-500 to-purple-400 rounded-full"></span>
+                        <h4 class="text-sm font-bold text-gray-800">AI 用户画像</h4>
+                        <span class="text-[9px] text-gray-400">智能编辑</span>
+                    </div>
+                    <div class="p-5 bg-gradient-to-br from-purple-50/80 to-white rounded-xl border border-purple-100 space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] text-gray-400 font-medium">画像总结</label>
+                            <textarea id="talent-edit-portrait-summary" rows="3" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all resize-none" placeholder="输入该人才的AI画像总结..."></textarea>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] text-gray-400 font-medium">标签（逗号分隔）</label>
+                            <input type="text" id="talent-edit-tags" class="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all" placeholder="如：战略思维, 金融科技, 跨境支付">
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <p id="talent-edit-hint" class="text-[10px] text-gray-400 hidden flex items-center gap-1">
+                        <i data-lucide="info" class="w-3 h-3"></i>
+                        <span>APEX用户仅可编辑用户画像，基本信息受保护</span>
+                    </p>
+                    <div class="flex items-center gap-3 ml-auto">
+                        <button type="button" class="px-5 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
+                        <button type="button" class="px-5 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="save-talent">保存修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="talent-detail-modal" class="modal-overlay">
         <div class="modal-container max-w-2xl custom-scrollbar">
             <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
@@ -8887,7 +8967,58 @@
             const id = btn.getAttribute('data-id');
             const item = TALENT_DATA.find(p => p.id === parseInt(id));
             if (item) {
-                showToast(`编辑 ${item.name} 的信息（姓名: ${item.name}, 邮箱: ${item.email}, 电话: ${item.phone}, 职位: ${item.position}, 公司: ${item.company}）`);
+                const isApex = item.isApexUser === '是';
+                document.getElementById('talent-edit-id').value = item.id;
+                document.getElementById('talent-edit-name').value = item.name;
+                document.getElementById('talent-edit-position').value = item.position;
+                document.getElementById('talent-edit-company').value = item.company;
+                document.getElementById('talent-edit-email').value = item.email;
+                document.getElementById('talent-edit-phone').value = item.phone;
+                document.getElementById('talent-edit-location').value = item.city + (item.country && item.country !== item.city ? ', ' + item.country : '');
+                document.getElementById('talent-edit-industry').value = item.industry;
+                document.getElementById('talent-edit-linkedin').value = item.linkedin;
+                document.getElementById('talent-edit-invite-count').value = item.inviteCount;
+                document.getElementById('talent-edit-avatar').textContent = item.name.substring(0, 2);
+                document.getElementById('talent-edit-portrait-summary').value = '该专家深耕' + item.industry + '领域' + item.inviteCount + '年，在' + item.company + '担任' + item.position + '，具备丰富的行业经验与深刻的战略洞察。';
+                document.getElementById('talent-edit-tags').value = item.industry + ', 战略思维, 跨文化沟通';
+                var hint = document.getElementById('talent-edit-hint');
+                var badge = document.getElementById('talent-edit-apex-badge');
+                var basicFields = ['talent-edit-name', 'talent-edit-position', 'talent-edit-company', 'talent-edit-email', 'talent-edit-phone', 'talent-edit-location', 'talent-edit-industry', 'talent-edit-linkedin'];
+                if (isApex) {
+                    basicFields.forEach(function(fid) { document.getElementById(fid).disabled = true; });
+                    hint.classList.remove('hidden');
+                    badge.classList.remove('hidden');
+                } else {
+                    basicFields.forEach(function(fid) { document.getElementById(fid).disabled = false; });
+                    hint.classList.add('hidden');
+                    badge.classList.add('hidden');
+                }
+                var modal = document.getElementById('talent-edit-modal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                lucide.createIcons();
+            }
+        }
+    });
+
+    // 保存人才编辑
+    document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action="save-talent"]');
+        if (btn) {
+            var id = parseInt(document.getElementById('talent-edit-id').value);
+            var item = TALENT_DATA.find(function(p) { return p.id === id; });
+            if (item) {
+                var isApex = item.isApexUser === '是';
+                if (!isApex) {
+                    item.name = document.getElementById('talent-edit-name').value.trim();
+                    item.position = document.getElementById('talent-edit-position').value.trim();
+                    item.company = document.getElementById('talent-edit-company').value.trim();
+                }
+                showToast(item.name + ' 的信息已保存' + (isApex ? '（用户画像已更新）' : ''));
+                document.getElementById('talent-edit-modal').classList.remove('active');
+                document.body.style.overflow = '';
+                renderTalentTable();
+                lucide.createIcons();
             }
         }
     });
