@@ -500,7 +500,7 @@
                     <button class="text-sm text-slate-600 hover:text-slate-900 transition-colors" data-action="landing-about">About</button>
                     <button class="px-5 py-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-white/60 hover:border-slate-300 transition-all" data-action="landing-login">登录</button>
                     <button class="px-5 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 shadow-sm transition-all" data-action="landing-register">注册</button>
-                    <button class="px-5 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all" data-action="landing-invite-register">特邀注册</button>
+                    <button class="px-5 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all hidden" data-action="landing-invite-register">特邀注册</button>
                 </div>
             </div>
             <!-- Banner section -->
@@ -564,7 +564,7 @@
                 <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
                     <span>还没有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">立即注册</a></span>
                     <span class="text-gray-300">|</span>
-                    <span><a href="#" class="text-blue-500 hover:underline" data-action="switch-to-invite-register">特邀注册</a></span>
+                    <span class="hidden"><a href="#" class="text-blue-500 hover:underline" data-action="switch-to-invite-register">特邀注册</a></span>
                 </div>
             </div>
         </div>
@@ -962,9 +962,8 @@
                             <select id="filter-project-status" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-white">
                                 <option value="">全部状态</option>
                                 <option>进行中</option>
-                                <option>已验收</option>
+                                <option>已完成</option>
                                 <option>已归档</option>
-                                <option>已取消</option>
                             </select>
                         </div>
                         <div class="space-y-1.5">
@@ -1078,7 +1077,7 @@
                                     <td class="px-6 py-4">
                                         <span class="flex items-center gap-1.5 text-emerald-500">
                                             <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                                            已验收
+                                            已完成
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
@@ -1094,7 +1093,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-right space-x-2">
                                         <button class="text-gray-400 hover:text-gray-600 font-medium" data-action="view-project-detail">查看</button>
-                                        <button class="text-gray-300 cursor-not-allowed font-medium" disabled title="已验收项目不可删除">删除</button>
+                                        <button class="text-gray-300 cursor-not-allowed font-medium" disabled title="已完成项目不可删除">删除</button>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-gray-50 transition-colors group">
@@ -7251,17 +7250,17 @@
                 const isEdit = document.getElementById('project-modal-title').textContent === '编辑项目';
                 
                 if (isEdit) {
-                    // 模拟：如果有超过 3 个特邀且其中有“已验收”状态，则项目状态联动为“已验收”
+                    // 模拟：如果有超过 3 个特邀且其中有“已完成”状态，则项目状态联动为“已完成”
                     const invites = container.querySelectorAll('span.text-[9px]');
                     let hasAccepted = false;
                     invites.forEach(inv => {
-                        if (inv.textContent.includes('已验收') || inv.textContent.includes('已完成')) {
+                        if (inv.textContent.includes('已完成')) {
                             hasAccepted = true;
                         }
                     });
 
                     if (hasAccepted && count >= 2) {
-                        showToast('状态联动：项目状态已自动更新为“已验收”');
+                        showToast('状态联动：项目状态已自动更新为“已完成”');
                         // 寻找列表中对应的行并更新（模拟）
                         const projectName = document.getElementById('project-form').name.value;
                         const rows = document.querySelectorAll('#project-center-tab tbody tr');
@@ -7271,7 +7270,7 @@
                                 statusCell.innerHTML = `
                                     <span class="flex items-center gap-1.5 text-emerald-500">
                                         <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                                        已验收
+                                        已完成
                                     </span>
                                 `;
                             }
@@ -7380,9 +7379,9 @@
                         `;
                     }
                     
-                    // 业务规则：移除已验收通过的邀请时，项目完成率将自动更新
-                    if (inviteStatus.includes('已完成') || inviteStatus.includes('已验收')) {
-                        showToast('已移除已验收的邀请，项目完成率已自动重新计算');
+                    // 业务规则：移除已完成的邀请时，项目完成率将自动更新
+                    if (inviteStatus.includes('已完成')) {
+                        showToast('已移除已完成项目的邀请，项目完成率已自动重新计算');
                         // 模拟完成率下降
                         const projectName = document.getElementById('project-form').name.value;
                         const rows = document.querySelectorAll('#project-center-tab tbody tr');
@@ -7538,13 +7537,13 @@
                     statusBadge.textContent = status;
                     statusBadge.className = 'px-2 py-0.5 rounded text-[10px] font-medium ' + 
                         (status === '已归档' ? 'bg-gray-100 text-gray-600' : 
-                         status === '已验收' ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-100 text-blue-600');
+                         status === '已完成' ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-100 text-blue-600');
                     
                     // 填充完成率
                     document.getElementById('project-detail-completion').textContent = completion;
                     const progressVal = completion.replace(/[^\d]/g, '');
                     document.getElementById('project-detail-progress-bar').style.width = `${progressVal}%`;
-                    document.getElementById('project-detail-progress-bar').className = `h-full rounded-full ${status === '已验收' ? 'bg-emerald-500' : status === '已归档' ? 'bg-gray-400' : 'bg-blue-500'}`;
+                    document.getElementById('project-detail-progress-bar').className = `h-full rounded-full ${status === '已完成' ? 'bg-emerald-500' : status === '已归档' ? 'bg-gray-400' : 'bg-blue-500'}`;
 
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
