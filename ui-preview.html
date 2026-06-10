@@ -4076,7 +4076,6 @@
                     </div>
                     <div class="flex items-center justify-end gap-3">
                         <button class="px-3 py-1.5 text-[10px] font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="verify-all-pass">全部采纳</button>
-                        <button class="px-3 py-1.5 text-[10px] font-medium text-white bg-red-500 rounded-lg hover:bg-red-400 transition-colors" data-action="verify-reject">驳回</button>
                         <button class="px-3 py-1.5 text-[10px] font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
                     </div>
                 </div>
@@ -4097,7 +4096,7 @@
                 </button>
             </div>
             <div class="p-5 space-y-4">
-                <p class="text-[10px] text-gray-500 leading-relaxed">确定要驳回所有成果验收吗？请填写驳回理由，专家将根据意见修改后重新提交。</p>
+                <p class="text-[10px] text-gray-500 leading-relaxed">确定要驳回 <span id="verify-reject-expert-name" class="font-semibold text-gray-700">该专家</span> 的成果验收吗？请填写驳回理由，专家将根据意见修改后重新提交。</p>
                 <div class="space-y-1.5">
                     <label class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">驳回理由 <span class="text-red-500">*</span></label>
                     <textarea rows="4" placeholder="请详细说明驳回原因及修改建议..." class="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 resize-none" id="verify-reject-reason"></textarea>
@@ -5623,6 +5622,7 @@
                 const verifySection = document.getElementById('invite-detail-verify-section');
                 const verifyList = document.getElementById('invite-detail-verify-list');
                 if (data.verifyMode && data.verifyUsers && data.verifyUsers.length > 0) {
+                    currentVerifyUsers = data.verifyUsers;
                     verifySection.classList.remove('hidden');
                     verifyList.innerHTML = data.verifyUsers.map((u, i) => `
                         <tr data-verify-user="${i}">
@@ -5653,6 +5653,7 @@
                                     <div class="flex items-center justify-center gap-1.5">
                                         <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'pass' ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600'}" data-action="verify-user-pass" data-index="${i}">采纳</button>
                                         <button class="px-2.5 py-1 text-[9px] font-medium rounded-md border transition-all ${u.result === 'fail' ? 'bg-red-50 border-red-300 text-red-700' : 'border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600'}" data-action="verify-user-fail" data-index="${i}">不采纳</button>
+                                            <button class="px-2 py-1 text-[9px] font-medium rounded-md border border-gray-200 text-gray-500 hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all" data-action="verify-user-reject" data-index="${i}">驳回</button>
                                     </div>
                                     <div class="verify-reason hidden w-full" data-reason-input="${i}">
                                         <input type="text" placeholder="请输入不采纳理由" class="w-full px-2 py-1 text-[8px] border border-red-200 rounded-md outline-none focus:ring-1 focus:ring-red-300" data-action="verify-reason-input" data-index="${i}">
@@ -7888,8 +7889,12 @@
                 return;
             }
 
-            if (action === 'verify-reject') {
+            if (action === 'verify-user-reject') {
                 e.preventDefault();
+                const index = target.getAttribute('data-index');
+                const users = currentVerifyUsers || [];
+                const expertName = users[index] ? users[index].name : '该专家';
+                document.getElementById('verify-reject-expert-name').textContent = expertName;
                 document.getElementById('verify-reject-reason').value = '';
                 document.getElementById('verify-reject-modal').classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -8239,16 +8244,15 @@
     });
 
     // 驳回理由弹窗 - 确认驳回
+    var currentVerifyUsers = [];
     document.getElementById('verify-reject-submit')?.addEventListener('click', function() {
         var reason = document.getElementById('verify-reject-reason').value.trim();
         if (!reason) { showToast('请填写驳回理由'); document.getElementById('verify-reject-reason').focus(); return; }
-        var inviteName = document.getElementById('invite-detail-title').textContent;
-        showToast('已驳回验收，理由已发送至专家：' + inviteName);
+        var expertName = document.getElementById('verify-reject-expert-name').textContent;
+        showToast('已驳回验收，理由已发送至：' + expertName);
         var modal = document.getElementById('verify-reject-modal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
-        var detailModal = document.getElementById('invite-detail-modal');
-        if (detailModal) { detailModal.classList.remove('active'); document.body.style.overflow = ''; }
     });
 
     // ========== 人才库 ==========
