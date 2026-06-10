@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock3, CheckCircle2, ListTodo, Circle, BookOpen, FileText, Play } from 'lucide-react';
+import { Clock3, CheckCircle2, ListTodo, Circle, BookOpen, FileText, Play, Coins } from 'lucide-react';
 import type { User, InvitationItem, Invitation, LearningResource } from '../../types';
 
 interface DashboardPageProps {
@@ -63,14 +63,11 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
       </section>
 
       <section>
-        <div className="grid grid-cols-4 gap-2">
-          <MiniStat label={copy.ongoing} value={ongoingCount} icon={Clock3} />
-          <MiniStat label={copy.completed} value={completedCount} icon={CheckCircle2} />
-          <MiniStat label={copy.available} value={openCount} icon={ListTodo} />
-          <div className="rounded-[10px] bg-white/82 border border-white/85 p-2">
-            <p className="text-[8px] font-semibold text-app-muted mb-0.5">{copy.wisdom}</p>
-            <p className="text-[1.1rem] leading-none tracking-[-0.04em] font-bold text-slate-900">{user.points.toLocaleString()}</p>
-          </div>
+        <div className="flex gap-1.5">
+          <StatCard label={copy.ongoing} value={ongoingCount} icon={Clock3} color="blue" wide />
+          <StatCard label={copy.completed} value={completedCount} icon={CheckCircle2} color="emerald" />
+          <StatCard label={copy.available} value={openCount} icon={ListTodo} color="amber" />
+          <StatCard label={copy.wisdom} value={user.points.toLocaleString()} icon={Coins} color="dark" wide />
         </div>
       </section>
 
@@ -145,16 +142,25 @@ export default function DashboardPage({ user, myInvitations, platformInvitations
   );
 }
 
-function MiniStat({ label, value, icon: Icon }: { label: string; value: string | number; icon: any }) {
+function StatCard({ label, value, icon: Icon, color, wide }: { label: string; value: string | number; icon: any; color: 'blue' | 'emerald' | 'amber' | 'dark'; wide?: boolean }) {
+  const colorStyles: Record<string, { bar: string; iconBg: string; iconColor: string; bg: string; textColor: string; accentText: string }> = {
+    blue: { bar: 'bg-blue-500/30', iconBg: 'bg-blue-100/80', iconColor: 'text-blue-600', bg: 'bg-white/82', textColor: 'text-blue-900', accentText: 'text-blue-700' },
+    emerald: { bar: 'bg-emerald-500/30', iconBg: 'bg-emerald-100/80', iconColor: 'text-emerald-600', bg: 'bg-white/82', textColor: 'text-emerald-900', accentText: 'text-emerald-700' },
+    amber: { bar: 'bg-amber-500/30', iconBg: 'bg-amber-100/80', iconColor: 'text-amber-600', bg: 'bg-white/82', textColor: 'text-amber-900', accentText: 'text-amber-700' },
+    dark: { bar: 'bg-black/20', iconBg: 'bg-[#17171b]', iconColor: 'text-white', bg: 'bg-[#17171b]/90', textColor: 'text-white', accentText: 'text-white/70' },
+  };
+  const s = colorStyles[color];
+
   return (
-    <div className="rounded-[10px] bg-white/82 border border-white/85 p-2">
-      <div className="flex items-center justify-between mb-1">
-        <p className="text-[8px] font-semibold text-app-muted">{label}</p>
-        <div className="w-4 h-4 rounded-[5px] bg-white/85 text-slate-800 flex items-center justify-center shadow-sm">
-          <Icon className="w-2 h-2" />
+    <div className={`${wide ? 'flex-[3]' : 'flex-[2]'} ${s.bg} border border-white/85 rounded-[10px] p-2.5 relative overflow-hidden`}>
+      <div className={`absolute top-0 left-0 right-0 h-[2.5px] ${s.bar}`} />
+      <div className="flex items-start justify-between mb-0.5">
+        <p className={`text-[8px] font-semibold ${s.accentText}`}>{label}</p>
+        <div className={`w-4.5 h-4.5 rounded-[5px] ${s.iconBg} ${s.iconColor} flex items-center justify-center`}>
+          <Icon className="w-2.5 h-2.5" />
         </div>
       </div>
-      <p className="text-[1.1rem] leading-none tracking-[-0.04em] font-bold text-slate-900">{value}</p>
+      <p className={`text-[1.1rem] leading-none tracking-[-0.04em] font-bold ${s.textColor}`}>{value}</p>
     </div>
   );
 }
