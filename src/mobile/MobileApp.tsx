@@ -6,6 +6,7 @@ import { api } from '../services/api';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import InvitationCenterPage from './pages/InvitationCenterPage';
+import InvitationDetailPage from './pages/InvitationDetailPage';
 import LearningPage from './pages/LearningPage';
 import ProfilePage from './pages/ProfilePage';
 import BottomNav from './components/BottomNav';
@@ -23,6 +24,7 @@ export default function MobileApp() {
   const [platformInvitations, setPlatformInvitations] = useState<InvitationItem[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [selectedInvitationId, setSelectedInvitationId] = useState<string | null>(null);
 
   const copy = appCopy[lang];
 
@@ -87,13 +89,27 @@ export default function MobileApp() {
             copy={copy.dashboard}
           />
         );
-      case 'invitation_center':
+      case 'invitation_center': {
+        const selected = selectedInvitationId
+          ? invitations.find(inv => inv.id === selectedInvitationId) || null
+          : null;
+        if (selected) {
+          return (
+            <InvitationDetailPage
+              invitation={selected}
+              copy={copy.invitationCenter}
+              onBack={() => setSelectedInvitationId(null)}
+            />
+          );
+        }
         return (
           <InvitationCenterPage
             invitations={invitations}
             copy={copy.invitationCenter}
+            onSelect={setSelectedInvitationId}
           />
         );
+      }
       case 'learning':
         return (
           <LearningPage resources={learningResources} copy={copy.learning} />

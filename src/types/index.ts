@@ -52,6 +52,13 @@ export interface Invitation {
   deadline: string;
   points: number;
   tags?: string[];
+  description?: string;
+  detail?: string;
+  startDate?: string;
+  endDate?: string;
+  regDeadline?: string;
+  acceptanceCriteria?: string;
+  registeredCount?: number;
 }
 
 export interface Submission {

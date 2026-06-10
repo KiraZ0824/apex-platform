@@ -6,9 +6,10 @@ import { replaceCount } from '../i18n';
 interface InvitationCenterPageProps {
   invitations: Invitation[];
   copy: any;
+  onSelect: (id: string) => void;
 }
 
-export default function InvitationCenterPage({ invitations, copy }: InvitationCenterPageProps) {
+export default function InvitationCenterPage({ invitations, copy, onSelect }: InvitationCenterPageProps) {
   const [tab, setTab] = useState<'invitations' | 'my'>('invitations');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -69,7 +70,7 @@ export default function InvitationCenterPage({ invitations, copy }: InvitationCe
           </div>
           <div className="space-y-2.5">
             {filteredInvitations.map(invitation => (
-              <div key={invitation.id} className="glass-panel rounded-[24px] p-3.5">
+              <div key={invitation.id} onClick={() => onSelect(invitation.id)} className="glass-panel rounded-[24px] p-3.5 cursor-pointer active:scale-[0.98] transition-transform">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1.5">
