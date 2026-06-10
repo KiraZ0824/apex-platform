@@ -500,6 +500,7 @@
                     <button class="text-sm text-slate-600 hover:text-slate-900 transition-colors" data-action="landing-about">About</button>
                     <button class="px-5 py-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-white/60 hover:border-slate-300 transition-all" data-action="landing-login">登录</button>
                     <button class="px-5 py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 shadow-sm transition-all" data-action="landing-register">注册</button>
+                    <button class="px-5 py-2 text-sm font-medium text-violet-500 bg-violet-50 rounded-lg hover:bg-violet-100 hover:text-violet-700 transition-all" data-action="landing-invite-register">特邀注册</button>
                 </div>
             </div>
             <!-- Banner section -->
@@ -560,7 +561,11 @@
                     </div>
                 </div>
                 <button class="w-full py-2.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="do-login">登录</button>
-                <p class="text-center text-xs text-gray-400">还没有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">立即注册</a></p>
+                <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
+                    <span>还没有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">立即注册</a></span>
+                    <span class="text-gray-300">|</span>
+                    <span><a href="#" class="text-violet-500 hover:underline" data-action="switch-to-invite-register">特邀注册</a></span>
+                </div>
             </div>
         </div>
     </div>
@@ -592,6 +597,58 @@
                 </label>
                 <button class="w-full py-2.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="do-register">注册</button>
                 <p class="text-center text-xs text-gray-400">已有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-login">立即登录</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invite Register Modal -->
+    <div id="invite-register-modal" class="modal-overlay">
+        <div class="modal-container max-w-md">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-1 h-5 bg-violet-500 rounded-full"></span>
+                    <h3 class="text-sm font-bold text-gray-900">特邀注册</h3>
+                </div>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="p-3 rounded-xl bg-violet-50 border border-violet-100 flex items-start gap-2.5">
+                    <i data-lucide="info" class="w-4 h-4 text-violet-500 shrink-0 mt-0.5"></i>
+                    <p class="text-[10px] text-violet-700 leading-relaxed">使用特邀码注册后，系统将自动拉取 LinkedIn 信息补充基础资料（头像、职业身份等），匿名模式下个人信息对外不可见。</p>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                        <i data-lucide="ticket" class="w-3.5 h-3.5 text-violet-500"></i>
+                        特邀码 <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="invite-code" placeholder="请输入特邀码" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none transition-all">
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-[9px] text-violet-600 bg-violet-50 rounded hover:bg-violet-100 transition-colors" id="invite-code-paste">粘贴</button>
+                    </div>
+                    <p class="text-[9px] text-gray-400">特邀码通常由项目负责人通过邮件发送给您</p>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-gray-700">邮箱 <span class="text-red-500">*</span></label>
+                    <input type="email" id="invite-email" placeholder="请输入邮箱" class="w-full px-3 py-2.5 text-xs border border-gray-200 rounded-lg focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 outline-none transition-all">
+                </div>
+                <div class="border-t border-gray-100 pt-3 space-y-3">
+                    <label class="flex items-start gap-2.5 cursor-pointer">
+                        <input type="checkbox" id="invite-agree" class="mt-0.5 rounded text-violet-500 w-3.5 h-3.5 shrink-0">
+                        <span class="text-[10px] text-gray-600 leading-relaxed">同意授权使用邮箱注册 APEX 账号，并授权系统自动拉取 <span class="font-medium text-gray-700">LinkedIn</span> 信息补充基础资料（头像、职业身份等）。<span class="text-blue-500 hover:underline cursor-pointer">查看详情</span></span>
+                    </label>
+                    <label class="flex items-start gap-2.5 cursor-pointer">
+                        <input type="checkbox" id="invite-anonymous" class="mt-0.5 rounded text-violet-500 w-3.5 h-3.5 shrink-0">
+                        <span class="text-[10px] text-gray-600 leading-relaxed"><span class="font-medium">匿名登录</span> — 启用后您的个人信息（姓名、头像、职业身份等）对平台其他用户不可见，后台仍会完整记录便于项目管理。</span>
+                    </label>
+                </div>
+                <button class="w-full py-2.5 bg-violet-600 text-white rounded-lg text-xs font-medium hover:bg-violet-500 shadow-sm transition-all" data-action="do-invite-register">立即注册并登录</button>
+                <div class="flex items-center justify-center gap-3 text-center text-xs text-gray-400">
+                    <span>已有账号？<a href="#" class="text-blue-500 hover:underline" data-action="switch-to-login">立即登录</a></span>
+                    <span class="text-gray-300">|</span>
+                    <span><a href="#" class="text-blue-500 hover:underline" data-action="switch-to-register">普通注册</a></span>
+                </div>
             </div>
         </div>
     </div>
@@ -5713,6 +5770,16 @@
                 const modal = document.getElementById('about-modal');
                 if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
             }
+            if (action === 'landing-invite-register') {
+                e.preventDefault();
+                const inviteModal = document.getElementById('invite-register-modal');
+                if (inviteModal) { inviteModal.classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code') || '';
+                const email = urlParams.get('email') || '';
+                if (code) document.getElementById('invite-code').value = code;
+                if (email) document.getElementById('invite-email').value = email;
+            }
             if (action === 'do-login') {
                 e.preventDefault();
                 const email = document.getElementById('login-email').value.trim();
@@ -5744,6 +5811,29 @@
                 document.body.classList.remove('overflow-hidden');
                 showToast('注册成功，欢迎加入 APEX！');
             }
+            if (action === 'do-invite-register') {
+                e.preventDefault();
+                const code = document.getElementById('invite-code').value.trim();
+                const email = document.getElementById('invite-email').value.trim();
+                const agree = document.getElementById('invite-agree').checked;
+                const anonymous = document.getElementById('invite-anonymous').checked;
+                if (!code) { showToast('请输入特邀码'); document.getElementById('invite-code').focus(); return; }
+                if (!email) { showToast('请输入邮箱'); document.getElementById('invite-email').focus(); return; }
+                if (!agree) { showToast('请阅读并同意授权条款'); return; }
+                const landing = document.getElementById('landing-page');
+                const inviteModal = document.getElementById('invite-register-modal');
+                if (landing) landing.style.display = 'none';
+                if (inviteModal) inviteModal.classList.remove('active');
+                document.body.style.overflow = '';
+                document.body.classList.remove('overflow-hidden');
+                if (anonymous) {
+                    showToast('特邀注册成功！已开启匿名模式，个人信息已隐藏');
+                } else {
+                    showToast('特邀注册成功！已自动同步 LinkedIn 信息');
+                }
+                // Simulate auto-registered & logged in
+                document.getElementById('current-language').textContent = '中文';
+            }
             if (action === 'switch-to-register') {
                 e.preventDefault();
                 const loginModal = document.getElementById('login-modal');
@@ -5751,11 +5841,20 @@
                 if (loginModal) loginModal.classList.remove('active');
                 if (registerModal) { registerModal.classList.add('active'); lucide.createIcons(); }
             }
+            if (action === 'switch-to-invite-register') {
+                e.preventDefault();
+                const loginModal = document.getElementById('login-modal');
+                const inviteModal = document.getElementById('invite-register-modal');
+                if (loginModal) loginModal.classList.remove('active');
+                if (inviteModal) { inviteModal.classList.add('active'); lucide.createIcons(); }
+            }
             if (action === 'switch-to-login') {
                 e.preventDefault();
                 const registerModal = document.getElementById('register-modal');
+                const inviteModal = document.getElementById('invite-register-modal');
                 const loginModal = document.getElementById('login-modal');
                 if (registerModal) registerModal.classList.remove('active');
+                if (inviteModal) inviteModal.classList.remove('active');
                 if (loginModal) { loginModal.classList.add('active'); lucide.createIcons(); }
             }
         });
@@ -8261,6 +8360,15 @@
         var modal = document.getElementById('verify-reject-modal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
+    });
+
+    // 特邀注册 - 粘贴特邀码
+    document.getElementById('invite-code-paste')?.addEventListener('click', function() {
+        navigator.clipboard.readText().then(function(text) {
+            if (text) { document.getElementById('invite-code').value = text; showToast('已粘贴特邀码'); }
+        }).catch(function() {
+            showToast('无法读取剪贴板，请手动输入');
+        });
     });
 
     // ========== 人才库 ==========
