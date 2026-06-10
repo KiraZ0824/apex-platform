@@ -7821,6 +7821,7 @@
                         name: cells[0] ? (cells[0].textContent || '').trim() : '特邀',
                         type: cells[1] ? (cells[1].textContent || '').trim() : '-',
                         status: statusText,
+                        registeredCount: cells[3] ? parseInt((cells[3].textContent || '').replace(/[^\d]/g, '')) || 0 : 0,
                         nameEn: '-', points: '-', createdAt: '2026-06-01', deadline: '2026-07-15',
                         projectDesc: '该项目旨在通过行业专家深度访谈，获取市场前沿洞察与战略建议。',
                         desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
@@ -7830,11 +7831,11 @@
                 } else {
                     const index = parseInt(target.getAttribute('data-index')) || 0;
                     const invites = [
-                        { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', nameEn: 'SaaS Growth Strategy Expert Interview', projectDesc: '深入分析东南亚电商市场的履约模式与增长策略，为平台扩张提供决策支持。', criteria: '需输出增长策略报告，包含竞品分析、市场容量测算及落地路径建议。' },
-                        { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', nameEn: 'Web3 Contract Audit Expert Search', projectDesc: '研究新能源汽车出海目的地国家的合规政策，建立法务与合规框架。', criteria: '需完成法规对比矩阵及合规风险清单。' },
-                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', nameEn: 'Cross-border Payment Compliance Research', projectDesc: '优化全球跨境支付体系，降低交易成本，提升合规风控能力。', criteria: '需提交合规差距分析报告及改进建议方案。' },
-                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', nameEn: 'Middle East FinTech Access Analysis', projectDesc: '评估中东金融科技市场准入条件，制定区域市场进入策略。', criteria: '需提供目标国家牌照申请路径及成本估算。' },
-                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', nameEn: 'SE Asia Card Scheme Policy', projectDesc: '调研东南亚各国卡组织支付政策与市场格局，为产品本地化提供依据。', criteria: '需总结各国卡组织核心规则及差异对比表。' }
+                        { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', registeredCount: 4, nameEn: 'SaaS Growth Strategy Expert Interview', projectDesc: '深入分析东南亚电商市场的履约模式与增长策略，为平台扩张提供决策支持。', criteria: '需输出增长策略报告，包含竞品分析、市场容量测算及落地路径建议。' },
+                        { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', registeredCount: 8, nameEn: 'Web3 Contract Audit Expert Search', projectDesc: '研究新能源汽车出海目的地国家的合规政策，建立法务与合规框架。', criteria: '需完成法规对比矩阵及合规风险清单。' },
+                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', registeredCount: 5, nameEn: 'Cross-border Payment Compliance Research', projectDesc: '优化全球跨境支付体系，降低交易成本，提升合规风控能力。', criteria: '需提交合规差距分析报告及改进建议方案。' },
+                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', registeredCount: 15, nameEn: 'Middle East FinTech Access Analysis', projectDesc: '评估中东金融科技市场准入条件，制定区域市场进入策略。', criteria: '需提供目标国家牌照申请路径及成本估算。' },
+                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', registeredCount: 3, nameEn: 'SE Asia Card Scheme Policy', projectDesc: '调研东南亚各国卡组织支付政策与市场格局，为产品本地化提供依据。', criteria: '需总结各国卡组织核心规则及差异对比表。' }
                     ];
                     const inv = invites[index] || invites[0];
                     data = Object.assign({}, inv, {
