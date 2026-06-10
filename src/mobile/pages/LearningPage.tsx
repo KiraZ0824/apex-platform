@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, Clock, Play, FileText, FileSpreadsheet, BarChart, Download, CheckCircle } from 'lucide-react';
+import { BookOpen, Play, FileText, FileSpreadsheet, BarChart, Download, CheckCircle } from 'lucide-react';
 import type { LearningResource } from '../../types';
 
 interface LearningPageProps {
@@ -36,7 +36,6 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
     <div className="px-4 pb-8 space-y-4">
       <section className="grid grid-cols-2 gap-2.5">
         <MetricCard icon={BookOpen} label={copy.completedCourses} value={`${completedCount}`} />
-        <MetricCard icon={Clock} label={copy.hours} value="12.5h" />
       </section>
 
       <section className="glass-panel rounded-[28px] p-4">
@@ -72,11 +71,6 @@ export default function LearningPage({ resources, copy }: LearningPageProps) {
                     <div className="w-11 h-11 rounded-full bg-white/82 backdrop-blur-sm flex items-center justify-center shadow-sm">
                       <Play className="w-5 h-5 text-slate-700 ml-0.5" />
                     </div>
-                    {resource.duration && (
-                      <span className="absolute bottom-3 right-3 pill-dark text-[9px] px-2 py-1 rounded-full">
-                        {resource.duration}
-                      </span>
-                    )}
                   </div>
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-2">
