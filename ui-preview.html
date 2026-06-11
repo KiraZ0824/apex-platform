@@ -8237,6 +8237,7 @@
 
             if (action === 'verify-all-pass') {
                 e.preventDefault();
+                if (!confirm('一旦采纳，智慧值将会发放给用户，请确保全部审核完成')) return;
                 document.querySelectorAll('[data-verify-actions]').forEach(actions => {
                     const btns = actions.querySelectorAll('button');
                     btns.forEach(b => {
