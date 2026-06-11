@@ -4209,6 +4209,7 @@
                         </table>
                     </div>
                     <div class="flex items-center justify-end gap-3">
+                        <button class="px-3 py-1.5 text-[10px] font-medium text-emerald-600 border border-emerald-200 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors" data-action="complete-invite">完成特邀</button>
                         <button class="px-3 py-1.5 text-[10px] font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="verify-all-pass">全部采纳</button>
                         <button class="px-3 py-1.5 text-[10px] font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="verify-submit">提交验收结果</button>
                     </div>
@@ -8289,6 +8290,16 @@
                 showToast(`验收结果已提交：${passed} 人采纳，${failed} 人不采纳`);
                 const modal = document.getElementById('invite-detail-modal');
                 if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+                return;
+            }
+
+            if (action === 'complete-invite') {
+                e.preventDefault();
+                if (confirm('一旦完成将无法继续提交/验收成果，请确认是否继续')) {
+                    showToast('特邀已完成，状态已锁定');
+                    const modal = document.getElementById('invite-detail-modal');
+                    if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+                }
                 return;
             }
 
