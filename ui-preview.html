@@ -6937,13 +6937,13 @@
         document.getElementById('invite-status-filter').addEventListener('change', filterInviteList);
 
         // 报名方式切换 —— 精准指派时显示指定用户字段，定向邀请时显示客户信息字段
-        function toggleAiRequired(isAi) {
+        function toggleAiRequired(isRequired) {
             var star1 = document.getElementById('industry-required-star');
             var star2 = document.getElementById('region-required-star');
             var label1 = document.getElementById('industry-label');
             var label2 = document.getElementById('region-label');
             if (star1 && star2) {
-                if (isAi) {
+                if (isRequired) {
                     star1.classList.remove('hidden');
                     star2.classList.remove('hidden');
                     if (label1) label1.className = 'block text-xs font-medium mb-3';
@@ -6955,6 +6955,10 @@
                     if (label2) label2.className = 'block text-xs font-medium text-gray-500 mb-3';
                 }
             }
+        }
+        function isAiOrClaim() {
+            var checked = document.querySelector('input[name="apply_type"]:checked');
+            return checked && (checked.value === 'AI 匹配邀请' || checked.value === '主动认领');
         }
         // 国家/地区平板多选下拉
         var REGION_ITEMS = [
@@ -7067,23 +7071,20 @@
                     assignField.classList.remove('hidden');
                     directField.classList.add('hidden');
                     aiReviewField.classList.add('hidden');
-                    toggleAiRequired(false);
                 } else if (this.value === '定向邀请') {
                     directField.classList.remove('hidden');
                     assignField.classList.add('hidden');
                     aiReviewField.classList.add('hidden');
-                    toggleAiRequired(false);
                 } else if (this.value === 'AI 匹配邀请') {
                     aiReviewField.classList.remove('hidden');
                     assignField.classList.add('hidden');
                     directField.classList.add('hidden');
-                    toggleAiRequired(true);
                 } else {
                     assignField.classList.add('hidden');
                     directField.classList.add('hidden');
                     aiReviewField.classList.add('hidden');
-                    toggleAiRequired(false);
                 }
+                toggleAiRequired(isAiOrClaim());
             });
             // 设置 value 属性以便判断
             const label = radio.closest('label');
@@ -7105,7 +7106,7 @@
                 } else if (checked.value === 'AI 匹配邀请') {
                     aiReviewField.classList.remove('hidden');
                 }
-                toggleAiRequired(checked && checked.value === 'AI 匹配邀请');
+                toggleAiRequired(isAiOrClaim());
             }
         })();
 
@@ -8141,12 +8142,12 @@
             if (action === 'submit-add-invite') {
                 e.preventDefault();
                 var aiChecked = document.querySelector('input[name="apply_type"]:checked');
-                var isAi = aiChecked && aiChecked.value === 'AI 匹配邀请';
-                if (isAi) {
+                var isRequired = aiChecked && (aiChecked.value === 'AI 匹配邀请' || aiChecked.value === '主动认领');
+                if (isRequired) {
                     var industryChecked = document.querySelectorAll('#industry-label ~ .flex-wrap input[type="checkbox"]:checked').length > 0;
                     var regionSelected = getRegionSelected().length > 0;
-                    if (!regionSelected) { showToast('AI 匹配邀请模式下，请至少选择一个国家/地区'); return; }
-                    if (!industryChecked) { showToast('AI 匹配邀请模式下，请至少选择一个行业'); return; }
+                    if (!regionSelected) { showToast('请至少选择一个国家/地区'); return; }
+                    if (!industryChecked) { showToast('请至少选择一个行业'); return; }
                 }
                 showToast('特邀任务创建成功');
                 const modal = document.getElementById('add-invite-modal');
