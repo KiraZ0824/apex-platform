@@ -4489,7 +4489,7 @@
                     </div>
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-3">行业 (多选)</label>
+                            <label class="block text-xs font-medium mb-3" id="industry-label">行业 (多选) <span class="text-red-500 hidden" id="industry-required-star">*</span></label>
                             <div class="flex flex-wrap gap-3">
                                 <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
                                     <input type="checkbox" class="rounded text-blue-500"> 银行
@@ -4512,7 +4512,7 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-3">国家/地区 (多选)</label>
+                            <label class="block text-xs font-medium mb-3" id="region-label">国家/地区 (多选) <span class="text-red-500 hidden" id="region-required-star">*</span></label>
                             <div class="flex flex-wrap gap-3">
                                 <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
                                     <input type="checkbox" class="rounded text-blue-500"> 中国香港
@@ -6951,6 +6951,25 @@
         document.getElementById('invite-status-filter').addEventListener('change', filterInviteList);
 
         // 报名方式切换 —— 精准指派时显示指定用户字段，定向邀请时显示客户信息字段
+        function toggleAiRequired(isAi) {
+            var star1 = document.getElementById('industry-required-star');
+            var star2 = document.getElementById('region-required-star');
+            var label1 = document.getElementById('industry-label');
+            var label2 = document.getElementById('region-label');
+            if (star1 && star2) {
+                if (isAi) {
+                    star1.classList.remove('hidden');
+                    star2.classList.remove('hidden');
+                    if (label1) label1.className = 'block text-xs font-medium mb-3';
+                    if (label2) label2.className = 'block text-xs font-medium mb-3';
+                } else {
+                    star1.classList.add('hidden');
+                    star2.classList.add('hidden');
+                    if (label1) label1.className = 'block text-xs font-medium text-gray-500 mb-3';
+                    if (label2) label2.className = 'block text-xs font-medium text-gray-500 mb-3';
+                }
+            }
+        }
         document.querySelectorAll('input[name="apply_type"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 const assignField = document.getElementById('assign-user-field');
@@ -6960,18 +6979,22 @@
                     assignField.classList.remove('hidden');
                     directField.classList.add('hidden');
                     aiReviewField.classList.add('hidden');
+                    toggleAiRequired(false);
                 } else if (this.value === '定向邀请') {
                     directField.classList.remove('hidden');
                     assignField.classList.add('hidden');
                     aiReviewField.classList.add('hidden');
+                    toggleAiRequired(false);
                 } else if (this.value === 'AI 匹配邀请') {
                     aiReviewField.classList.remove('hidden');
                     assignField.classList.add('hidden');
                     directField.classList.add('hidden');
+                    toggleAiRequired(true);
                 } else {
                     assignField.classList.add('hidden');
                     directField.classList.add('hidden');
                     aiReviewField.classList.add('hidden');
+                    toggleAiRequired(false);
                 }
             });
             // 设置 value 属性以便判断
@@ -6994,6 +7017,7 @@
                 } else if (checked.value === 'AI 匹配邀请') {
                     aiReviewField.classList.remove('hidden');
                 }
+                toggleAiRequired(checked && checked.value === 'AI 匹配邀请');
             }
         })();
 
@@ -8027,6 +8051,15 @@
             }
 
             if (action === 'submit-add-invite') {
+                e.preventDefault();
+                var aiChecked = document.querySelector('input[name="apply_type"]:checked');
+                var isAi = aiChecked && aiChecked.value === 'AI 匹配邀请';
+                if (isAi) {
+                    var industryChecked = document.querySelectorAll('#industry-label ~ .flex-wrap input[type="checkbox"]:checked').length > 0;
+                    var regionChecked = document.querySelectorAll('#region-label ~ .flex-wrap input[type="checkbox"]:checked').length > 0;
+                    if (!industryChecked) { showToast('AI 匹配邀请模式下，请至少选择一个行业'); return; }
+                    if (!regionChecked) { showToast('AI 匹配邀请模式下，请至少选择一个国家/地区'); return; }
+                }
                 showToast('特邀任务创建成功');
                 const modal = document.getElementById('add-invite-modal');
                 if (modal) {
