@@ -4513,28 +4513,22 @@
                         </div>
                         <div>
                             <label class="block text-xs font-medium mb-3" id="region-label">国家/地区 (多选) <span class="text-red-500 hidden" id="region-required-star">*</span></label>
-                            <div class="flex flex-wrap gap-3">
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 中国香港
-                                </label>
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 新加坡
-                                </label>
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 美国
-                                </label>
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 欧盟
-                                </label>
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 英国
-                                </label>
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 东南亚
-                                </label>
-                                <label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                    <input type="checkbox" class="rounded text-blue-500"> 中东
-                                </label>
+                            <div class="space-y-3">
+                                <select id="region-select" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                                    <option value="">请选择地区</option>
+                                    <option value="东南亚">东南亚</option>
+                                    <option value="东亚">东亚</option>
+                                    <option value="中东">中东</option>
+                                    <option value="欧洲">欧洲</option>
+                                    <option value="北美">北美</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                                <div id="country-chips" class="flex flex-wrap gap-3 hidden">
+                                </div>
+                                <p class="text-[10px] text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="info" class="w-3 h-3"></i>
+                                    选择地区后可选具体国家，也可仅选择地区
+                                </p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -6970,6 +6964,35 @@
                 }
             }
         }
+        // 地区-国家映射与级联逻辑
+        const REGION_COUNTRIES = {
+            '东南亚': ['新加坡', '越南', '菲律宾', '马来西亚', '泰国', '印度尼西亚'],
+            '东亚': ['中国香港', '中国台湾', '日本', '韩国'],
+            '中东': ['阿联酋', '沙特阿拉伯', '卡塔尔', '以色列', '土耳其'],
+            '欧洲': ['英国', '德国', '法国', '荷兰', '瑞士', '卢森堡'],
+            '北美': ['美国', '加拿大', '墨西哥'],
+            '其他': ['澳大利亚', '新西兰', '巴西', '印度', '非洲']
+        };
+        var regionSelect = document.getElementById('region-select');
+        var countryChips = document.getElementById('country-chips');
+        if (regionSelect && countryChips) {
+            regionSelect.addEventListener('change', function() {
+                var val = this.value;
+                var countries = REGION_COUNTRIES[val];
+                if (countries && countries.length) {
+                    countryChips.innerHTML = countries.map(function(c) {
+                        return '<label class="px-3 py-1.5 border border-gray-200 rounded-full text-xs cursor-pointer hover:bg-blue-50 transition-colors flex items-center gap-2 selected:border-blue-300 selected:bg-blue-50">' +
+                            '<input type="checkbox" class="rounded text-blue-500" value="' + c + '"> ' + c +
+                            '</label>';
+                    }).join('');
+                    countryChips.classList.remove('hidden');
+                } else {
+                    countryChips.innerHTML = '';
+                    countryChips.classList.add('hidden');
+                }
+                lucide.createIcons();
+            });
+        }
         document.querySelectorAll('input[name="apply_type"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 const assignField = document.getElementById('assign-user-field');
@@ -8056,9 +8079,10 @@
                 var isAi = aiChecked && aiChecked.value === 'AI 匹配邀请';
                 if (isAi) {
                     var industryChecked = document.querySelectorAll('#industry-label ~ .flex-wrap input[type="checkbox"]:checked').length > 0;
-                    var regionChecked = document.querySelectorAll('#region-label ~ .flex-wrap input[type="checkbox"]:checked').length > 0;
+                    var regionSelect = document.getElementById('region-select');
+                    var regionVal = regionSelect ? regionSelect.value : '';
+                    if (!regionVal) { showToast('AI 匹配邀请模式下，请至少选择一个地区'); return; }
                     if (!industryChecked) { showToast('AI 匹配邀请模式下，请至少选择一个行业'); return; }
-                    if (!regionChecked) { showToast('AI 匹配邀请模式下，请至少选择一个国家/地区'); return; }
                 }
                 showToast('特邀任务创建成功');
                 const modal = document.getElementById('add-invite-modal');
