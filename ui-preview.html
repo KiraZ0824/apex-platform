@@ -4786,6 +4786,33 @@
         </div>
     </div>
 
+    <!-- 定向邀请结果弹窗 -->
+    <div id="invite-result-modal" class="modal-overlay">
+        <div class="modal-container max-w-md">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-lg font-bold text-gray-900">定向邀请已创建</h3>
+                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" data-action="close-modal">
+                    <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
+                </button>
+            </div>
+            <div class="p-8 flex flex-col items-center gap-6">
+                <div class="w-44 h-44 bg-white rounded-xl border border-gray-200 flex items-center justify-center p-2 shadow-sm" id="invite-qr-container">
+                    <img id="invite-qr-img" src="" alt="邀请二维码" class="w-full h-full object-contain">
+                </div>
+                <div class="text-center">
+                    <p class="text-sm font-semibold text-gray-900 mb-1">邀请链接</p>
+                    <p class="text-[11px] text-gray-400 mb-3">将此链接或二维码发送给客户，对方即可完成注册</p>
+                </div>
+                <div class="w-full flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <input type="text" id="invite-result-link" readonly class="flex-1 text-[10px] text-gray-600 bg-transparent outline-none truncate" value="">
+                    <button class="shrink-0 px-3 py-1.5 bg-slate-900 text-white rounded-lg text-[10px] font-medium hover:bg-slate-800 transition-colors flex items-center gap-1" id="copy-invite-link-btn">
+                        <i data-lucide="copy" class="w-3 h-3"></i>复制
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 上传资源弹窗 -->
     <div id="upload-resource-modal" class="modal-overlay">
         <div class="modal-container custom-scrollbar">
@@ -8255,12 +8282,34 @@
             if (action === 'submit-add-invite') {
                 e.preventDefault();
                 var aiChecked = document.querySelector('input[name="apply_type"]:checked');
-                var isRequired = aiChecked && (aiChecked.value === 'AI 匹配邀请' || aiChecked.value === '主动认领');
+                var applyType = aiChecked ? aiChecked.value : '';
+                var isRequired = applyType === 'AI 匹配邀请' || applyType === '主动认领';
                 if (isRequired) {
                     var industryChecked = document.querySelectorAll('#industry-label ~ .flex-wrap input[type="checkbox"]:checked').length > 0;
                     var regionSelected = getRegionSelected().length > 0;
                     if (!regionSelected) { showToast('请至少选择一个国家/地区'); return; }
                     if (!industryChecked) { showToast('请至少选择一个行业'); return; }
+                }
+                if (applyType === '定向邀请') {
+                    var customerName = document.getElementById('direct-customer-name').value.trim();
+                    var contactInfo = document.getElementById('direct-contact-info').value.trim();
+                    if (!customerName) { showToast('请输入客户名称'); return; }
+                    if (!contactInfo) { showToast('请输入联系方式'); return; }
+                    var inviteLink = 'https://apex-platform.example.com/invite/' + Date.now() + Math.random().toString(36).substring(2, 8);
+                    var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(inviteLink);
+                    document.getElementById('invite-qr-img').src = qrUrl;
+                    document.getElementById('invite-result-link').value = inviteLink;
+                    const addModal = document.getElementById('add-invite-modal');
+                    if (addModal) {
+                        addModal.classList.remove('active');
+                    }
+                    const resultModal = document.getElementById('invite-result-modal');
+                    if (resultModal) {
+                        resultModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        setTimeout(function() { lucide.createIcons(); }, 100);
+                    }
+                    return;
                 }
                 showToast('特邀任务创建成功');
                 const modal = document.getElementById('add-invite-modal');
@@ -9505,6 +9554,19 @@
             const name = row ? row.querySelector('td:first-child')?.textContent : '';
             showToast(`特邀「${name}」已发布`);
         }
+    });
+
+    // 复制邀请链接
+    document.getElementById('copy-invite-link-btn')?.addEventListener('click', function() {
+        var input = document.getElementById('invite-result-link');
+        if (!input) return;
+        input.select();
+        input.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(input.value).then(function() {
+            showToast('邀请链接已复制到剪贴板');
+        }).catch(function() {
+            showToast('复制失败，请手动复制');
+        });
     });
 </script>
 </body>
