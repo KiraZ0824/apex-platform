@@ -2473,25 +2473,24 @@
 
             <!-- Tab Content: 智慧值规则 -->
             <div class="config-tab-content block" data-config-tab-content="points">
-                <div class="flex items-center justify-between mb-6">
-                    <div>
-                        <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
-                            <i data-lucide="award" class="w-5 h-5 text-blue-500"></i>
-                            智慧值规则
-                        </h3>
-                        <p class="text-xs text-gray-400 mt-1">管理智慧值规则配置和发放统计</p>
-                    </div>
-                    <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all flex items-center gap-1.5" data-action="open-add-point-rule-modal">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i>新增规则
-                    </button>
-                </div>
-
                 <div class="flex items-center gap-6 border-b border-gray-100 mb-6">
                     <div class="points-sub-tab active pb-2 border-b-2 border-slate-900 text-xs font-semibold text-slate-900 cursor-pointer" data-points-sub-tab="rules">规则配置</div>
                     <div class="points-sub-tab pb-2 border-b-2 border-transparent text-xs font-medium text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" data-points-sub-tab="statistics">发放统计</div>
                 </div>
 
                 <div class="points-sub-content block" data-points-sub-content="rules">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                                <i data-lucide="award" class="w-5 h-5 text-blue-500"></i>
+                                智慧值规则配置
+                            </h3>
+                            <p class="text-xs text-gray-400 mt-1">管理智慧值获取规则</p>
+                        </div>
+                        <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all flex items-center gap-1.5" data-action="open-add-point-rule-modal">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>新增规则
+                        </button>
+                    </div>
 
                     <div class="ant-card p-6">
                     <div class="flex items-center justify-between">
@@ -2660,6 +2659,15 @@
                 </div>
 
                 <div class="points-sub-content hidden" data-points-sub-content="statistics">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                                <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-500"></i>
+                                智慧值发放统计
+                            </h3>
+                            <p class="text-xs text-gray-400 mt-1">查看智慧值发放数据与历史记录</p>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="ant-card p-4 flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
