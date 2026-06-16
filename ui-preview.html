@@ -708,9 +708,6 @@
                 <div class="nav-sub-item active" data-view="config-center" data-config-tab="points">
                     <span>智慧值规则</span>
                 </div>
-                <div class="nav-sub-item" data-view="config-center" data-config-tab="points-statistics">
-                    <span>发放统计</span>
-                </div>
                 <div class="nav-sub-item" data-view="config-center" data-config-tab="projects">
                     <span>项目/特邀配置</span>
                 </div>
@@ -2480,16 +2477,23 @@
                     <div>
                         <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
                             <i data-lucide="award" class="w-5 h-5 text-blue-500"></i>
-                            智慧值规则配置
+                            智慧值规则
                         </h3>
-                        <p class="text-xs text-gray-400 mt-1">管理智慧值获取规则</p>
+                        <p class="text-xs text-gray-400 mt-1">管理智慧值规则配置和发放统计</p>
                     </div>
                     <button class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all flex items-center gap-1.5" data-action="open-add-point-rule-modal">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i>新增规则
                     </button>
                 </div>
 
-                <div class="ant-card p-6">
+                <div class="flex items-center gap-6 border-b border-gray-100 mb-6">
+                    <div class="points-sub-tab active pb-2 border-b-2 border-slate-900 text-xs font-semibold text-slate-900 cursor-pointer" data-points-sub-tab="rules">规则配置</div>
+                    <div class="points-sub-tab pb-2 border-b-2 border-transparent text-xs font-medium text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" data-points-sub-tab="statistics">发放统计</div>
+                </div>
+
+                <div class="points-sub-content block" data-points-sub-content="rules">
+
+                    <div class="ant-card p-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
@@ -2653,86 +2657,77 @@
                         <span class="text-[10px] text-gray-500">拖动规则行可排序</span>
                     </div>
                 </div>
-            </div>
+                </div>
 
-            <!-- Tab Content: 发放统计 -->
-            <div class="config-tab-content hidden" data-config-tab-content="points-statistics">
-                <div class="flex items-center justify-between mb-6">
-                    <div>
-                        <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
-                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-500"></i>
-                            智慧值发放统计
-                        </h3>
-                        <p class="text-xs text-gray-400 mt-1">查看智慧值发放数据与历史记录</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div class="ant-card p-4 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-                            <i data-lucide="coins" class="w-5 h-5 text-emerald-500"></i>
+                <div class="points-sub-content hidden" data-points-sub-content="statistics">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="ant-card p-4 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                                <i data-lucide="coins" class="w-5 h-5 text-emerald-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-gray-400">本月发放总量</p>
+                                <p class="text-lg font-bold text-gray-900">12,845 <span class="text-[10px] text-gray-400 font-normal">pts</span></p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-[10px] text-gray-400">本月发放总量</p>
-                            <p class="text-lg font-bold text-gray-900">12,845 <span class="text-[10px] text-gray-400 font-normal">pts</span></p>
+                        <div class="ant-card p-4 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+                                <i data-lucide="users" class="w-5 h-5 text-blue-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-gray-400">受益用户数</p>
+                                <p class="text-lg font-bold text-gray-900">328 <span class="text-[10px] text-gray-400 font-normal">人</span></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="ant-card p-4 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                            <i data-lucide="users" class="w-5 h-5 text-blue-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-gray-400">受益用户数</p>
-                            <p class="text-lg font-bold text-gray-900">328 <span class="text-[10px] text-gray-400 font-normal">人</span></p>
-                        </div>
-                    </div>
-                    <div class="ant-card p-4 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
-                            <i data-lucide="activity" class="w-5 h-5 text-amber-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-gray-400">发放次数</p>
-                            <p class="text-lg font-bold text-gray-900">1,247 <span class="text-[10px] text-gray-400 font-normal">次</span></p>
+                        <div class="ant-card p-4 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
+                                <i data-lucide="activity" class="w-5 h-5 text-amber-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-gray-400">发放次数</p>
+                                <p class="text-lg font-bold text-gray-900">1,247 <span class="text-[10px] text-gray-400 font-normal">次</span></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="ant-card overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="clock" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">历史发放记录</span>
+                    <div class="ant-card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="clock" class="w-4 h-4 text-gray-400"></i>
+                                <span class="text-[11px] font-semibold text-gray-600">历史发放记录</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="text" placeholder="搜索用户..." class="w-36 pl-3 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded text-[10px] outline-none focus:ring-2 focus:ring-blue-500/20">
+                                <select class="text-[10px] border border-gray-200 rounded py-1.5 px-2 bg-white text-gray-600 outline-none">
+                                    <option value="">全部类型</option>
+                                    <option>注册奖励</option>
+                                    <option>学习奖励</option>
+                                    <option>任务奖励</option>
+                                    <option>手动发放</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <input type="text" placeholder="搜索用户..." class="w-36 pl-3 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded text-[10px] outline-none focus:ring-2 focus:ring-blue-500/20">
-                            <select class="text-[10px] border border-gray-200 rounded py-1.5 px-2 bg-white text-gray-600 outline-none">
-                                <option value="">全部类型</option>
-                                <option>注册奖励</option>
-                                <option>学习奖励</option>
-                                <option>任务奖励</option>
-                                <option>手动发放</option>
-                            </select>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                    <tr>
+                                        <th class="px-6 py-3 font-medium">时间</th>
+                                        <th class="px-6 py-3 font-medium">用户</th>
+                                        <th class="px-6 py-3 font-medium">类型</th>
+                                        <th class="px-6 py-3 font-medium">发放智慧值</th>
+                                        <th class="px-6 py-3 font-medium">触发规则</th>
+                                        <th class="px-6 py-3 font-medium">状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-xs" id="points-history-tbody"></tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3 font-medium">时间</th>
-                                    <th class="px-6 py-3 font-medium">用户</th>
-                                    <th class="px-6 py-3 font-medium">类型</th>
-                                    <th class="px-6 py-3 font-medium">发放智慧值</th>
-                                    <th class="px-6 py-3 font-medium">触发规则</th>
-                                    <th class="px-6 py-3 font-medium">状态</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs" id="points-history-tbody"></tbody>
-                        </table>
-                    </div>
-                    <div class="px-6 py-3 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
-                        <p class="text-[10px] text-gray-400">共 <span id="points-history-count">32</span> 条发放记录</p>
-                        <div class="flex items-center gap-2">
-                            <button class="px-2 py-1 text-[10px] text-gray-500 border border-gray-200 rounded hover:bg-gray-100 transition-colors">上一页</button>
-                            <span class="text-[10px] text-gray-400">1/4</span>
-                            <button class="px-2 py-1 text-[10px] text-gray-500 border border-gray-200 rounded hover:bg-gray-100 transition-colors">下一页</button>
+                        <div class="px-6 py-3 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
+                            <p class="text-[10px] text-gray-400">共 <span id="points-history-count">32</span> 条发放记录</p>
+                            <div class="flex items-center gap-2">
+                                <button class="px-2 py-1 text-[10px] text-gray-500 border border-gray-200 rounded hover:bg-gray-100 transition-colors">上一页</button>
+                                <span class="text-[10px] text-gray-400">1/4</span>
+                                <button class="px-2 py-1 text-[10px] text-gray-500 border border-gray-200 rounded hover:bg-gray-100 transition-colors">下一页</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -7117,6 +7112,29 @@
                 showToast('没有符合条件的智慧值规则');
             }
         }
+
+        // 智慧值规则子标签切换
+        document.querySelectorAll('.points-sub-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.points-sub-tab').forEach(function(t) {
+                    t.classList.remove('border-slate-900', 'text-slate-900', 'font-semibold');
+                    t.classList.add('border-transparent', 'text-gray-400', 'font-medium');
+                });
+                this.classList.remove('border-transparent', 'text-gray-400', 'font-medium');
+                this.classList.add('border-slate-900', 'text-slate-900', 'font-semibold');
+                var key = this.getAttribute('data-points-sub-tab');
+                document.querySelectorAll('.points-sub-content').forEach(function(c) {
+                    c.classList.add('hidden');
+                    c.classList.remove('block');
+                });
+                var target = document.querySelector('[data-points-sub-content="' + key + '"]');
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.add('block');
+                    setTimeout(function() { lucide.createIcons(); }, 50);
+                }
+            });
+        });
 
         // 生成智慧值发放历史数据
         (function generatePointsHistory() {
