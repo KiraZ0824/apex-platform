@@ -3040,6 +3040,7 @@
                                         <th class="px-6 py-3 font-medium">学习/下载量</th>
                                         <th class="px-6 py-3 font-medium">智慧值奖励</th>
                                         <th class="px-6 py-3 font-medium">状态</th>
+                                        <th class="px-6 py-3 font-medium">置顶</th>
                                         <th class="px-6 py-3 font-medium text-right">操作</th>
                                     </tr>
                                 </thead>
@@ -3051,6 +3052,7 @@
                                         <td class="px-6 py-4 text-gray-400">1.2k</td>
                                         <td class="px-6 py-4 text-emerald-600">+20</td>
                                         <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                        <td class="px-6 py-4 text-center"><button class="text-gray-300 hover:text-amber-500 transition-colors" data-action="toggle-pin" data-item-id="lr-1"><i data-lucide="pin" class="w-3.5 h-3.5"></i></button></td>
                                         <td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-amber-600 hover:text-amber-700">下架</button><button class="text-red-400 hover:text-red-600">删除</button></td>
                                     </tr>
                                     <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2">
@@ -3060,6 +3062,7 @@
                                         <td class="px-6 py-4 text-gray-400">5.8k</td>
                                         <td class="px-6 py-4 text-emerald-600">+10</td>
                                         <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                        <td class="px-6 py-4 text-center"><button class="text-gray-300 hover:text-amber-500 transition-colors" data-action="toggle-pin" data-item-id="lr-2"><i data-lucide="pin" class="w-3.5 h-3.5"></i></button></td>
                                         <td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-amber-600 hover:text-amber-700">下架</button><button class="text-red-400 hover:text-red-600">删除</button></td>
                                     </tr>
                                     <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3">
@@ -3069,6 +3072,7 @@
                                         <td class="px-6 py-4 text-gray-400">856</td>
                                         <td class="px-6 py-4 text-emerald-600">+15</td>
                                         <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                        <td class="px-6 py-4 text-center"><button class="text-gray-300 hover:text-amber-500 transition-colors" data-action="toggle-pin" data-item-id="lr-3"><i data-lucide="pin" class="w-3.5 h-3.5"></i></button></td>
                                         <td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-amber-600 hover:text-amber-700">下架</button><button class="text-red-400 hover:text-red-600">删除</button></td>
                                     </tr>
                                 </tbody>
@@ -7576,6 +7580,22 @@
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
                 }
+                return;
+            }
+
+            if (action === 'toggle-pin') {
+                var btn = target;
+                var icon = btn.querySelector('i');
+                if (btn.classList.contains('text-amber-500')) {
+                    btn.classList.remove('text-amber-500');
+                    btn.classList.add('text-gray-300');
+                    showToast('已取消置顶');
+                } else {
+                    btn.classList.remove('text-gray-300');
+                    btn.classList.add('text-amber-500');
+                    showToast('已置顶');
+                }
+                if (icon) lucide.createIcons();
                 return;
             }
 
