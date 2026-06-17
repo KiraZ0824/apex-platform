@@ -3015,216 +3015,114 @@
 
             <!-- Tab Content: 学习中心配置 -->
             <div class="config-tab-content hidden" data-config-tab-content="operations">
-                <!-- 资源列表管理 -->
-                <div class="ant-card overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="library" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">资源列表管理</span>
-                            <span class="text-[9px] text-gray-400 ml-2">管理学习中心展示的资源内容</span>
+                <div class="flex items-center gap-6 border-b border-gray-100 mb-6">
+                    <div class="ops-sub-tab active pb-2 border-b-2 border-slate-900 text-xs font-semibold text-slate-900 cursor-pointer" data-ops-sub-tab="upload">资源上传</div>
+                    <div class="ops-sub-tab pb-2 border-b-2 border-transparent text-xs font-medium text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" data-ops-sub-tab="config">学习中心配置</div>
+                </div>
+
+                <div class="ops-sub-content block" data-ops-sub-content="upload">
+                    <div class="ant-card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="library" class="w-4 h-4 text-gray-400"></i>
+                                <span class="text-[11px] font-semibold text-gray-600">资源列表管理</span>
+                                <span class="text-[9px] text-gray-400 ml-2">管理学习中心展示的资源内容</span>
+                            </div>
+                            <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-resource">+ 新增资源</button>
                         </div>
-                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-resource">+ 新增资源</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3 font-medium">资源名称</th>
-                                    <th class="px-6 py-3 font-medium">所属分类</th>
-                                    <th class="px-6 py-3 font-medium">资源类型</th>
-                                    <th class="px-6 py-3 font-medium">学习/下载量</th>
-                                    <th class="px-6 py-3 font-medium">智慧值奖励</th>
-                                    <th class="px-6 py-3 font-medium">状态</th>
-                                    <th class="px-6 py-3 font-medium text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs">
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-1">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <span class="font-medium text-gray-900">如何进行一次高质量的专家访谈？</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4"><span class="text-gray-500">技能提升 (视频)</span></td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded">视频</span></td>
-                                    <td class="px-6 py-4 text-gray-400">1.2k</td>
-                                    <td class="px-6 py-4 text-emerald-600">+20</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-amber-600 hover:text-amber-700">下架</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <span class="font-medium text-gray-900">平台特邀顾问行为规范与红线</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4"><span class="text-gray-500">新手必读</span></td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 text-[10px] rounded">PDF</span></td>
-                                    <td class="px-6 py-4 text-gray-400">5.8k</td>
-                                    <td class="px-6 py-4 text-emerald-600">+10</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-amber-600 hover:text-amber-700">下架</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <span class="font-medium text-gray-900">行业研究数据测算模型模板 v2.0</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4"><span class="text-gray-500">交付物模板</span></td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded">Excel</span></td>
-                                    <td class="px-6 py-4 text-gray-400">856</td>
-                                    <td class="px-6 py-4 text-emerald-600">+15</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-amber-600 hover:text-amber-700">下架</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                    <tr>
+                                        <th class="px-6 py-3 font-medium">资源名称</th>
+                                        <th class="px-6 py-3 font-medium">所属分类</th>
+                                        <th class="px-6 py-3 font-medium">资源类型</th>
+                                        <th class="px-6 py-3 font-medium">学习/下载量</th>
+                                        <th class="px-6 py-3 font-medium">智慧值奖励</th>
+                                        <th class="px-6 py-3 font-medium">状态</th>
+                                        <th class="px-6 py-3 font-medium text-right">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-xs">
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-1">
+                                        <td class="px-6 py-4"><div class="flex items-center gap-2"><span class="font-medium text-gray-900">如何进行一次高质量的专家访谈？</span></div></td>
+                                        <td class="px-6 py-4"><span class="text-gray-500">技能提升 (视频)</span></td>
+                                        <td class="px-6 py-4"><span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] rounded">视频</span></td>
+                                        <td class="px-6 py-4 text-gray-400">1.2k</td>
+                                        <td class="px-6 py-4 text-emerald-600">+20</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                        <td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-amber-600 hover:text-amber-700">下架</button><button class="text-red-400 hover:text-red-600">删除</button></td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2">
+                                        <td class="px-6 py-4"><div class="flex items-center gap-2"><span class="font-medium text-gray-900">平台特邀顾问行为规范与红线</span></div></td>
+                                        <td class="px-6 py-4"><span class="text-gray-500">新手必读</span></td>
+                                        <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 text-[10px] rounded">PDF</span></td>
+                                        <td class="px-6 py-4 text-gray-400">5.8k</td>
+                                        <td class="px-6 py-4 text-emerald-600">+10</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                        <td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-amber-600 hover:text-amber-700">下架</button><button class="text-red-400 hover:text-red-600">删除</button></td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3">
+                                        <td class="px-6 py-4"><div class="flex items-center gap-2"><span class="font-medium text-gray-900">行业研究数据测算模型模板 v2.0</span></div></td>
+                                        <td class="px-6 py-4"><span class="text-gray-500">交付物模板</span></td>
+                                        <td class="px-6 py-4"><span class="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] rounded">Excel</span></td>
+                                        <td class="px-6 py-4 text-gray-400">856</td>
+                                        <td class="px-6 py-4 text-emerald-600">+15</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">已发布</span></td>
+                                        <td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-amber-600 hover:text-amber-700">下架</button><button class="text-red-400 hover:text-red-600">删除</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 资源分类管理 -->
-                <div class="ant-card overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="folder-tree" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">资源分类管理</span>
-                            <span class="text-[9px] text-gray-400 ml-2">管理学习中心的分类标签</span>
+                <div class="ops-sub-content hidden" data-ops-sub-content="config">
+                    <div class="ant-card overflow-hidden mb-6">
+                        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="folder-tree" class="w-4 h-4 text-gray-400"></i>
+                                <span class="text-[11px] font-semibold text-gray-600">资源分类管理</span>
+                                <span class="text-[9px] text-gray-400 ml-2">管理学习中心的分类标签</span>
+                            </div>
+                            <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-category">+ 新增分类</button>
                         </div>
-                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-category">+ 新增分类</button>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                    <tr><th class="px-6 py-3 font-medium">分类名称</th><th class="px-6 py-3 font-medium">类型标识</th><th class="px-6 py-3 font-medium">关联资源数</th><th class="px-6 py-3 font-medium">排序</th><th class="px-6 py-3 font-medium">状态</th><th class="px-6 py-3 font-medium text-right">操作</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-xs">
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-1"><td class="px-6 py-4 font-medium text-gray-900">新手必读</td><td class="px-6 py-4"><span class="text-gray-400">beginner</span></td><td class="px-6 py-4 text-gray-400">3</td><td class="px-6 py-4 text-gray-400">1</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-2"><td class="px-6 py-4 font-medium text-gray-900">技能提升 (视频)</td><td class="px-6 py-4"><span class="text-gray-400">video</span></td><td class="px-6 py-4 text-gray-400">5</td><td class="px-6 py-4 text-gray-400">2</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-3"><td class="px-6 py-4 font-medium text-gray-900">交付物模板</td><td class="px-6 py-4"><span class="text-gray-400">template</span></td><td class="px-6 py-4 text-gray-400">4</td><td class="px-6 py-4 text-gray-400">3</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-4"><td class="px-6 py-4 font-medium text-gray-900">行业报告库</td><td class="px-6 py-4"><span class="text-gray-400">report</span></td><td class="px-6 py-4 text-gray-400">6</td><td class="px-6 py-4 text-gray-400">4</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3 font-medium">分类名称</th>
-                                    <th class="px-6 py-3 font-medium">类型标识</th>
-                                    <th class="px-6 py-3 font-medium">关联资源数</th>
-                                    <th class="px-6 py-3 font-medium">排序</th>
-                                    <th class="px-6 py-3 font-medium">状态</th>
-                                    <th class="px-6 py-3 font-medium text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs">
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-1">
-                                    <td class="px-6 py-4 font-medium text-gray-900">新手必读</td>
-                                    <td class="px-6 py-4"><span class="text-gray-400">beginner</span></td>
-                                    <td class="px-6 py-4 text-gray-400">3</td>
-                                    <td class="px-6 py-4 text-gray-400">1</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-2">
-                                    <td class="px-6 py-4 font-medium text-gray-900">技能提升 (视频)</td>
-                                    <td class="px-6 py-4"><span class="text-gray-400">video</span></td>
-                                    <td class="px-6 py-4 text-gray-400">5</td>
-                                    <td class="px-6 py-4 text-gray-400">2</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-3">
-                                    <td class="px-6 py-4 font-medium text-gray-900">交付物模板</td>
-                                    <td class="px-6 py-4"><span class="text-gray-400">template</span></td>
-                                    <td class="px-6 py-4 text-gray-400">4</td>
-                                    <td class="px-6 py-4 text-gray-400">3</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lc-4">
-                                    <td class="px-6 py-4 font-medium text-gray-900">行业报告库</td>
-                                    <td class="px-6 py-4"><span class="text-gray-400">report</span></td>
-                                    <td class="px-6 py-4 text-gray-400">6</td>
-                                    <td class="px-6 py-4 text-gray-400">4</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
-                <!-- 智慧值奖励配置 -->
-                <div class="ant-card overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="coins" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-[11px] font-semibold text-gray-600">智慧值奖励配置</span>
-                            <span class="text-[9px] text-gray-400 ml-2">学习行为对应的智慧值奖励规则</span>
+                    <div class="ant-card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="coins" class="w-4 h-4 text-gray-400"></i>
+                                <span class="text-[11px] font-semibold text-gray-600">智慧值奖励配置</span>
+                                <span class="text-[9px] text-gray-400 ml-2">学习行为对应的智慧值奖励规则</span>
+                            </div>
+                            <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-reward">+ 新增规则</button>
                         </div>
-                        <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-reward">+ 新增规则</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3 font-medium">奖励场景</th>
-                                    <th class="px-6 py-3 font-medium">适用分类</th>
-                                    <th class="px-6 py-3 font-medium">奖励智慧值</th>
-                                    <th class="px-6 py-3 font-medium">每日上限</th>
-                                    <th class="px-6 py-3 font-medium">状态</th>
-                                    <th class="px-6 py-3 font-medium text-right">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs">
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-1">
-                                    <td class="px-6 py-4 font-medium text-gray-900">完成阅读</td>
-                                    <td class="px-6 py-4 text-gray-500">全部</td>
-                                    <td class="px-6 py-4"><span class="text-emerald-600 font-medium">+10</span></td>
-                                    <td class="px-6 py-4 text-gray-400">50</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2">
-                                    <td class="px-6 py-4 font-medium text-gray-900">完成视频学习</td>
-                                    <td class="px-6 py-4 text-gray-500">技能提升 (视频)</td>
-                                    <td class="px-6 py-4"><span class="text-emerald-600 font-medium">+20</span></td>
-                                    <td class="px-6 py-4 text-gray-400">100</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3">
-                                    <td class="px-6 py-4 font-medium text-gray-900">下载模板</td>
-                                    <td class="px-6 py-4 text-gray-500">交付物模板</td>
-                                    <td class="px-6 py-4"><span class="text-emerald-600 font-medium">+15</span></td>
-                                    <td class="px-6 py-4 text-gray-400">30</td>
-                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button class="text-slate-600 hover:text-slate-900">编辑</button>
-                                        <button class="text-red-400 hover:text-red-600">删除</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
+                                    <tr><th class="px-6 py-3 font-medium">奖励场景</th><th class="px-6 py-3 font-medium">适用分类</th><th class="px-6 py-3 font-medium">奖励智慧值</th><th class="px-6 py-3 font-medium">每日上限</th><th class="px-6 py-3 font-medium">状态</th><th class="px-6 py-3 font-medium text-right">操作</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-xs">
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-1"><td class="px-6 py-4 font-medium text-gray-900">完成阅读</td><td class="px-6 py-4 text-gray-500">全部</td><td class="px-6 py-4"><span class="text-emerald-600 font-medium">+10</span></td><td class="px-6 py-4 text-gray-400">50</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-2"><td class="px-6 py-4 font-medium text-gray-900">完成视频学习</td><td class="px-6 py-4 text-gray-500">技能提升 (视频)</td><td class="px-6 py-4"><span class="text-emerald-600 font-medium">+20</span></td><td class="px-6 py-4 text-gray-400">100</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                    <tr class="hover:bg-gray-50 transition-colors" data-item-id="lr-3"><td class="px-6 py-4 font-medium text-gray-900">下载模板</td><td class="px-6 py-4 text-gray-500">交付物模板</td><td class="px-6 py-4"><span class="text-emerald-600 font-medium">+15</span></td><td class="px-6 py-4 text-gray-400">30</td><td class="px-6 py-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] rounded-full">启用</span></td><td class="px-6 py-4 text-right space-x-2"><button class="text-slate-600 hover:text-slate-900">编辑</button><button class="text-red-400 hover:text-red-600">删除</button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -6985,6 +6883,29 @@
                     c.classList.remove('block');
                 });
                 var target = document.querySelector('[data-points-sub-content="' + key + '"]');
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.add('block');
+                    setTimeout(function() { lucide.createIcons(); }, 50);
+                }
+            });
+        });
+
+        // 学习中心子标签切换
+        document.querySelectorAll('.ops-sub-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.ops-sub-tab').forEach(function(t) {
+                    t.classList.remove('border-slate-900', 'text-slate-900', 'font-semibold');
+                    t.classList.add('border-transparent', 'text-gray-400', 'font-medium');
+                });
+                this.classList.remove('border-transparent', 'text-gray-400', 'font-medium');
+                this.classList.add('border-slate-900', 'text-slate-900', 'font-semibold');
+                var key = this.getAttribute('data-ops-sub-tab');
+                document.querySelectorAll('.ops-sub-content').forEach(function(c) {
+                    c.classList.add('hidden');
+                    c.classList.remove('block');
+                });
+                var target = document.querySelector('[data-ops-sub-content="' + key + '"]');
                 if (target) {
                     target.classList.remove('hidden');
                     target.classList.add('block');
