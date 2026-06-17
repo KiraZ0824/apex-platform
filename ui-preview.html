@@ -2571,7 +2571,6 @@
                                         <th class="px-6 py-3 font-medium">类型</th>
                                         <th class="px-6 py-3 font-medium">发放智慧值</th>
                                         <th class="px-6 py-3 font-medium">触发规则</th>
-                                        <th class="px-6 py-3 font-medium">状态</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-xs" id="points-history-tbody"></tbody>
@@ -6777,7 +6776,6 @@
             var users = ['李明', '王芳', '张伟', '刘洋', '陈静', '赵强', '黄丽', '周杰', '吴敏', '孙磊', '徐婷', 'Alex Chen', 'Sarah Wang', 'Mike Liu', 'Emily Zhang', 'James Huang', 'Lisa Wu', 'Tom Li', 'Jane Zhou', 'David Xu'];
             var types = ['注册奖励', '学习奖励', '任务奖励', '手动发放'];
             var rules = ['注册完善资料奖励', '资源学习奖励', '每日签到奖励', '特邀任务完成奖励', '手动调整'];
-            var statuses = ['已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '已完成', '待确认', '待确认'];
             var rows = '';
             for (var i = 0; i < 32; i++) {
                 var d = new Date(2026, 5, 15 - i);
@@ -6786,15 +6784,12 @@
                 var type = types[i % types.length];
                 var rule = rules[i % rules.length];
                 var amount = [40, 10, 5, 100, 20, 50, 15, 30][i % 8];
-                var status = statuses[i % statuses.length];
-                var statusClass = status === '已完成' ? 'text-emerald-600 bg-emerald-50' : 'text-amber-600 bg-amber-50';
                 rows += '<tr class="hover:bg-gray-50 transition-colors">' +
                     '<td class="px-6 py-4 text-gray-500">' + dateStr + '</td>' +
                     '<td class="px-6 py-4 font-medium text-gray-900">' + user + '</td>' +
                     '<td class="px-6 py-4"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded">' + type + '</span></td>' +
                     '<td class="px-6 py-4"><span class="font-bold text-amber-600">+' + amount + '</span> <span class="text-gray-400">pts</span></td>' +
                     '<td class="px-6 py-4 text-gray-500">' + rule + '</td>' +
-                    '<td class="px-6 py-4"><span class="px-1.5 py-0.5 ' + statusClass + ' text-[9px] rounded font-medium">' + status + '</span></td>' +
                     '</tr>';
             }
             tbody.innerHTML = rows;
