@@ -8682,7 +8682,29 @@
                 const panel = document.getElementById('ai-assist-panel');
                 const isOpen = panel && !panel.classList.contains('opacity-0');
                 if (!isOpen) toggleAiAssist();
-                showToast('已为您打开智能助手，可咨询项目相关问题');
+                var container = document.getElementById('ai-chat-messages');
+                container.innerHTML = '';
+                document.getElementById('ai-quick-questions').style.display = 'none';
+                appendMessage('bot', '您好！我们的项目负责人将尽快与您取得联系，请问您希望项目负责人以什么方式联系您？');
+                setTimeout(function() {
+                    var optDiv = document.createElement('div');
+                    optDiv.className = 'flex items-start gap-3';
+                    optDiv.id = 'contact-options';
+                    optDiv.innerHTML = '<div class="w-7 h-7 shrink-0 invisible"></div><div class="flex gap-2"><button class="px-4 py-2 bg-white border border-blue-200 text-blue-600 rounded-xl text-xs font-medium hover:bg-blue-50 transition-colors" data-contact-method="邮箱"><i data-lucide="mail" class="w-3.5 h-3.5 inline mr-1"></i>邮箱</button><button class="px-4 py-2 bg-white border border-blue-200 text-blue-600 rounded-xl text-xs font-medium hover:bg-blue-50 transition-colors" data-contact-method="电话"><i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1"></i>电话</button></div>';
+                    container.appendChild(optDiv);
+                    lucide.createIcons();
+                    optDiv.querySelectorAll('button').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var method = this.getAttribute('data-contact-method');
+                            appendMessage('user', '我希望通过' + method + '联系');
+                            document.getElementById('contact-options').remove();
+                            document.getElementById('ai-quick-questions').style.display = '';
+                            setTimeout(function() {
+                                appendMessage('bot', '好的，已记录您的联系方式偏好，项目负责人将尽快通过' + method + '与您取得联系，请保持留意。');
+                            }, 600);
+                        });
+                    });
+                }, 200);
                 return;
             }
 
