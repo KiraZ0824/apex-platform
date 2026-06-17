@@ -7585,7 +7585,6 @@
 
             if (action === 'toggle-pin') {
                 var btn = target;
-                var icon = btn.querySelector('i');
                 if (btn.classList.contains('text-amber-500')) {
                     btn.classList.remove('text-amber-500');
                     btn.classList.add('text-gray-300');
@@ -7595,7 +7594,6 @@
                     btn.classList.add('text-amber-500');
                     showToast('已置顶');
                 }
-                if (icon) lucide.createIcons();
                 return;
             }
 
