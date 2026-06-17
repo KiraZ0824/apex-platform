@@ -3030,6 +3030,19 @@
                             </div>
                             <button class="text-xs text-slate-600 hover:text-slate-900" data-action="add-learning-resource">+ 新增资源</button>
                         </div>
+                        <div class="px-6 py-3 bg-gray-50/30 border-b border-gray-100 flex items-center gap-3">
+                            <div class="relative flex-1 max-w-xs">
+                                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
+                                <input type="text" id="resource-search-input" placeholder="搜索资源名称..." class="w-full pl-9 pr-3 py-1.5 bg-white border border-gray-200 rounded text-[11px] outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                            </div>
+                            <select id="resource-category-filter" class="text-[10px] border border-gray-200 rounded py-1.5 px-2 bg-white text-gray-600 outline-none focus:ring-2 focus:ring-blue-500/20">
+                                <option value="">全部分类</option>
+                                <option>新手必读</option>
+                                <option>技能提升 (视频)</option>
+                                <option>交付物模板</option>
+                                <option>行业报告库</option>
+                            </select>
+                        </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left">
                                 <thead class="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wider">
@@ -9509,6 +9522,28 @@
             showToast('复制失败，请手动复制');
         });
     });
+
+    // 资源搜索与分类筛选
+    function filterResourceList() {
+        const keyword = document.getElementById('resource-search-input').value.toLowerCase().trim();
+        const category = document.getElementById('resource-category-filter').value;
+        const rows = document.querySelectorAll('[data-ops-sub-content="upload"] tbody tr');
+        let count = 0;
+        rows.forEach(function(row) {
+            const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase().trim();
+            const cat = row.querySelector('td:nth-child(2)').textContent.trim();
+            const keywordMatch = !keyword || name.includes(keyword);
+            const categoryMatch = !category || cat.includes(category);
+            if (keywordMatch && categoryMatch) {
+                row.classList.remove('hidden');
+                count++;
+            } else {
+                row.classList.add('hidden');
+            }
+        });
+    }
+    document.getElementById('resource-search-input')?.addEventListener('input', filterResourceList);
+    document.getElementById('resource-category-filter')?.addEventListener('change', filterResourceList);
 </script>
 </body>
 </html>
