@@ -3691,24 +3691,33 @@
                     </div>
                 </div>
             </div>
+            </div>
 
             <!-- Tab Content: 基础配置 -->
             <div class="config-tab-content hidden" data-config-tab-content="basic">
+                <!-- Sub Tabs -->
+                <div class="flex items-center gap-6 border-b border-gray-200 mb-6">
+                    <div class="pb-2 border-b-2 border-slate-900 text-xs font-semibold text-slate-900 cursor-pointer" data-basic-tab="web" onclick="switchBasicTab('web')">Web网站首页</div>
+                    <div class="pb-2 border-b-2 border-transparent text-xs font-medium text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" data-basic-tab="mobile" onclick="switchBasicTab('mobile')">移动端加载页</div>
+                </div>
+
+                <!-- Web网站首页 -->
+                <div data-basic-tab-content="web">
                 <div class="p-6 bg-white rounded-xl border border-gray-200">
                     <div class="flex items-center justify-between mb-6">
                         <div>
-                            <h4 class="text-base font-bold text-gray-900">首页 Banner</h4>
-                            <p class="text-xs text-gray-400 mt-1">管理首页轮播展示图，支持多图上传与排序</p>
+                            <h4 class="text-base font-bold text-gray-900">Web网站首页</h4>
+                            <p class="text-xs text-gray-400 mt-1">需严格遵循规定尺寸上传，否则影响呈现效果</p>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="text-[10px] text-gray-400">共 <strong id="banner-count" class="text-gray-700">3</strong> 张</span>
-                            <button class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors flex items-center gap-1" data-action="add-banner">
+                            <button class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors flex items-center gap-1" data-action="add-banner" data-banner-type="web">
                                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>添加
                             </button>
                         </div>
                     </div>
-                    <div class="space-y-3" id="banner-list">
-                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="1">
+                    <div class="space-y-3" id="banner-list" data-banner-type="web">
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="web-1">
                             <div class="w-44 h-24 rounded-lg overflow-hidden bg-gray-200 shrink-0 cursor-pointer" data-action="change-banner-image">
                                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Clean%20modern%20corporate%20website%20hero%20banner%2C%20blue%20and%20white%20gradient%20background%2C%20abstract%20geometric%20shapes%2C%20professional%20business%20presentation%2C%20high%20quality&image_size=landscape_16_9" alt="Banner 1" class="w-full h-full object-cover">
                             </div>
@@ -3716,18 +3725,20 @@
                                 <div class="flex-1 space-y-2">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">Banner 1</span>
-                                        <span class="px-1.5 py-0.5 bg-green-50 text-green-600 text-[9px] rounded font-medium">已启用</span>
                                     </div>
-                                    <input type="text" class="w-full px-2.5 py-1.5 text-[10px] border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" value="/invitations" placeholder="跳转链接">
                                 </div>
                                 <div class="flex items-center gap-1.5">
-                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="1"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button>
-                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="1"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>
-                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="1"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
+                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="web-1"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button>
+                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="web-1"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>
+                                    <label class="relative inline-flex items-center cursor-pointer ml-1 mr-1">
+                                        <input type="checkbox" class="sr-only peer" data-action="toggle-banner-status" data-banner-id="web-1" data-banner-type="web" checked onchange="handleBannerToggle(this)">
+                                        <div class="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                                    </label>
+                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="web-1"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="2">
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="web-2">
                             <div class="w-44 h-24 rounded-lg overflow-hidden bg-gray-200 shrink-0 cursor-pointer" data-action="change-banner-image">
                                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Modern%20tech%20conference%20banner%2C%20dark%20blue%20and%20violet%20gradient%2C%20digital%20network%20nodes%2C%20futuristic%20business%20theme%2C%20professional%20presentation&image_size=landscape_16_9" alt="Banner 2" class="w-full h-full object-cover">
                             </div>
@@ -3735,18 +3746,20 @@
                                 <div class="flex-1 space-y-2">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">Banner 2</span>
-                                        <span class="px-1.5 py-0.5 bg-green-50 text-green-600 text-[9px] rounded font-medium">已启用</span>
                                     </div>
-                                    <input type="text" class="w-full px-2.5 py-1.5 text-[10px] border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" value="/invitations" placeholder="跳转链接">
                                 </div>
                                 <div class="flex items-center gap-1.5">
-                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="2"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button>
-                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="2"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>
-                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="2"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
+                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="web-2"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button>
+                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="web-2"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>
+                                    <label class="relative inline-flex items-center cursor-pointer ml-1 mr-1">
+                                        <input type="checkbox" class="sr-only peer" data-action="toggle-banner-status" data-banner-id="web-2" data-banner-type="web" checked onchange="handleBannerToggle(this)">
+                                        <div class="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                                    </label>
+                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="web-2"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="3">
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="web-3">
                             <div class="w-44 h-24 rounded-lg overflow-hidden bg-gray-200 shrink-0 cursor-pointer" data-action="change-banner-image">
                                 <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Financial%20technology%20partnership%20banner%2C%20gold%20and%20navy%20luxury%20scheme%2C%20global%20network%20map%2C%20professional%20corporate%20alliance%20theme&image_size=landscape_16_9" alt="Banner 3" class="w-full h-full object-cover">
                             </div>
@@ -3754,25 +3767,79 @@
                                 <div class="flex-1 space-y-2">
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-semibold text-gray-900">Banner 3</span>
-                                        <span class="px-1.5 py-0.5 bg-gray-100 text-gray-500 text-[9px] rounded font-medium">草稿</span>
                                     </div>
-                                    <input type="text" class="w-full px-2.5 py-1.5 text-[10px] border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" value="" placeholder="跳转链接">
                                 </div>
                                 <div class="flex items-center gap-1.5">
-                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="3"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button>
-                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="3"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>
-                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="3"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
+                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="web-3"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button>
+                                    <button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="web-3"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>
+                                    <label class="relative inline-flex items-center cursor-pointer ml-1 mr-1">
+                                        <input type="checkbox" class="sr-only peer" data-action="toggle-banner-status" data-banner-id="web-3" data-banner-type="web" onchange="handleBannerToggle(this)">
+                                        <div class="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                                    </label>
+                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="web-3"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
-                        <button class="px-3 py-1.5 text-[10px] text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="reset-banner-config">恢复默认</button>
-                        <div class="flex items-center gap-2">
-                            <button class="px-3 py-1.5 text-[10px] text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors" data-action="preview-banner">预览</button>
-                            <button class="px-3 py-1.5 text-[10px] text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors" data-action="save-banner-config">保存</button>
+                </div>
+                </div>
+
+                <!-- 移动端加载页 -->
+                <div data-basic-tab-content="mobile" class="hidden">
+                <div class="p-6 bg-white rounded-xl border border-gray-200">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h4 class="text-base font-bold text-gray-900">移动端加载页</h4>
+                            <p class="text-xs text-gray-400 mt-1">需严格遵循规定尺寸上传，否则影响呈现效果</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[10px] text-gray-400">共 <strong id="mobile-banner-count" class="text-gray-700">2</strong> 张</span>
+                            <button class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 transition-colors flex items-center gap-1" data-action="add-banner" data-banner-type="mobile">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>添加
+                            </button>
                         </div>
                     </div>
+                    <div class="space-y-3" id="mobile-banner-list" data-banner-type="mobile">
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="mobile-1">
+                            <div class="w-20 h-36 rounded-lg overflow-hidden bg-gray-200 shrink-0 cursor-pointer" data-action="change-banner-image">
+                                <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Mobile%20app%20splash%20screen%2C%20minimalist%20gradient%20background%20blue%20and%20white%2C%20modern%20clean%20design%2C%20portrait%20orientation&image_size=portrait_9_16" alt="Mobile Banner 1" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0 flex items-center gap-4">
+                                <div class="flex-1 space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-semibold text-gray-900">加载页 1</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <label class="relative inline-flex items-center cursor-pointer mr-1">
+                                        <input type="checkbox" class="sr-only peer" data-action="toggle-banner-status" data-banner-id="mobile-1" data-banner-type="mobile" checked onchange="handleBannerToggle(this)">
+                                        <div class="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                                    </label>
+                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="mobile-1"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100" data-banner-id="mobile-2">
+                            <div class="w-20 h-36 rounded-lg overflow-hidden bg-gray-200 shrink-0 cursor-pointer" data-action="change-banner-image">
+                                <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Mobile%20loading%20screen%2C%20purple%20and%20indigo%20gradient%2C%20abstract%20particles%2C%20modern%20tech%20theme%2C%20portrait%20orientation&image_size=portrait_9_16" alt="Mobile Banner 2" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0 flex items-center gap-4">
+                                <div class="flex-1 space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-semibold text-gray-900">加载页 2</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <label class="relative inline-flex items-center cursor-pointer mr-1">
+                                        <input type="checkbox" class="sr-only peer" data-action="toggle-banner-status" data-banner-id="mobile-2" data-banner-type="mobile" onchange="handleBannerToggle(this)">
+                                        <div class="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                                    </label>
+                                    <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="mobile-2"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -9338,6 +9405,158 @@
     }
     document.getElementById('resource-search-input')?.addEventListener('input', filterResourceList);
     document.getElementById('resource-category-filter')?.addEventListener('change', filterResourceList);
+
+    // Banner 管理逻辑
+    function switchBasicTab(tab) {
+        document.querySelectorAll('[data-basic-tab]').forEach(function(el) {
+            if (el.getAttribute('data-basic-tab') === tab) {
+                el.className = 'pb-2 border-b-2 border-slate-900 text-xs font-semibold text-slate-900 cursor-pointer';
+            } else {
+                el.className = 'pb-2 border-b-2 border-transparent text-xs font-medium text-gray-400 cursor-pointer hover:text-gray-600 transition-colors';
+            }
+        });
+        document.querySelectorAll('[data-basic-tab-content]').forEach(function(el) {
+            if (el.getAttribute('data-basic-tab-content') === tab) {
+                el.classList.remove('hidden');
+            } else {
+                el.classList.add('hidden');
+            }
+        });
+    }
+
+    function handleBannerToggle(checkbox) {
+        const bannerType = checkbox.getAttribute('data-banner-type');
+        if (checkbox.checked) {
+            const otherType = bannerType === 'web' ? 'mobile' : 'web';
+            document.querySelectorAll('input[data-banner-type="' + otherType + '"][data-action="toggle-banner-status"]').forEach(function(cb) {
+                if (cb.checked) {
+                    cb.checked = false;
+                }
+            });
+            showToast('已启用，已自动禁用另一端的 Banner');
+        } else {
+            showToast('已禁用该 Banner');
+        }
+    }
+
+    function toggleBannerStatus(checkbox) {
+        handleBannerToggle(checkbox);
+    }
+
+    function getWebBannerCount() {
+        return document.querySelectorAll('#banner-list [data-banner-id]').length;
+    }
+    function getMobileBannerCount() {
+        return document.querySelectorAll('#mobile-banner-list [data-banner-id]').length;
+    }
+
+    function moveBannerUp(btn) {
+        const bannerItem = btn.closest('[data-banner-id]');
+        const prev = bannerItem.previousElementSibling;
+        if (prev) {
+            bannerItem.parentNode.insertBefore(bannerItem, prev);
+            showToast('已上移');
+        } else {
+            showToast('已经是第一条了');
+        }
+    }
+
+    function moveBannerDown(btn) {
+        const bannerItem = btn.closest('[data-banner-id]');
+        const next = bannerItem.nextElementSibling;
+        if (next) {
+            bannerItem.parentNode.insertBefore(next, bannerItem);
+            showToast('已下移');
+        } else {
+            showToast('已经是最后一条了');
+        }
+    }
+
+    function deleteBanner(btn) {
+        if (confirm('确定要删除这个 Banner 吗？')) {
+            const bannerItem = btn.closest('[data-banner-id]');
+            const list = bannerItem.parentElement;
+            const bannerType = list.getAttribute('data-banner-type');
+            bannerItem.remove();
+            if (bannerType === 'web') {
+                const countEl = document.getElementById('banner-count');
+                if (countEl) countEl.textContent = getWebBannerCount();
+            } else {
+                const countEl = document.getElementById('mobile-banner-count');
+                if (countEl) countEl.textContent = getMobileBannerCount();
+            }
+            showToast('已删除 Banner');
+        }
+    }
+
+    document.body.addEventListener('click', function(e) {
+        const target = e.target.closest('[data-action]');
+        if (!target) return;
+        const action = target.getAttribute('data-action');
+
+        if (action === 'toggle-banner-status') {
+            toggleBannerStatus(target);
+            return;
+        }
+        if (action === 'move-banner-up') {
+            moveBannerUp(target);
+            return;
+        }
+        if (action === 'move-banner-down') {
+            moveBannerDown(target);
+            return;
+        }
+        if (action === 'delete-banner') {
+            deleteBanner(target);
+            return;
+        }
+        if (action === 'save-banner-config') {
+            showToast('Banner 配置已保存');
+            return;
+        }
+        if (action === 'add-banner') {
+            const bannerType = target.getAttribute('data-banner-type');
+            const listId = bannerType === 'web' ? 'banner-list' : 'mobile-banner-list';
+            const countId = bannerType === 'web' ? 'banner-count' : 'mobile-banner-count';
+            const labelPrefix = bannerType === 'web' ? 'Banner' : '加载页';
+            const list = document.getElementById(listId);
+            if (!list) return;
+            const count = list.querySelectorAll('[data-banner-id]').length + 1;
+            const hasUpDown = bannerType === 'web';
+            const newItem = document.createElement('div');
+            newItem.className = 'flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100';
+            newItem.setAttribute('data-banner-id', bannerType + '-' + count);
+            const imgSize = bannerType === 'web' ? 'w-44 h-24' : 'w-20 h-36';
+            newItem.innerHTML = `
+                <div class="${imgSize} rounded-lg overflow-hidden bg-gray-200 shrink-0 cursor-pointer" data-action="change-banner-image">
+                    <div class="w-full h-full flex items-center justify-center text-gray-400">
+                        <i data-lucide="image-plus" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0 flex items-center gap-4">
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-900">${labelPrefix} ${count}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        ${hasUpDown ? '<button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-up" data-banner-id="' + bannerType + '-' + count + '"><i data-lucide="arrow-up" class="w-3.5 h-3.5 text-gray-400"></i></button><button class="p-1 hover:bg-gray-200 rounded" data-action="move-banner-down" data-banner-id="' + bannerType + '-' + count + '"><i data-lucide="arrow-down" class="w-3.5 h-3.5 text-gray-400"></i></button>' : ''}
+                        <label class="relative inline-flex items-center cursor-pointer ${hasUpDown ? 'ml-1 mr-1' : 'mr-1'}">
+                            <input type="checkbox" class="sr-only peer" data-action="toggle-banner-status" data-banner-id="${bannerType}-${count}" data-banner-type="${bannerType}" onchange="handleBannerToggle(this)">
+                            <div class="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                        </label>
+                        <button class="p-1 hover:bg-red-100 rounded" data-action="delete-banner" data-banner-id="${bannerType}-${count}"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-red-400"></i></button>
+                    </div>
+                </div>
+            `;
+            list.appendChild(newItem);
+            const countEl = document.getElementById(countId);
+            if (countEl) countEl.textContent = list.querySelectorAll('[data-banner-id]').length;
+            lucide.createIcons();
+            showToast('已添加新 Banner，请上传图片');
+            return;
+        }
+    });
 </script>
 </body>
 </html>
