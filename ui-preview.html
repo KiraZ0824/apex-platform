@@ -4170,7 +4170,14 @@
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1.5">智慧值 <span class="text-red-500">*</span></label>
                             <div class="relative">
-                                <input type="number" placeholder="设定奖励智慧值" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <input type="number" id="invite-points" placeholder="设定奖励智慧值" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">pts</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1.5">特邀总智慧值</label>
+                            <div class="relative">
+                                <input type="number" id="invite-total-points" readonly class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-100 text-gray-500 focus:outline-none" placeholder="自动计算">
                                 <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">pts</span>
                             </div>
                         </div>
@@ -7056,6 +7063,13 @@
                 quotaInput.readOnly = true;
                 if (quotaHint) quotaHint.textContent = '定向邀请默认名额为 1';
             }
+            calcTotalPoints();
+        }
+        function calcTotalPoints() {
+            const pointsVal = parseInt(document.getElementById('invite-points')?.value) || 0;
+            const quotaVal = parseInt(document.getElementById('invite-quota')?.value) || 0;
+            const total = pointsVal * quotaVal;
+            document.getElementById('invite-total-points').value = total || '';
         }
         // 报名名额校验：AI 匹配邀请时不能超过推荐上限
         document.getElementById('invite-quota')?.addEventListener('input', function() {
@@ -7074,6 +7088,10 @@
                     this.value = 1;
                 }
             }
+            calcTotalPoints();
+        });
+        document.getElementById('invite-points')?.addEventListener('input', function() {
+            calcTotalPoints();
         });
         document.querySelectorAll('input[name="apply_type"]').forEach(radio => {
             radio.addEventListener('change', function() {
@@ -7123,6 +7141,7 @@
                 toggleAiRequired(isAiOrClaim());
             }
             updateInviteQuota();
+            calcTotalPoints();
         })();
 
         // 用户选择器逻辑
