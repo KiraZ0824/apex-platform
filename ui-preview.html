@@ -5783,6 +5783,7 @@
                         document.querySelector('#invite-detail-verify-section thead tr').innerHTML = '<th class="px-3 py-2.5 text-left font-medium">用户</th><th class="px-3 py-2.5 text-left font-medium">智慧值</th>';
                         document.querySelector('#invite-detail-verify-section .flex.items-center.justify-end.gap-3').classList.add('hidden');
                     } else {
+                        verifyList.innerHTML = data.verifyUsers.map((u, i) => `
                         <tr data-verify-user="${i}">
                             <td class="px-3 py-3">
                                 <div class="flex items-center gap-2.5">
