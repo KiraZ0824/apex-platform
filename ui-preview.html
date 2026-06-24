@@ -5763,7 +5763,26 @@
                 if (data.verifyMode && data.verifyUsers && data.verifyUsers.length > 0) {
                     currentVerifyUsers = data.verifyUsers;
                     verifySection.classList.remove('hidden');
-                    verifyList.innerHTML = data.verifyUsers.map((u, i) => `
+                    if (data.simpleVerify) {
+                        verifyList.innerHTML = data.verifyUsers.map((u, i) => `
+                            <tr>
+                                <td class="px-3 py-3">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[9px] font-bold shrink-0">${u.name[0]}</div>
+                                        <div class="min-w-0">
+                                            <p class="text-[10px] font-medium text-gray-700 leading-tight">${u.name}</p>
+                                            <p class="text-[8px] text-gray-400 leading-tight">${u.position}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-3 py-3 align-top">
+                                    <span class="text-[10px] font-semibold text-amber-600">${u.points}</span>
+                                </td>
+                            </tr>
+                        `).join('');
+                        document.querySelector('#invite-detail-verify-section thead tr').innerHTML = '<th class="px-3 py-2.5 text-left font-medium">用户</th><th class="px-3 py-2.5 text-left font-medium">智慧值</th>';
+                        document.querySelector('#invite-detail-verify-section .flex.items-center.justify-end.gap-3').classList.add('hidden');
+                    } else {
                         <tr data-verify-user="${i}">
                             <td class="px-3 py-3">
                                 <div class="flex items-center gap-2.5">
@@ -5802,6 +5821,7 @@
                         </tr>
                     `).join('');
                     verifySection.setAttribute('data-invite-name', data.name);
+                    }
                 } else {
                     verifySection.classList.add('hidden');
                     verifyList.innerHTML = '';
@@ -8263,27 +8283,39 @@
                     const tr = target.closest('tr');
                     if (!tr) { showToast('未找到特邀数据'); return; }
                     const cells = tr.cells;
-                    const statusCell = cells[2];
+                    const statusCell = cells[3];
                     const statusText = statusCell ? (statusCell.textContent || '').replace(/[^a-zA-Z\u4e00-\u9fa5]/g, '').trim() : '-';
+                    var regCount = cells[4] ? parseInt((cells[4].textContent || '').replace(/[^\d]/g, '')) || 0 : 0;
+                    var verifyUsers = [];
+                    if (statusText === '进行中' || statusText === '已完成' || statusText === '延期') {
+                        verifyUsers = [
+                            { name: '张立', position: 'CEO · 某跨境支付公司', points: '80pt' },
+                            { name: '李薇', position: '合规总监 · 某国际银行', points: '80pt' },
+                            { name: '王晨曦', position: '高级研究员 · FinTech Lab', points: '80pt' }
+                        ];
+                    }
                     data = {
                         name: cells[0] ? (cells[0].textContent || '').trim() : '特邀',
                         type: cells[1] ? (cells[1].textContent || '').trim() : '-',
                         status: statusText,
-                        registeredCount: cells[3] ? parseInt((cells[3].textContent || '').replace(/[^\d]/g, '')) || 0 : 0,
+                        registeredCount: regCount,
                         nameEn: '-', points: '-', createdAt: '2026-06-01', deadline: '2026-07-15',
                         projectDesc: '该项目旨在通过行业专家深度访谈，获取市场前沿洞察与战略建议。',
                         desc: '该特邀任务通过 AI 智能匹配系统生成，基于多维画像与权重算法精准匹配行业专家。',
                         criteria: '需完成调研报告不少于 30 页，包含至少 3 个目标市场的对比分析。',
-                        timeline: [{ text: '特邀创建', time: '2026-06-01 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true }, { text: '等待专家报名', time: '2026-06-09', active: true }]
+                        timeline: [{ text: '特邀创建', time: '2026-06-01 10:00', active: true }, { text: 'AI 匹配完成', time: '2026-06-01 10:05', active: true }, { text: '等待专家报名', time: '2026-06-09', active: true }],
+                        verifyMode: statusText === '进行中' || statusText === '已完成' || statusText === '延期',
+                        verifyUsers: verifyUsers,
+                        simpleVerify: true
                     };
                 } else {
                     const index = parseInt(target.getAttribute('data-index')) || 0;
                     const invites = [
                         { type: '专家访谈', name: 'SaaS 增长策略专家访谈', points: '100pt', status: '报名中', registeredCount: 4, nameEn: 'SaaS Growth Strategy Expert Interview', projectDesc: '深入分析东南亚电商市场的履约模式与增长策略，为平台扩张提供决策支持。', criteria: '需输出增长策略报告，包含竞品分析、市场容量测算及落地路径建议。' },
                         { type: '行业研究', name: 'Web3 合约审计专家寻访', points: '80pt', status: '待分配', registeredCount: 8, nameEn: 'Web3 Contract Audit Expert Search', projectDesc: '研究新能源汽车出海目的地国家的合规政策，建立法务与合规框架。', criteria: '需完成法规对比矩阵及合规风险清单。' },
-                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', registeredCount: 5, nameEn: 'Cross-border Payment Compliance Research', projectDesc: '优化全球跨境支付体系，降低交易成本，提升合规风控能力。', criteria: '需提交合规差距分析报告及改进建议方案。' },
-                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', registeredCount: 15, nameEn: 'Middle East FinTech Access Analysis', projectDesc: '评估中东金融科技市场准入条件，制定区域市场进入策略。', criteria: '需提供目标国家牌照申请路径及成本估算。' },
-                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', registeredCount: 3, nameEn: 'SE Asia Card Scheme Policy', projectDesc: '调研东南亚各国卡组织支付政策与市场格局，为产品本地化提供依据。', criteria: '需总结各国卡组织核心规则及差异对比表。' }
+                        { type: '战略咨询', name: '跨境支付合规调研', points: '60pt', status: '进行中', registeredCount: 5, nameEn: 'Cross-border Payment Compliance Research', projectDesc: '优化全球跨境支付体系，降低交易成本，提升合规风控能力。', criteria: '需提交合规差距分析报告及改进建议方案。', verifyMode: true, verifyUsers: [{ name: '张立', position: 'CEO · 某跨境支付公司', points: '60pt' }, { name: '李薇', position: '合规总监 · 某国际银行', points: '60pt' }], simpleVerify: true },
+                        { type: '专家访谈', name: '中东金融科技准入分析', points: '50pt', status: '已完成', registeredCount: 15, nameEn: 'Middle East FinTech Access Analysis', projectDesc: '评估中东金融科技市场准入条件，制定区域市场进入策略。', criteria: '需提供目标国家牌照申请路径及成本估算。', verifyMode: true, verifyUsers: [{ name: '张立', position: 'CEO · 某跨境支付公司', points: '50pt' }, { name: '李薇', position: '合规总监 · 某国际银行', points: '50pt' }, { name: '王晨曦', position: '高级研究员 · FinTech Lab', points: '50pt' }], simpleVerify: true },
+                        { type: '行业研究', name: '东南亚卡组织政策解读', points: '40pt', status: '延期', registeredCount: 3, nameEn: 'SE Asia Card Scheme Policy', projectDesc: '调研东南亚各国卡组织支付政策与市场格局，为产品本地化提供依据。', criteria: '需总结各国卡组织核心规则及差异对比表。', verifyMode: true, verifyUsers: [{ name: '李薇', position: '合规总监 · 某国际银行', points: '40pt' }], simpleVerify: true }
                     ];
                     const inv = invites[index] || invites[0];
                     data = Object.assign({}, inv, {
