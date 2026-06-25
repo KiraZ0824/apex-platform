@@ -717,6 +717,9 @@
                 <div class="nav-sub-item" data-view="config-center" data-config-tab="roles">
                     <span>角色权限管理</span>
                 </div>
+                <div class="nav-sub-item" data-view="config-center" data-config-tab="ai-knowledge">
+                    <span>AI知识库</span>
+                </div>
                 <div class="nav-sub-item" data-view="config-center" data-config-tab="ai-model">
                     <span>AI模型参数</span>
                 </div>
@@ -3713,6 +3716,178 @@
                     </div>
                 </div>
             </div>
+            </div>
+
+            <!-- Tab Content: AI知识库 -->
+            <div class="config-tab-content hidden" data-config-tab-content="ai-knowledge">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                            <i data-lucide="library" class="w-5 h-5 text-blue-500"></i>
+                            AI知识库
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">管理智能助手调用的知识文档</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
+                    <!-- 左侧：文档列表 -->
+                    <div class="xl:col-span-3 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-1 relative">
+                                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
+                                <input type="text" id="ai-knowledge-search" placeholder="搜索文档名称..." class="w-full pl-9 pr-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                            </div>
+                            <select id="ai-knowledge-category-filter" class="px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <option value="">全部分类</option>
+                                <option value="行业研究">行业研究</option>
+                                <option value="政策法规">政策法规</option>
+                                <option value="市场分析">市场分析</option>
+                                <option value="技术文档">技术文档</option>
+                            </select>
+                            <select id="ai-knowledge-status-filter" class="px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <option value="">全部状态</option>
+                                <option value="已就绪">已就绪</option>
+                                <option value="处理中">处理中</option>
+                                <option value="失败">失败</option>
+                            </select>
+                        </div>
+                        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-gray-500 text-[9px] uppercase tracking-wider">
+                                        <th class="px-4 py-3 text-left font-medium">文档名称</th>
+                                        <th class="px-4 py-3 text-left font-medium">分类</th>
+                                        <th class="px-4 py-3 text-left font-medium">大小</th>
+                                        <th class="px-4 py-3 text-center font-medium">切片数</th>
+                                        <th class="px-4 py-3 text-center font-medium">状态</th>
+                                        <th class="px-4 py-3 text-left font-medium">上传时间</th>
+                                        <th class="px-4 py-3 text-center font-medium">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ai-knowledge-list" class="divide-y divide-gray-100 text-xs">
+                                    <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-doc-id="1" onclick="previewAiKnowledge(this)">
+                                        <td class="px-4 py-3 font-medium text-gray-900">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-400 shrink-0"></i>
+                                                <span>东南亚支付市场研究报告2024.pdf</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-500">行业研究</td>
+                                        <td class="px-4 py-3 text-gray-500">2.4 MB</td>
+                                        <td class="px-4 py-3 text-center text-gray-600 font-medium">28</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[9px] rounded-full font-medium">已就绪</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-400">2024-06-20</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button class="text-red-400 hover:text-red-600" onclick="event.stopPropagation();deleteAiKnowledge(this)">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-doc-id="2" onclick="previewAiKnowledge(this)">
+                                        <td class="px-4 py-3 font-medium text-gray-900">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="file-text" class="w-3.5 h-3.5 text-orange-400 shrink-0"></i>
+                                                <span>跨境支付合规政策汇编.docx</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-500">政策法规</td>
+                                        <td class="px-4 py-3 text-gray-500">1.8 MB</td>
+                                        <td class="px-4 py-3 text-center text-gray-600 font-medium">15</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[9px] rounded-full font-medium">已就绪</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-400">2024-06-19</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button class="text-red-400 hover:text-red-600" onclick="event.stopPropagation();deleteAiKnowledge(this)">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-doc-id="3" onclick="previewAiKnowledge(this)">
+                                        <td class="px-4 py-3 font-medium text-gray-900">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-400 shrink-0"></i>
+                                                <span>东南亚各国金融监管框架对比.pdf</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-500">市场分析</td>
+                                        <td class="px-4 py-3 text-gray-500">3.1 MB</td>
+                                        <td class="px-4 py-3 text-center text-gray-600 font-medium">42</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-600 text-[9px] rounded-full font-medium">处理中</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-400">2024-06-18</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button class="text-red-400 hover:text-red-600" onclick="event.stopPropagation();deleteAiKnowledge(this)">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors cursor-pointer" data-doc-id="4" onclick="previewAiKnowledge(this)">
+                                        <td class="px-4 py-3 font-medium text-gray-900">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="file-text" class="w-3.5 h-3.5 text-purple-400 shrink-0"></i>
+                                                <span>OpenAPI 集成技术规范.md</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-500">技术文档</td>
+                                        <td class="px-4 py-3 text-gray-500">0.6 MB</td>
+                                        <td class="px-4 py-3 text-center text-gray-600 font-medium">8</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[9px] rounded-full font-medium">已就绪</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-400">2024-06-17</td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button class="text-red-400 hover:text-red-600" onclick="event.stopPropagation();deleteAiKnowledge(this)">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- 右侧：上传面板 + 预览面板 -->
+                    <div class="xl:col-span-2 space-y-4">
+                        <!-- 上传面板 -->
+                        <div class="p-6 bg-white rounded-xl border border-gray-200">
+                            <h4 class="text-xs font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <i data-lucide="upload" class="w-4 h-4 text-blue-500"></i>上传文档
+                            </h4>
+                            <div class="space-y-4">
+                                <div id="ai-knowledge-dropzone" class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50/30 transition-colors cursor-pointer" onclick="document.getElementById('ai-knowledge-file-input').click()">
+                                    <i data-lucide="cloud-upload" class="w-8 h-8 text-gray-300 mx-auto mb-3"></i>
+                                    <p class="text-xs text-gray-500 mb-1">拖拽文件到此处，或 <span class="text-blue-500 font-medium">点击上传</span></p>
+                                    <p class="text-[10px] text-gray-400">支持 PDF、Word、TXT、MD 格式，单个文件不超过 20MB</p>
+                                    <input type="file" id="ai-knowledge-file-input" class="hidden" accept=".pdf,.doc,.docx,.txt,.md" onchange="handleAiKnowledgeUpload(this)">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-medium text-gray-500 mb-1.5">文档分类</label>
+                                    <select id="ai-knowledge-category" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                        <option value="行业研究">行业研究</option>
+                                        <option value="政策法规">政策法规</option>
+                                        <option value="市场分析">市场分析</option>
+                                        <option value="技术文档">技术文档</option>
+                                    </select>
+                                </div>
+                                <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
+                                    <div class="flex items-start gap-2">
+                                        <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400 mt-0.5 shrink-0"></i>
+                                        <p class="text-[10px] text-blue-600 leading-relaxed">文档上传后将自动进行解析和切片处理，处理完成后即可供智能助手调用。切片过程可能需要几分钟时间。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 预览面板 -->
+                        <div class="p-6 bg-white rounded-xl border border-gray-200">
+                            <h4 class="text-xs font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <i data-lucide="eye" class="w-4 h-4 text-violet-500"></i>
+                                <span>内容切片预览</span>
+                                <span id="ai-knowledge-preview-name" class="font-normal text-gray-400 text-[10px]">— 点击左侧文档查看</span>
+                            </h4>
+                            <div id="ai-knowledge-preview-empty" class="text-center py-10">
+                                <i data-lucide="file-search" class="w-10 h-10 text-gray-200 mx-auto mb-3"></i>
+                                <p class="text-xs text-gray-400">请从左侧文档列表中选择一条查看</p>
+                            </div>
+                            <div id="ai-knowledge-preview-content" class="hidden space-y-3 max-h-80 overflow-y-auto custom-scrollbar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Tab Content: 基础配置 -->
@@ -9715,6 +9890,149 @@
             return;
         }
     });
+
+    // ========== AI知识库 ==========
+    var aiKnowledgeData = [
+        { id: 1, name: '东南亚支付市场研究报告2024.pdf', category: '行业研究', size: '2.4 MB', chunks: 28, status: '已就绪', date: '2024-06-20', chunksContent: ['第一章 东南亚支付市场概况\n东南亚地区包括新加坡、马来西亚、泰国、印度尼西亚、菲律宾、越南等主要经济体，总人口超过6.5亿，数字经济规模持续增长。', '1.1 市场规模\n2023年东南亚数字支付交易规模达到1.2万亿美元，同比增长15%。其中移动支付占比持续提升，已占总交易量的42%。', '1.2 主要玩家\n市场主要参与者包括 GrabPay、GoPay、ShopeePay、TrueMoney 等本地化支付工具，以及蚂蚁集团、腾讯等跨境支付平台。', '第二章 各国监管政策\n各国对支付行业的监管政策差异较大，新加坡金融管理局(MAS)采用较为开放的监管态度，而菲律宾和印尼则更加注重本地化要求。'] },
+        { id: 2, name: '跨境支付合规政策汇编.docx', category: '政策法规', size: '1.8 MB', chunks: 15, status: '已就绪', date: '2024-06-19', chunksContent: ['第一章 跨境支付合规框架\n跨境支付涉及多个司法管辖区的监管要求，主要包括反洗钱(AML)、了解你的客户(KYC)、数据隐私保护等核心合规领域。', '第二章 主要地区合规要求\n欧盟地区遵循PSD2和GDPR双重监管；美国由 FinCEN 和各州监管机构共同监管；新加坡由 MAS 统一监管。', '第三章 合规最佳实践\n建立统一的合规框架，采用分层风险管理策略，定期进行合规审计和员工培训。'] },
+        { id: 4, name: 'OpenAPI 集成技术规范.md', category: '技术文档', size: '0.6 MB', chunks: 8, status: '已就绪', date: '2024-06-17', chunksContent: ['# OpenAPI 规范概述\n本文档定义 APEX 平台对外提供的 OpenAPI 接口规范，包括认证方式、请求格式、响应结构等。', '## 认证方式\n所有 API 请求需要在 Header 中携带 Bearer Token，Token 通过 OAuth 2.0 授权码流程获取。', '## 接口列表\n1. GET /api/v1/invites - 获取特邀列表\n2. POST /api/v1/invites - 创建特邀\n3. GET /api/v1/invites/{id} - 获取特邀详情'] }
+    ];
+
+    function previewAiKnowledge(row) {
+        var id = parseInt(row.getAttribute('data-doc-id'));
+        var doc = aiKnowledgeData.find(function(d) { return d.id === id; });
+        if (!doc || !doc.chunksContent) return;
+        var emptyEl = document.getElementById('ai-knowledge-preview-empty');
+        var contentEl = document.getElementById('ai-knowledge-preview-content');
+        var nameEl = document.getElementById('ai-knowledge-preview-name');
+        emptyEl.classList.add('hidden');
+        contentEl.classList.remove('hidden');
+        if (nameEl) nameEl.textContent = '— ' + doc.name;
+        contentEl.innerHTML = doc.chunksContent.map(function(c, i) {
+            return '<div class="p-3 bg-gray-50 rounded-lg border border-gray-100">' +
+                '<div class="flex items-center gap-2 mb-1.5">' +
+                '<span class="w-5 h-5 rounded bg-violet-100 text-violet-600 text-[8px] font-bold flex items-center justify-center">' + (i + 1) + '</span>' +
+                '<span class="text-[9px] text-gray-400 font-medium">切片 ' + (i + 1) + '</span>' +
+                '</div>' +
+                '<p class="text-[10px] text-gray-600 leading-relaxed whitespace-pre-line">' + c + '</p>' +
+                '</div>';
+        }).join('');
+    }
+
+    function deleteAiKnowledge(btn) {
+        if (confirm('确定要删除这篇文档吗？删除后智能助手将无法调用该文档内容。')) {
+            var row = btn.closest('tr');
+            var id = parseInt(row.getAttribute('data-doc-id'));
+            aiKnowledgeData = aiKnowledgeData.filter(function(d) { return d.id !== id; });
+            row.remove();
+            document.getElementById('ai-knowledge-preview-empty').classList.remove('hidden');
+            document.getElementById('ai-knowledge-preview-content').classList.add('hidden');
+            document.getElementById('ai-knowledge-preview-name').textContent = '— 点击左侧文档查看';
+            showToast('文档已删除');
+        }
+    }
+
+    function handleAiKnowledgeUpload(input) {
+        var file = input.files && input.files[0];
+        if (!file) return;
+        var maxSize = 20 * 1024 * 1024;
+        if (file.size > maxSize) {
+            showToast('文件大小不能超过 20MB');
+            return;
+        }
+        var ext = file.name.split('.').pop().toLowerCase();
+        var allowed = ['pdf', 'doc', 'docx', 'txt', 'md'];
+        if (allowed.indexOf(ext) === -1) {
+            showToast('仅支持 PDF、Word、TXT、MD 格式');
+            return;
+        }
+        showToast('文件「' + file.name + '」已上传，正在自动解析切片...');
+        var newId = Date.now();
+        aiKnowledgeData.push({
+            id: newId,
+            name: file.name,
+            category: document.getElementById('ai-knowledge-category').value,
+            size: (file.size / 1024 / 1024).toFixed(1) + ' MB',
+            chunks: 0,
+            status: '处理中',
+            date: new Date().toISOString().slice(0, 10),
+            chunksContent: []
+        });
+        var iconMap = { pdf: 'text-blue-400', doc: 'text-orange-400', docx: 'text-orange-400', txt: 'text-gray-400', md: 'text-purple-400' };
+        var iconColor = iconMap[ext] || 'text-blue-400';
+        var list = document.getElementById('ai-knowledge-list');
+        var tr = document.createElement('tr');
+        tr.className = 'hover:bg-gray-50 transition-colors cursor-pointer';
+        tr.setAttribute('data-doc-id', newId);
+        tr.setAttribute('onclick', 'previewAiKnowledge(this)');
+        tr.innerHTML = '<td class="px-4 py-3 font-medium text-gray-900"><div class="flex items-center gap-2"><i data-lucide="file-text" class="w-3.5 h-3.5 ' + iconColor + ' shrink-0"></i><span>' + file.name + '</span></div></td>' +
+            '<td class="px-4 py-3 text-gray-500">' + document.getElementById('ai-knowledge-category').value + '</td>' +
+            '<td class="px-4 py-3 text-gray-500">' + (file.size / 1024 / 1024).toFixed(1) + ' MB</td>' +
+            '<td class="px-4 py-3 text-center text-gray-600 font-medium">0</td>' +
+            '<td class="px-4 py-3 text-center"><span class="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-600 text-[9px] rounded-full font-medium">处理中</span></td>' +
+            '<td class="px-4 py-3 text-gray-400">' + new Date().toISOString().slice(0, 10) + '</td>' +
+            '<td class="px-4 py-3 text-center"><button class="text-red-400 hover:text-red-600" onclick="event.stopPropagation();deleteAiKnowledge(this)">删除</button></td>';
+        list.appendChild(tr);
+        lucide.createIcons();
+        input.value = '';
+        setTimeout(function() {
+            var doc = aiKnowledgeData.find(function(d) { return d.id === newId; });
+            if (doc) {
+                doc.status = '已就绪';
+                doc.chunks = Math.floor(Math.random() * 50) + 5;
+                doc.chunksContent = ['文档解析完成，系统已自动将内容切分为 ' + doc.chunks + ' 个片段。', '您可以在左侧文档列表中选择此文档查看具体切片内容。'];
+                tr.querySelectorAll('td')[3].textContent = doc.chunks;
+                var statusSpan = tr.querySelector('.inline-flex');
+                if (statusSpan) {
+                    statusSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[9px] rounded-full font-medium';
+                    statusSpan.textContent = '已就绪';
+                }
+                showToast('文档解析完成，共生成 ' + doc.chunks + ' 个内容切片');
+            }
+        }, 2000);
+    }
+
+    // 拖拽上传
+    var dropzone = document.getElementById('ai-knowledge-dropzone');
+    if (dropzone) {
+        dropzone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropzone.classList.add('border-blue-500', 'bg-blue-50/50');
+        });
+        dropzone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('border-blue-500', 'bg-blue-50/50');
+        });
+        dropzone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('border-blue-500', 'bg-blue-50/50');
+            var file = e.dataTransfer.files && e.dataTransfer.files[0];
+            if (file) {
+                document.getElementById('ai-knowledge-file-input').files = e.dataTransfer.files;
+                handleAiKnowledgeUpload(document.getElementById('ai-knowledge-file-input'));
+            }
+        });
+    }
+
+    // AI知识库筛选
+    document.getElementById('ai-knowledge-search')?.addEventListener('input', filterAiKnowledge);
+    document.getElementById('ai-knowledge-category-filter')?.addEventListener('change', filterAiKnowledge);
+    document.getElementById('ai-knowledge-status-filter')?.addEventListener('change', filterAiKnowledge);
+
+    function filterAiKnowledge() {
+        var keyword = (document.getElementById('ai-knowledge-search').value || '').toLowerCase();
+        var category = document.getElementById('ai-knowledge-category-filter').value;
+        var status = document.getElementById('ai-knowledge-status-filter').value;
+        document.querySelectorAll('#ai-knowledge-list tr').forEach(function(tr) {
+            var name = (tr.querySelector('td:nth-child(1)')?.textContent || '').toLowerCase();
+            var cat = tr.querySelector('td:nth-child(2)')?.textContent || '';
+            var st = tr.querySelector('.inline-flex')?.textContent?.trim() || '';
+            var matchName = !keyword || name.indexOf(keyword) !== -1;
+            var matchCat = !category || cat === category;
+            var matchStatus = !status || st === status;
+            tr.style.display = matchName && matchCat && matchStatus ? '' : 'none';
+        });
+    }
 </script>
 </body>
 </html>
