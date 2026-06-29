@@ -4840,39 +4840,6 @@
         </div>
     </div>
 
-    <!-- 项目详情：添加关联特邀弹窗 -->
-    <div id="project-detail-invite-select-modal" class="modal-overlay">
-        <div class="modal-container max-w-2xl custom-scrollbar">
-            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
-                <h3 class="text-sm font-bold text-gray-900">添加关联特邀</h3>
-                <button class="text-gray-400 hover:text-gray-600" data-action="close-modal">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-            <div class="p-6 space-y-4">
-                <div class="flex items-center justify-between gap-3">
-                    <div class="relative flex-1">
-                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
-                        <input type="text" id="detail-invite-select-search" placeholder="搜索特邀名称、类型..." class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded text-[11px] outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
-                    </div>
-                    <span id="detail-invite-select-count" class="text-[10px] text-gray-400 shrink-0">0 条</span>
-                </div>
-
-                <div id="detail-invite-select-list" class="border border-gray-100 rounded-xl overflow-hidden bg-white">
-                    <div class="p-8 text-center">
-                        <p class="text-[10px] text-gray-400">暂无可选的草稿状态特邀</p>
-                    </div>
-                </div>
-
-                <p class="text-[10px] text-gray-400">仅展示未绑定项目的草稿状态特邀</p>
-            </div>
-            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-3 sticky bottom-0 z-10">
-                <button type="button" class="px-6 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
-                <button type="button" class="px-6 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="confirm-select-detail-invites">确认关联</button>
-            </div>
-        </div>
-    </div>
-
     <!-- 配置项新增/编辑弹窗 -->
     <div id="project-config-modal" class="modal-overlay">
         <div class="modal-container max-w-md custom-scrollbar">
@@ -5157,6 +5124,39 @@
                     <button class="px-4 py-1.5 border border-slate-200 rounded text-xs font-medium text-slate-600 hover:bg-slate-50" data-action="close-modal">返回列表</button>
                     <button class="px-4 py-1.5 bg-slate-900 text-white rounded text-xs font-medium hover:bg-slate-800 shadow-sm" data-action="edit-project">编辑项目</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 项目详情：添加关联特邀弹窗 -->
+    <div id="project-detail-invite-select-modal" class="modal-overlay" style="z-index: 60;">
+        <div class="modal-container max-w-2xl custom-scrollbar">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+                <h3 class="text-sm font-bold text-gray-900">添加关联特邀</h3>
+                <button class="text-gray-400 hover:text-gray-600" data-action="close-modal">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-center justify-between gap-3">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
+                        <input type="text" id="detail-invite-select-search" placeholder="搜索特邀名称、类型..." class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded text-[11px] outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                    </div>
+                    <span id="detail-invite-select-count" class="text-[10px] text-gray-400 shrink-0">0 条</span>
+                </div>
+
+                <div id="detail-invite-select-list" class="border border-gray-100 rounded-xl overflow-hidden bg-white">
+                    <div class="p-8 text-center">
+                        <p class="text-[10px] text-gray-400">暂无可选的草稿状态特邀</p>
+                    </div>
+                </div>
+
+                <p class="text-[10px] text-gray-400">仅展示未绑定项目的草稿状态特邀</p>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-3 sticky bottom-0 z-10">
+                <button type="button" class="px-6 py-2 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors" data-action="close-modal">取消</button>
+                <button type="button" class="px-6 py-2 bg-slate-900 text-white rounded-lg text-xs font-medium hover:bg-slate-800 shadow-sm transition-all" data-action="confirm-select-detail-invites">确认关联</button>
             </div>
         </div>
     </div>
