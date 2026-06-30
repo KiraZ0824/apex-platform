@@ -978,35 +978,36 @@
                 <!-- Bottom-Right: 智慧值 Insight Credits -->
                 <div class="xl:col-span-2">
                     <div class="ant-card p-5 flex flex-col gap-4 h-full">
-                        <div class="flex items-center gap-2 shrink-0">
-                            <i data-lucide="coins" class="w-4 h-4 text-amber-400"></i>
-                            <p class="text-[11px] font-semibold text-gray-600">智慧值</p>
-                            <span class="text-[9px] text-gray-400">Insight Credits</span>
+                        <div class="flex justify-end shrink-0">
+                            <div class="bg-amber-50 border border-amber-100 rounded-lg px-4 py-2.5 flex items-center gap-3 cursor-pointer hover:bg-amber-100/60 transition-colors" data-action="toggle-points-log">
+                                <i data-lucide="coins" class="w-4 h-4 text-amber-500"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-[9px] text-gray-400 leading-none mb-0.5">智慧值</span>
+                                    <div class="flex items-baseline gap-1.5">
+                                        <p class="text-xl font-black text-amber-500 leading-none">12,480</p>
+                                        <span class="text-[9px] text-emerald-500 font-medium flex items-center gap-0.5"><i data-lucide="trending-up" class="w-2.5 h-2.5"></i>+320 本月</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-baseline gap-2 shrink-0">
-                            <p class="text-3xl font-black text-amber-500 leading-none">12,480</p>
-                            <span class="text-[10px] text-emerald-500 font-medium flex items-center gap-0.5"><i data-lucide="trending-up" class="w-3 h-3"></i>+320 本月</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3 mt-1 flex-1 items-center">
+                        <div class="grid grid-cols-3 gap-3 flex-1 items-center">
                             <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                <i data-lucide="loader" class="w-3.5 h-3.5 text-blue-500 mx-auto mb-1"></i>
                                 <p class="text-lg font-bold text-gray-900">1</p>
                                 <span class="text-[9px] text-blue-500 font-medium">进行中</span>
                                 <span class="text-[8px] text-gray-400">我的特邀</span>
                             </div>
                             <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-500 mx-auto mb-1"></i>
                                 <p class="text-lg font-bold text-gray-900">1</p>
                                 <span class="text-[9px] text-emerald-500 font-medium">已完成</span>
                                 <span class="text-[8px] text-gray-400">我的特邀</span>
                             </div>
                             <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                <i data-lucide="globe" class="w-3.5 h-3.5 text-emerald-500 mx-auto mb-1"></i>
                                 <p class="text-lg font-bold text-gray-900">2</p>
                                 <span class="text-[9px] text-emerald-500 font-medium">可参与</span>
                                 <span class="text-[8px] text-gray-400">平台特邀</span>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-3 text-center cursor-pointer" data-action="toggle-points-log">
-                                <p class="text-lg font-bold text-amber-500">5</p>
-                                <span class="text-[9px] text-amber-500 font-medium">待兑换</span>
-                                <span class="text-[8px] text-gray-400">智慧值</span>
                             </div>
                         </div>
                     </div>
